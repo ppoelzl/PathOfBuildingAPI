@@ -35,12 +35,12 @@ def fetch_url(url: str, timeout: float=6.0) -> str:
                 requests.TooManyRedirects) as e:
             print(e, "Something went wrong, check it out.")
         else:
-            return fetch_xml(request.text)
+            return fetch_import_code(request.text)
     else:
         raise ValueError(url, "is not a valid pastebin.com URL.")
 
 
-def fetch_xml(import_code: str) -> str:
+def fetch_import_code(import_code: str) -> str:
     if isinstance(import_code, str):
         try:
             base64_decode = base64.urlsafe_b64decode(import_code)

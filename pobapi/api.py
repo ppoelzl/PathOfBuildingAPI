@@ -2,11 +2,11 @@
 from __future__ import annotations
 from dataclasses import dataclass, InitVar
 import decimal
-from typing import List, Union, Any
 import re
+from typing import List, Union, Any
 # Project
 from pobapi.constants import CONFIG_MAP, STATS_MAP, MONSTER_DAMAGE_TABLE, MONSTER_LIFE_TABLE
-import pobapi.util as util
+from pobapi import util
 # Third-Party
 from defusedxml import lxml
 
@@ -362,7 +362,7 @@ class PathOfBuildingAPI:
 
     @classmethod
     def from_import_code(cls, import_code: str) -> PathOfBuildingAPI:
-        return cls(util.fetch_xml(import_code))
+        return cls(util.fetch_import_code(import_code))
 
     #
 
