@@ -209,13 +209,12 @@ class Config(GeneralConfig, SkillConfig, MapConfig, CombatConfig, DPSOptions):
     character_level: InitVar[int] = None
 
     def __post_init__(self, character_level: int):
-        monster_level = character_level
         if self.enemy_level is None:
             self.enemy_level = min(character_level, 84)
         if self.enemy_physical_hit_damage is None:
-            self.enemy_physical_hit_damage = MONSTER_DAMAGE_TABLE[monster_level - 1] * 1.5
+            self.enemy_physical_hit_damage = MONSTER_DAMAGE_TABLE[self.enemy_level - 1] * 1.5
         if self.detonate_dead_corpse_life is None:
-            self.detonate_dead_corpse_life = MONSTER_LIFE_TABLE[monster_level - 1]
+            self.detonate_dead_corpse_life = MONSTER_LIFE_TABLE[self.enemy_level - 1]
 
 
 @dataclass
