@@ -22,13 +22,13 @@ class CachedProperty:
 
 def fetch_url(url: str, timeout: float=6.0) -> str:
     if url.startswith("https://pastebin.com/"):
+        raw = url.replace("https://pastebin.com/", "https://pastebin.com/raw/")
         try:
-            raw = url.replace("https://pastebin.com/", "https://pastebin.com/raw/")
             request = requests.get(raw, timeout=timeout)
         except requests.URLRequired as e:
-            raise ValueError(e, "Not a valid URL.") from e
+            raise ValueError(e, url, "is not a valid URL.") from e
         except requests.Timeout as e:
-            print(e, "Connection timed out, try again or try raise the timeout.")
+            print(e, "Connection timed out, try again or raise the timeout.")
         except (requests.ConnectionError,
                 requests.HTTPError,
                 requests.RequestException,
@@ -40,19 +40,16 @@ def fetch_url(url: str, timeout: float=6.0) -> str:
         raise ValueError(url, "is not a valid pastebin.com URL.")
 
 
-def fetch_import_code(import_code: str) -> str:
-    if isinstance(import_code, str):
-        try:
-            base64_decode = base64.urlsafe_b64decode(import_code)
-            decompressed_xml = zlib.decompress(base64_decode)
-        except (TypeError, ValueError) as e:
-            print(e, "Something went wrong while decoding. Fix it.")
-        except zlib.error as e:
-            print(e, "Something went wrong while decompressing. Fix it.")
-        else:
-            return decompressed_xml
+def fetch_import_code(import_code: str) -> str:  # TODO: XML schema validation?
+    try:
+        base64_decode = base64.urlsafe_b64decode(import_code)
+        decompressed_xml = zlib.decompress(base64_decode)
+    except (TypeError, ValueError) as e:
+        print(e, "Something went wrong while decoding. Fix it.")
+    except zlib.error as e:
+        print(e, "Something went wrong while decompressing. Fix it.")
     else:
-        raise ValueError(import_code, "Import code is not a string.")
+        return decompressed_xml
 
 
 @property
