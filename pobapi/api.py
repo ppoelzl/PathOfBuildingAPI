@@ -244,7 +244,7 @@ class Item:
         text += f"Quality: {self.quality}\n"
         text += f"LevelReq: {self.level_req}\n"
         text += f"ItemLvl: {self.item_level}\n"
-        text += f"{self.implicit}\n"
+        text += f"Implicits: {self.implicit}\n"
         text += f"{self.text}"
         return text
 
@@ -460,9 +460,8 @@ def _item_builder(text: lxml.RestrictedElement) -> Item:  # TODO: Cleanup
     quality = int(util.get_stat(item, "Quality: ", default=0)) or None
     level_req = int(util.get_stat(item, "Item Level: ", default=1))
     item_level = int(util.get_stat(item, "Item Level: ", default=1))
-    implicit = util.implicit_text(item)
-    item_text = util.item_text(item)
-    item_text = _text_parse(item_text, _variant, mod_ranges)
+    implicit = util.get_stat(item, "Implicits: ")
+    item_text = _text_parse(util.item_text(item), _variant, mod_ranges)
     return Item(rarity, name, base, quality, level_req, item_level, implicit, item_text)
 
 
@@ -486,7 +485,7 @@ def _text_parse(t, variant, mod_ranges):  # TODO: Cleanup
     counter = 0
     re_find_variant = re.compile("(?<={variant:).+?(?=})")
     for i in t.splitlines():
-        if i.startswith("Source:") or "Adds" in i:  # TODO: Support "Adds X to Y mods"
+        if "Adds" in i:  # TODO: Support "Adds X to Y mods"
             continue
         if "(" in i or ")" in i:
             start, stop = i.split("(")[1].split(")")[0].split("-")

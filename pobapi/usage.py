@@ -6,7 +6,8 @@ if __name__ == "__main__":
     build = api.PathOfBuildingAPI.from_import_code(code)
 
     for it in build.items:
-        print(it.text)
+        print(it)
+        print()
 
 # <Build banditCruel banditMerciless banditNormal targetVersion viewMode>
 # <Calcs><Input */>

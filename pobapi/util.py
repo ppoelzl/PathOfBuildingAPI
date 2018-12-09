@@ -84,7 +84,7 @@ def _get_text_start(text: List[str], stat: Any):
 
 
 def item_text(text: List[str]) -> str:
-    return "\n".join(text[_get_text_start(text, "Implicits: ") + int(get_stat(text, "Implicits: ", 0)):])
+    return "\n".join(text)
 
 
 @property
