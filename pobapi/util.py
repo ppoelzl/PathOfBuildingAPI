@@ -1,7 +1,7 @@
 import base64
 # TODO: lxml vs. cElementTree for parsing?
 import zlib
-from typing import Dict, List, Iterator, Any
+from typing import Dict, List, Iterator
 import requests
 
 
@@ -61,26 +61,11 @@ def get_active_skill_gem(skill_group_slice):
     return skill_group_slice.gems[skill_group_slice.main - 1]
 
 
-def implicit_text(text: List[str]) -> str:
-    implicit = get_stat(text, "Implicits: ")
-    if implicit:
-        return text[_get_text_start(text, "Implicits: ") + int(implicit)]
-    else:
-        return "Implicits: None"
-
-
 def get_stat(text: List[str], stat, default=None) -> str:
     for line in text:
         if line.startswith(stat):
             return line[len(stat):]
     return default
-
-
-def _get_text_start(text: List[str], stat: Any):
-    for index, line in enumerate(text):
-        if line.startswith(stat):
-            return index
-    return 0
 
 
 def item_text(text: List[str]) -> str:
