@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, InitVar
 import decimal
 import re
-from typing import List, Union, Any
+from typing import Dict, List, Union
 # Project
 from pobapi.constants import CONFIG_MAP, STATS_MAP, MONSTER_DAMAGE_TABLE, MONSTER_LIFE_TABLE
 from pobapi import util
@@ -348,7 +348,7 @@ class Stats:
 @dataclass
 class Tree:
     url: str
-    sockets: Any
+    sockets: Dict[int: int]
 
 
 class PathOfBuildingAPI:
