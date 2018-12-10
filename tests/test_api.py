@@ -1,7 +1,9 @@
-import pytest
+# Project
 from pobapi import api
 from pobapi import util
 from pobapi.constants import CLASS_NAMES, ASCENDANCY_NAMES, BANDITS
+# Third-Party
+import pytest
 
 
 @pytest.fixture(scope="module")

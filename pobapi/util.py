@@ -1,8 +1,10 @@
+# Built-ins
 import base64
-# TODO: lxml vs. cElementTree for parsing?
-import zlib
 from typing import Dict, List, Iterator
+import zlib
+# Third-Party
 import requests
+# TODO: lxml vs. cElementTree for parsing?
 
 
 class CachedProperty:
@@ -92,12 +94,3 @@ def _active_item_set_index(self) -> int:
 def _item_sets(self) -> Iterator[Dict[str, int]]:
     for item_set in self.xml.find_all("ItemSet"):
         yield {slot.get("name"): int(slot.get("itemId")) for slot in item_set.find_all("Slot")}
-
-
-if __name__ == "__main__":
-    with open("../resources/import_code.txt") as f:
-        code = f.read()
-
-# pastebin.com link
-# import code
-# xml
