@@ -69,7 +69,12 @@ def get_stat(text: List[str], stat, default=None) -> str:
 
 
 def item_text(text: List[str]) -> str:
-    return "\n".join(text)
+    for index, line in enumerate(text):
+        if line.startswith("Implicits: "):
+            try:
+                return "\n".join(text[index + 1:])
+            except KeyError:
+                return ""
 
 
 @property
