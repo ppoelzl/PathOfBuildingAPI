@@ -79,6 +79,8 @@ def test_items(build):
         assert isinstance(i.rarity, str)
         assert isinstance(i.name, str)
         assert isinstance(i.base, str)
+        assert isinstance(i.shaper, (bool, type(None)))
+        assert isinstance(i.elder, (bool, type(None)))
         assert isinstance(i.quality, (int, type(None)))
         assert isinstance(i.sockets, (list, type(None)))
         assert isinstance(i.level_req, int)
