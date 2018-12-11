@@ -80,6 +80,7 @@ def test_items(build):
         assert isinstance(i.name, str)
         assert isinstance(i.base, str)
         assert isinstance(i.quality, (int, type(None)))
+        assert isinstance(i.sockets, (list, type(None)))
         assert isinstance(i.level_req, int)
         assert isinstance(i.item_level, int)
         assert isinstance(i.implicit, (str, type(None)))

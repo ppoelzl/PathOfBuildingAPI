@@ -231,6 +231,7 @@ class Item:
     name: str
     base: str
     quality: Union[int, None]
+    sockets: Union[List, None]
     level_req: int
     item_level: int
     implicit: Union[str, None]
@@ -242,6 +243,7 @@ class Item:
         text += f"{self.name}\n"
         text += f"{self.base}\n"
         text += f"Quality: {self.quality}\n"
+        text += f"Sockets: {self.sockets}\n"
         text += f"LevelReq: {self.level_req}\n"
         text += f"ItemLvl: {self.item_level}\n"
         text += f"Implicits: {self.implicit}\n"
@@ -458,11 +460,14 @@ def _item_builder(text: lxml.RestrictedElement) -> Item:  # TODO: Cleanup
     name = item[1]
     base = item[1] if item[2].startswith(("Crafted: true", "Unique ID:")) else item[2]
     quality = int(util.get_stat(item, "Quality: ", default=0)) or None
+    sockets = util.get_stat(item, "Sockets: ")
+    if sockets:
+        sockets = sockets.split("-")
     level_req = int(util.get_stat(item, "Item Level: ", default=1))
     item_level = int(util.get_stat(item, "Item Level: ", default=1))
     implicit = util.get_stat(item, "Implicits: ")
     item_text = _text_parse(util.item_text(item), _variant, mod_ranges)
-    return Item(rarity, name, base, quality, level_req, item_level, implicit, item_text)
+    return Item(rarity, name, base, quality, sockets, level_req, item_level, implicit, item_text)
 
 
 def _tree_builder(spec: lxml.RestrictedElement) -> Tree:
