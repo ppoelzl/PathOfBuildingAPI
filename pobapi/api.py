@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, InitVar
 import decimal
 import re
-from typing import Dict, List, Union
+from typing import Dict, List, Tuple, Union
 # Project
 from pobapi.constants import CONFIG_MAP, STATS_MAP, MONSTER_DAMAGE_TABLE, MONSTER_LIFE_TABLE
 from pobapi import util
@@ -231,10 +231,10 @@ class Item:
     name: str
     base: str
     quality: Union[int, None]
-    sockets: Union[List, None]
+    sockets: Union[Tuple[str], None]
     level_req: int
     item_level: int
-    implicit: Union[str, None]
+    implicit: Union[int, None]
     text: str
 
     def __str__(self):
@@ -246,7 +246,8 @@ class Item:
         text += f"Sockets: {self.sockets}\n"
         text += f"LevelReq: {self.level_req}\n"
         text += f"ItemLvl: {self.item_level}\n"
-        text += f"Implicits: {self.implicit}\n"
+        if self.implicit:
+            text += f"Implicits: {self.implicit}\n"
         text += f"{self.text}"
         return text
 
@@ -344,7 +345,7 @@ class Stats:
     endurance_charges: float = None
     endurance_charges_maximum: float = None
     active_totem_limit: float = None
-    active_minion_limt: float = None
+    active_minion_limit: float = None
 
 
 @dataclass
@@ -462,10 +463,10 @@ def _item_builder(text: lxml.RestrictedElement) -> Item:  # TODO: Cleanup
     quality = int(util.get_stat(item, "Quality: ", default=0)) or None
     sockets = util.get_stat(item, "Sockets: ")
     if sockets:
-        sockets = sockets.split("-")
+        sockets = tuple(sockets.split("-"))
     level_req = int(util.get_stat(item, "Item Level: ", default=1))
     item_level = int(util.get_stat(item, "Item Level: ", default=1))
-    implicit = util.get_stat(item, "Implicits: ")
+    implicit = int(util.get_stat(item, "Implicits: "))
     item_text = _text_parse(util.item_text(item), _variant, mod_ranges)
     return Item(rarity, name, base, quality, sockets, level_req, item_level, implicit, item_text)
 
