@@ -54,11 +54,6 @@ def fetch_import_code(import_code: str) -> str:  # TODO: XML schema validation?
         return decompressed_xml
 
 
-@property
-def _use_second_weapon_set(self) -> bool:
-    return True if self.xml.find("Items").get("useSecondWeaponSet") == "true" else False
-
-
 def get_active_skill_gem(skill_group_slice):
     return skill_group_slice.gems[skill_group_slice.main - 1]
 
@@ -77,20 +72,3 @@ def item_text(text: List[str]) -> str:
                 return "\n".join(text[index + 1:])
             except KeyError:
                 return ""
-
-
-@property
-def _current_item_set(self) -> Dict[str, int]:
-    return {item.get("name"): int(item.get("itemId"))
-            for item in self.xml.find("Items").find_all("Slot", recursive=0)}
-
-
-@property
-def _active_item_set_index(self) -> int:
-    return int(self.xml.find("Items").get("activeItemSet"))
-
-
-@property
-def _item_sets(self) -> Iterator[Dict[str, int]]:
-    for item_set in self.xml.find_all("ItemSet"):
-        yield {slot.get("name"): int(slot.get("itemId")) for slot in item_set.find_all("Slot")}

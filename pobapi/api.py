@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, InitVar
 import decimal
 import re
-from typing import Dict, List, Tuple, Union
+from typing import Dict, Iterator, List, Tuple, Union
 # Project
 from pobapi.constants import CONFIG_MAP, STATS_MAP, MONSTER_DAMAGE_TABLE, MONSTER_LIFE_TABLE
 from pobapi import util
@@ -412,6 +412,24 @@ class PathOfBuildingAPI:
         return self.xml.find("Notes").text.rstrip("\n\r\t")
 
     @util.CachedProperty
+    def second_weapon_set(self) -> bool:
+        return True if self.xml.find("Items").get("useSecondWeaponSet") == "true" else False
+
+    @util.CachedProperty
+    def item_sets(self) -> Iterator[Dict[str, int]]:
+        for item_set in self.xml.find_all("ItemSet"):
+            yield {slot.get("name"): int(slot.get("itemId")) for slot in item_set.find_all("Slot")}
+
+    @util.CachedProperty
+    def current_item_set(self) -> Dict[str, int]:
+        return {item.get("name"): int(item.get("itemId"))
+                for item in self.xml.find("Items").find_all("Slot", recursive=0)}
+
+    @util.CachedProperty
+    def current_item_set_index(self) -> int:
+        return int(self.xml.find("Items").get("activeItemSet"))
+
+    @util.CachedProperty
     def active_skill_group(self) -> Skill:
         index = int(self.xml.find("Build").get("mainSocketGroup")) - 1
         return self.skill_groups[index]
@@ -455,7 +473,7 @@ def _item_builder(text: lxml.RestrictedElement) -> Item:  # TODO: Cleanup
     _variant = text.get("variantAlt")
     if not _variant:
         _variant = text.get("variant")
-    mod_ranges = [float(i.get("range")) for i in text.findall("ModRange")]
+    _mod_ranges = [float(i.get("range")) for i in text.findall("ModRange")]
     item = text.text.strip("\n\r\t").splitlines()
     rarity = util.get_stat(item, "Rarity: ").capitalize()
     name = item[1]
