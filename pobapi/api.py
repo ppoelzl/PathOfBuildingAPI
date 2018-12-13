@@ -509,17 +509,32 @@ def _text_parse(t, variant, mod_ranges):  # TODO: Cleanup
     counter = 0
     re_find_variant = re.compile("(?<={variant:).+?(?=})")
     for i in t.splitlines():
-        if "Adds" in i:  # TODO: Support "Adds X to Y mods"
-            continue
-        if "(" in i or ")" in i:
+        if "Adds (" in i:
+            start1, stop1 = i.split("(")[1].split(")")[0].split("-")
+            start2, stop2 = i.rsplit("(")[1].rsplit(")")[0].split("-")
+            value1 = mod_ranges[counter]
+            counter += 1
+            width1 = float(stop1) - float(start1) + 1
+            offset1 = decimal.Decimal(width1 * value1).to_integral(decimal.ROUND_HALF_DOWN)
+            result1 = float(start1) + float(offset1)
+            value2 = mod_ranges[counter]
+            counter += 1
+            width2 = float(stop2) - float(start2) + 1
+            offset2 = decimal.Decimal(width2 * value2).to_integral(decimal.ROUND_HALF_DOWN)
+            result2 = float(start2) + float(offset2)
+            replace_string = "(" + start1 + "-" + stop1 + ") to (" + start2 + "-" + stop2 + ")"
+            result_string = str(result1 if result1 % 1 else (int(result1))) + " to " + \
+                str(result2 if result2 % 1 else (int(result2)))
+            i = i.replace(replace_string, result_string)
+        elif "(" in i or ")" in i:
             start, stop = i.split("(")[1].split(")")[0].split("-")
             value = mod_ranges[counter]
             counter += 1
             width = float(stop) - float(start) + 1
             offset = decimal.Decimal(width * value).to_integral(decimal.ROUND_HALF_DOWN)
             result = float(start) + float(offset)
-            string = "(" + start + "-" + stop + ")"
-            i = i.replace(string, str(result if result % 1 else int(result)))
+            replace_string = "(" + start + "-" + stop + ")"
+            i = i.replace(replace_string, str(result if result % 1 else int(result)))
         if i.startswith(f"{{variant:"):
             exp = re.search(re_find_variant, i).group()
             sp = [int(i) for i in exp.split(",")]
