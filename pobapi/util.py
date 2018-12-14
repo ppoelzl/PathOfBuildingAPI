@@ -1,6 +1,6 @@
 # Built-ins
 import base64
-from typing import Dict, List, Iterator
+from typing import List
 import zlib
 # Third-Party
 import requests
@@ -52,10 +52,6 @@ def fetch_import_code(import_code: str) -> str:  # TODO: XML schema validation?
         print(e, "Something went wrong while decompressing. Fix it.")
     else:
         return decompressed_xml
-
-
-def get_active_skill_gem(skill_group_slice):
-    return skill_group_slice.gems[skill_group_slice.main - 1]
 
 
 def get_stat(text: List[str], stat, default=None) -> str:
