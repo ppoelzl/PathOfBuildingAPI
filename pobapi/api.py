@@ -230,6 +230,8 @@ class Item:
     rarity: str
     name: str
     base: str
+    shaper: bool
+    elder: bool
     quality: Union[int, None]
     sockets: Union[Tuple[str], None]
     level_req: int
@@ -240,10 +242,16 @@ class Item:
     def __str__(self):
         text = ""
         text += f"Rarity: {self.rarity}\n"
-        text += f"{self.name}\n"
-        text += f"{self.base}\n"
-        text += f"Quality: {self.quality}\n"
-        text += f"Sockets: {self.sockets}\n"
+        text += f"Name: {self.name}\n"
+        text += f"Base: {self.base}\n"
+        if self.shaper:
+            text += f"Shaper Item\n"
+        if self.elder:
+            text += f"Elder Item\n"
+        if self.quality:
+            text += f"Quality: {self.quality}\n"
+        if self.sockets:
+            text += f"Sockets: {self.sockets}\n"
         text += f"LevelReq: {self.level_req}\n"
         text += f"ItemLvl: {self.item_level}\n"
         if self.implicit:
@@ -478,6 +486,8 @@ def _item_builder(text: lxml.RestrictedElement) -> Item:  # TODO: Cleanup
     rarity = util.get_stat(item, "Rarity: ").capitalize()
     name = item[1]
     base = item[1] if item[2].startswith(("Crafted: true", "Unique ID:")) else item[2]
+    shaper = True if util.get_stat(item, "Shaper Item") else False
+    elder = True if util.get_stat(item, "Elder Item") else False
     quality = int(util.get_stat(item, "Quality: ", default=0)) or None
     sockets = util.get_stat(item, "Sockets: ")
     if sockets:
@@ -486,7 +496,7 @@ def _item_builder(text: lxml.RestrictedElement) -> Item:  # TODO: Cleanup
     item_level = int(util.get_stat(item, "Item Level: ", default=1))
     implicit = int(util.get_stat(item, "Implicits: "))
     item_text = _text_parse(util.item_text(item), _variant, _mod_ranges)
-    return Item(rarity, name, base, quality, sockets, level_req, item_level, implicit, item_text)
+    return Item(rarity, name, base, shaper, elder, quality, sockets, level_req, item_level, implicit, item_text)
 
 
 def _tree_builder(spec: lxml.RestrictedElement) -> Tree:
