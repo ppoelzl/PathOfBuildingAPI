@@ -514,7 +514,7 @@ def _convert_fields(item: lxml.RestrictedElement) -> Union[True, int, str]:
         return item.get("string").capitalize()
 
 
-def _text_parse(t, variant, mod_ranges):  # TODO: Cleanup
+def _text_parse(t: str, variant: str, mod_ranges: List[float]) -> str:  # TODO: Cleanup
     mods = []
     counter = 0
     re_find_variant = re.compile("(?<={variant:).+?(?=})")
@@ -522,21 +522,20 @@ def _text_parse(t, variant, mod_ranges):  # TODO: Cleanup
         if "Adds (" in i:
             start1, stop1 = i.split("(")[1].split(")")[0].split("-")
             start2, stop2 = i.rsplit("(")[1].rsplit(")")[0].split("-")
-            value1 = mod_ranges[counter]
+            value = mod_ranges[counter]
             counter += 1
             width1 = float(stop1) - float(start1) + 1
-            offset1 = decimal.Decimal(width1 * value1).to_integral(decimal.ROUND_HALF_DOWN)
+            offset1 = decimal.Decimal(width1 * value).to_integral(decimal.ROUND_HALF_DOWN)
             result1 = float(start1) + float(offset1)
-            value2 = mod_ranges[counter]
-            counter += 1
             width2 = float(stop2) - float(start2) + 1
-            offset2 = decimal.Decimal(width2 * value2).to_integral(decimal.ROUND_HALF_DOWN)
+            offset2 = decimal.Decimal(width2 * value).to_integral(decimal.ROUND_HALF_DOWN)
             result2 = float(start2) + float(offset2)
             replace_string = "(" + start1 + "-" + stop1 + ") to (" + start2 + "-" + stop2 + ")"
             result_string = str(result1 if result1 % 1 else (int(result1))) + " to " + \
                 str(result2 if result2 % 1 else (int(result2)))
             i = i.replace(replace_string, result_string)
-        elif "(" in i or ")" in i:
+        elif "(" in i and "{range:" in i:
+            # We have to check for '{range:' characters used in range expressions to filter unsupported mods.
             start, stop = i.split("(")[1].split(")")[0].split("-")
             value = mod_ranges[counter]
             counter += 1
