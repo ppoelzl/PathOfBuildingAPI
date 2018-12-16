@@ -35,6 +35,10 @@ def test_notes(build):
     assert build.notes.endswith("\n\r\t") is False
 
 
+def test_second_weapon_set(build):
+    assert isinstance(build.second_weapon_set, bool)
+
+
 def test_stats(build):
     assert isinstance(build.stats, api.Stats)
     assert 1 <= build.stats.life
@@ -44,6 +48,26 @@ def test_stats(build):
 def test_config(build):
     assert isinstance(build.config, api.Config)
     assert build.config.enemy_boss in (False, True, "Shaper")
+
+
+def test_item_sets(build):
+    pass
+
+
+def test_current_item_set(build):
+    pass
+
+
+def test_current_item_set_index(build):
+    pass
+
+
+def test_active_skill_group(build):
+    pass
+
+
+def test_active_skill(build):
+    pass
 
 
 def test_trees(build):
