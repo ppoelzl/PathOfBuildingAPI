@@ -424,14 +424,14 @@ class PathOfBuildingAPI:
         return True if self.xml.find("Items").get("useSecondWeaponSet") == "true" else False
 
     @util.CachedProperty
-    def item_sets(self) -> Iterator[Dict[str, int]]:
-        for item_set in self.xml.find_all("ItemSet"):
-            yield {slot.get("name"): int(slot.get("itemId")) for slot in item_set.find_all("Slot")}
+    def item_sets(self) -> Dict[Dict[str, int]]:
+        return {slot.get("name"): int(slot.get("itemId"))
+                for item_set in self.xml.findall("ItemSet") for slot in item_set.findall("Slot")}
 
     @util.CachedProperty
     def current_item_set(self) -> Dict[str, int]:
         return {item.get("name"): int(item.get("itemId"))
-                for item in self.xml.find("Items").find_all("Slot", recursive=0)}
+                for item in self.xml.find("Items").findall("Slot", recursive=0)}
 
     @util.CachedProperty
     def current_item_set_index(self) -> int:

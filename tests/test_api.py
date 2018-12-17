@@ -51,23 +51,38 @@ def test_config(build):
 
 
 def test_item_sets(build):
-    pass
+    for i in build.item_sets:
+        assert isinstance(i, dict)
 
 
 def test_current_item_set(build):
-    pass
+    assert isinstance(build.current_item_sets, dict)
 
 
 def test_current_item_set_index(build):
-    pass
+    assert isinstance(build.current_item_set_index, int)
 
 
 def test_active_skill_group(build):
-    pass
+    assert isinstance(build.active_skill_group, api.Skill)
+    assert isinstance(build.active_skill_group.enabled, bool)
+    assert isinstance(build.active_skill_group.label, str)
+    assert isinstance(build.active_skill_group.active, (int, type(None)))
+    assert isinstance(build.active_skill_group.gems, list)
+    for i in build.active_skill_group.gems:
+        assert isinstance(i, api.Gems)
+        assert isinstance(i.name, str)
+        assert isinstance(i.enabled, bool)
+        assert isinstance(i.level, int)
+        assert isinstance(i.quality, int)
 
 
 def test_active_skill(build):
-    pass
+    assert isinstance(build.current_active_skill, api.Gems)
+    assert isinstance(build.current_active_skill.name, str)
+    assert isinstance(build.current_active_skill.enabled, bool)
+    assert isinstance(build.current_active_skill.level, int)
+    assert isinstance(build.current_active_skill.quality, int)
 
 
 def test_trees(build):
