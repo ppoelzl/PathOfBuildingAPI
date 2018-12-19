@@ -56,7 +56,7 @@ def test_item_sets(build):
 
 
 def test_current_item_set(build):
-    assert isinstance(build.current_item_sets, dict)
+    assert isinstance(build.current_item_set, dict)
 
 
 def test_current_item_set_index(build):
@@ -78,11 +78,11 @@ def test_active_skill_group(build):
 
 
 def test_active_skill(build):
-    assert isinstance(build.current_active_skill, api.Gems)
-    assert isinstance(build.current_active_skill.name, str)
-    assert isinstance(build.current_active_skill.enabled, bool)
-    assert isinstance(build.current_active_skill.level, int)
-    assert isinstance(build.current_active_skill.quality, int)
+    assert isinstance(build.active_skill, api.Gems)
+    assert isinstance(build.active_skill.name, str)
+    assert isinstance(build.active_skill.enabled, bool)
+    assert isinstance(build.active_skill.level, int)
+    assert isinstance(build.active_skill.quality, int)
 
 
 def test_trees(build):

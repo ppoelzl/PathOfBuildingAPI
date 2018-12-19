@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, InitVar
 import decimal
 import re
-from typing import Dict, Iterator, List, Tuple, Union
+from typing import Dict, List, Tuple, Union
 # Project
 from pobapi.constants import CONFIG_MAP, STATS_MAP, MONSTER_DAMAGE_TABLE, MONSTER_LIFE_TABLE
 from pobapi import util
@@ -431,7 +431,7 @@ class PathOfBuildingAPI:
     @util.CachedProperty
     def current_item_set(self) -> Dict[str, int]:
         return {item.get("name"): int(item.get("itemId"))
-                for item in self.xml.find("Items").findall("Slot", recursive=0)}
+                for item in self.xml.find("Items").findall("Slot")}
 
     @util.CachedProperty
     def current_item_set_index(self) -> int:

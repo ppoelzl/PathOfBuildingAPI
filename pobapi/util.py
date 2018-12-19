@@ -22,7 +22,7 @@ class CachedProperty:
         return value
 
 
-def fetch_url(url: str, timeout: float=6.0) -> str:
+def fetch_url(url: str, timeout: float = 6.0) -> str:
     if url.startswith("https://pastebin.com/"):
         raw = url.replace("https://pastebin.com/", "https://pastebin.com/raw/")
         try:
