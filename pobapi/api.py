@@ -519,9 +519,10 @@ def _text_parse(t: str, variant: str, mod_ranges: List[float]) -> str:  # TODO: 
     counter = 0
     re_find_variant = re.compile("(?<={variant:).+?(?=})")
     for i in t.splitlines():
-        if "Adds (" in i:
+        if "Adds (" in i and "{range:" in i:
+            # We have to check for '{range:' characters used in range expressions to filter unsupported mods.
             start1, stop1 = i.split("(")[1].split(")")[0].split("-")
-            start2, stop2 = i.rsplit("(")[1].rsplit(")")[0].split("-")
+            start2, stop2 = i.rsplit("(")[2].split(")")[0].split("-")
             value = mod_ranges[counter]
             counter += 1
             width1 = float(stop1) - float(start1) + 1
@@ -530,19 +531,17 @@ def _text_parse(t: str, variant: str, mod_ranges: List[float]) -> str:  # TODO: 
             width2 = float(stop2) - float(start2) + 1
             offset2 = decimal.Decimal(width2 * value).to_integral(decimal.ROUND_HALF_DOWN)
             result2 = float(start2) + float(offset2)
-            replace_string = "(" + start1 + "-" + stop1 + ") to (" + start2 + "-" + stop2 + ")"
-            result_string = str(result1 if result1 % 1 else (int(result1))) + " to " + \
-                str(result2 if result2 % 1 else (int(result2)))
+            replace_string = f"({start1}-{stop1}) to ({start2}-{stop2})"
+            result_string = f"{result1 if result1 % 1 else int(result1)} to {result2 if result2 % 1 else int(result2)}"
             i = i.replace(replace_string, result_string)
         elif "(" in i and "{range:" in i:
-            # We have to check for '{range:' characters used in range expressions to filter unsupported mods.
             start, stop = i.split("(")[1].split(")")[0].split("-")
             value = mod_ranges[counter]
             counter += 1
             width = float(stop) - float(start) + 1
             offset = decimal.Decimal(width * value).to_integral(decimal.ROUND_HALF_DOWN)
             result = float(start) + float(offset)
-            replace_string = "(" + start + "-" + stop + ")"
+            replace_string = f"({start}-{stop})"
             i = i.replace(replace_string, str(result if result % 1 else int(result)))
         if i.startswith(f"{{variant:"):
             exp = re.search(re_find_variant, i).group()
