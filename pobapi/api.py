@@ -514,11 +514,15 @@ def _convert_fields(item: lxml.RestrictedElement) -> Union[True, int, str]:
         return item.get("string").capitalize()
 
 
-def _text_parse(t: str, variant: str, mod_ranges: List[float]) -> str:  # TODO: Cleanup
+def _text_parse(t: str, variant: str, mod_ranges: List[float]) -> str:
     mods = []
     counter = 0
     re_find_variant = re.compile("(?<={variant:).+?(?=})")
     for i in t.splitlines():
+        if i.startswith("{variant:"):
+            # We want to skip all mods of alternative item versions.
+            if int(variant) not in [int(i) for i in re.search(re_find_variant, i).group().split(",")]:
+                continue
         if "Adds (" in i and "{range:" in i:
             # We have to check for '{range:' characters used in range expressions to filter unsupported mods.
             start1, stop1 = i.split("(")[1].split(")")[0].split("-")
@@ -543,14 +547,7 @@ def _text_parse(t: str, variant: str, mod_ranges: List[float]) -> str:  # TODO: 
             result = float(start) + float(offset)
             replace_string = f"({start}-{stop})"
             i = i.replace(replace_string, str(result if result % 1 else int(result)))
-        if i.startswith(f"{{variant:"):
-            exp = re.search(re_find_variant, i).group()
-            sp = [int(i) for i in exp.split(",")]
-            if int(variant) in sp:
-                mods.append(i.rsplit("}", maxsplit=1)[1])
-        elif i.startswith(f"{{range:"):
-            mods.append(i.rsplit("}", maxsplit=1)[1])
-        else:
-            mods.append(i)
-
+        # We are only interested in everything past the '{variant: *}' and '{range: *}' tags.
+        _, _, mod = i.rpartition("}")
+        mods.append(mod)
     return "\n".join(mods)
