@@ -5,7 +5,6 @@ from typing import Iterator, List
 import zlib
 # Third-Party
 import requests
-# TODO: lxml vs. cElementTree for parsing?
 
 
 class CachedProperty:
@@ -43,7 +42,7 @@ def fetch_url(url: str, timeout: float = 6.0) -> str:
         raise ValueError(url, "is not a valid pastebin.com URL.")
 
 
-def fetch_import_code(import_code: str) -> str:  # TODO: XML schema validation?
+def fetch_import_code(import_code: str) -> str:
     try:
         base64_decode = base64.urlsafe_b64decode(import_code)
         decompressed_xml = zlib.decompress(base64_decode)
@@ -90,7 +89,7 @@ def _text_parse(text: str, variant: str, mod_ranges: List[float]) -> Iterator[st
         yield mod
 
 
-def _calculate_mod_text(line, value):
+def _calculate_mod_text(line: str, value: float) -> str:
     start, stop = line.partition("(")[-1].partition(")")[0].split("-")
     width = float(stop) - float(start) + 1
     # Python's round() function uses banker's rounding from 3.0 onwards, we have to emulate Lua's 'towards 0' rounding.
