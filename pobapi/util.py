@@ -1,6 +1,7 @@
 # Built-ins
 import base64
-from typing import List
+import decimal
+from typing import Iterator, List
 import zlib
 # Third-Party
 import requests
@@ -54,7 +55,7 @@ def fetch_import_code(import_code: str) -> str:  # TODO: XML schema validation?
         return decompressed_xml
 
 
-def get_stat(text: List[str], stat, default=None) -> str:
+def get_stat(text: List[str], stat: str, default=None) -> str:
     for line in text:
         if line.startswith(stat):
             return line[len(stat):]
@@ -68,3 +69,34 @@ def item_text(text: List[str]) -> str:
                 return "\n".join(text[index + 1:])
             except KeyError:
                 return ""
+
+
+def _text_parse(text: str, variant: str, mod_ranges: List[float]) -> Iterator[str]:
+    counter = 0  # We have to advance this every time we get a line with text to replace, not every time we substitute.
+    for line in text.splitlines():
+        # We want to skip all mods of alternative item versions.
+        if line.startswith("{variant:") and variant not in line.partition("{variant:")[-1].partition("}")[0].split(","):
+            continue
+        # We have to check for '{range:' characters used in range tags to filter unsupported mods.
+        if "Adds (" in line and "{range:" in line:  # 'Adds (A-B) to (C-D) to something' mods need to be replaced twice.
+            value = mod_ranges[counter]
+            line = _calculate_mod_text(line, value)
+        if "(" in line and "{range:" in line:
+            value = mod_ranges[counter]
+            line = _calculate_mod_text(line, value)
+            counter += 1
+        # We are only interested in everything past the '{variant: *}' and '{range: *}' tags.
+        _, _, mod = line.rpartition("}")
+        yield mod
+
+
+def _calculate_mod_text(line, value):
+    start, stop = line.partition("(")[-1].partition(")")[0].split("-")
+    width = float(stop) - float(start) + 1
+    # Python's round() function uses banker's rounding from 3.0 onwards, we have to emulate Lua's 'towards 0' rounding.
+    # https://en.wikipedia.org/w/index.php?title=IEEE_754#Rounding_rules
+    offset = decimal.Decimal(width * value).to_integral(decimal.ROUND_HALF_DOWN)
+    result = float(start) + float(offset)
+    replace_string = f"({start}-{stop})"
+    result_string = f"{result if result % 1 else int(result)}"
+    return line.replace(replace_string, result_string)

@@ -1,8 +1,6 @@
 # Built-ins
 from __future__ import annotations
 from dataclasses import dataclass, InitVar
-import decimal
-import re
 from typing import Dict, List, Tuple, Union
 # Project
 from pobapi.constants import CONFIG_MAP, STATS_MAP, MONSTER_DAMAGE_TABLE, MONSTER_LIFE_TABLE
@@ -477,6 +475,21 @@ def _gem_builder(gem: lxml.RestrictedElement) -> Gems:
     return Gems(name, enabled, level, quality)
 
 
+def _tree_builder(spec: lxml.RestrictedElement) -> Tree:
+    url = spec.find("URL").text.strip("\n\r\t")
+    sockets = {int(s.get("nodeId")): int(s.get("itemId")) for s in spec.findall("Socket")}
+    return Tree(url, sockets)
+
+
+def _convert_fields(item: lxml.RestrictedElement) -> Union[True, int, str]:
+    if item.get("boolean"):
+        return True
+    elif item.get("number"):
+        return int(item.get("number"))
+    elif item.get("string"):
+        return item.get("string").capitalize()
+
+
 def _item_builder(text: lxml.RestrictedElement) -> Item:  # TODO: Cleanup
     _variant = text.get("variantAlt")
     if not _variant:
@@ -495,59 +508,5 @@ def _item_builder(text: lxml.RestrictedElement) -> Item:  # TODO: Cleanup
     level_req = int(util.get_stat(item, "Item Level: ", default=1))
     item_level = int(util.get_stat(item, "Item Level: ", default=1))
     implicit = int(util.get_stat(item, "Implicits: "))
-    item_text = _text_parse(util.item_text(item), _variant, _mod_ranges)
+    item_text = "\n".join(util._text_parse(util.item_text(item), _variant, _mod_ranges))
     return Item(rarity, name, base, shaper, elder, quality, sockets, level_req, item_level, implicit, item_text)
-
-
-def _tree_builder(spec: lxml.RestrictedElement) -> Tree:
-    url = spec.find("URL").text.strip("\n\r\t")
-    sockets = {int(s.get("nodeId")): int(s.get("itemId")) for s in spec.findall("Socket")}
-    return Tree(url, sockets)
-
-
-def _convert_fields(item: lxml.RestrictedElement) -> Union[True, int, str]:
-    if item.get("boolean"):
-        return True
-    elif item.get("number"):
-        return int(item.get("number"))
-    elif item.get("string"):
-        return item.get("string").capitalize()
-
-
-def _text_parse(t: str, variant: str, mod_ranges: List[float]) -> str:
-    mods = []
-    counter = 0
-    re_find_variant = re.compile("(?<={variant:).+?(?=})")
-    for i in t.splitlines():
-        if i.startswith("{variant:"):
-            # We want to skip all mods of alternative item versions.
-            if int(variant) not in [int(i) for i in re.search(re_find_variant, i).group().split(",")]:
-                continue
-        if "Adds (" in i and "{range:" in i:
-            # We have to check for '{range:' characters used in range expressions to filter unsupported mods.
-            start1, stop1 = i.split("(")[1].split(")")[0].split("-")
-            start2, stop2 = i.rsplit("(")[2].split(")")[0].split("-")
-            value = mod_ranges[counter]
-            counter += 1
-            width1 = float(stop1) - float(start1) + 1
-            offset1 = decimal.Decimal(width1 * value).to_integral(decimal.ROUND_HALF_DOWN)
-            result1 = float(start1) + float(offset1)
-            width2 = float(stop2) - float(start2) + 1
-            offset2 = decimal.Decimal(width2 * value).to_integral(decimal.ROUND_HALF_DOWN)
-            result2 = float(start2) + float(offset2)
-            replace_string = f"({start1}-{stop1}) to ({start2}-{stop2})"
-            result_string = f"{result1 if result1 % 1 else int(result1)} to {result2 if result2 % 1 else int(result2)}"
-            i = i.replace(replace_string, result_string)
-        elif "(" in i and "{range:" in i:
-            start, stop = i.split("(")[1].split(")")[0].split("-")
-            value = mod_ranges[counter]
-            counter += 1
-            width = float(stop) - float(start) + 1
-            offset = decimal.Decimal(width * value).to_integral(decimal.ROUND_HALF_DOWN)
-            result = float(start) + float(offset)
-            replace_string = f"({start}-{stop})"
-            i = i.replace(replace_string, str(result if result % 1 else int(result)))
-        # We are only interested in everything past the '{variant: *}' and '{range: *}' tags.
-        _, _, mod = i.rpartition("}")
-        mods.append(mod)
-    return "\n".join(mods)
