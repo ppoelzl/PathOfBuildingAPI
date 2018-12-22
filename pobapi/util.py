@@ -57,22 +57,23 @@ def fetch_import_code(import_code: str) -> str:
 def get_stat(text: List[str], stat: str, default=None) -> str:
     for line in text:
         if line.startswith(stat):
-            return line[len(stat):]
+            _, _, result = line.partition(stat)
+            return result
     return default
 
 
-def item_text(text: List[str]) -> str:
+def item_text(text: List[str]) -> Iterator[str]:
     for index, line in enumerate(text):
         if line.startswith("Implicits: "):
             try:
-                return "\n".join(text[index + 1:])
+                yield from text[index + 1:]
             except KeyError:
                 return ""
 
 
-def _text_parse(text: str, variant: str, mod_ranges: List[float]) -> Iterator[str]:
+def text_parse(text: Iterator[str], variant: str, mod_ranges: List[float]) -> Iterator[str]:
     counter = 0  # We have to advance this every time we get a line with text to replace, not every time we substitute.
-    for line in text.splitlines():
+    for line in text:
         # We want to skip all mods of alternative item versions.
         if line.startswith("{variant:") and variant not in line.partition("{variant:")[-1].partition("}")[0].split(","):
             continue

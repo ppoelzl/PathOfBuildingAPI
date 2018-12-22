@@ -508,5 +508,5 @@ def _item_builder(text: lxml.RestrictedElement) -> Item:  # TODO: Cleanup
     level_req = int(util.get_stat(item, "Item Level: ", default=1))
     item_level = int(util.get_stat(item, "Item Level: ", default=1))
     implicit = int(util.get_stat(item, "Implicits: "))
-    item_text = "\n".join(util._text_parse(util.item_text(item), _variant, _mod_ranges))
+    item_text = "\n".join(util.text_parse(util.item_text(item), _variant, _mod_ranges))
     return Item(rarity, name, base, shaper, elder, quality, sockets, level_req, item_level, implicit, item_text)
