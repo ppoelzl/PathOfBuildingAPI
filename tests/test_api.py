@@ -63,7 +63,7 @@ def test_current_item_set(build):
 
 
 def test_current_item_set_index(build):
-    assert isinstance(build.current_item_set_index, int)
+    assert isinstance(build.active_item_set, int)
 
 
 def test_active_skill_group(build):

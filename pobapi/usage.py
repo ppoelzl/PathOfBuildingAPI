@@ -5,7 +5,7 @@ if __name__ == "__main__":
         code = f.read()
     build = api.PathOfBuildingAPI.from_import_code(code)
 
-    for it in build.items:
+    for it in build.skill_groups:
         print(it)
         print()
 
