@@ -5,9 +5,12 @@ if __name__ == "__main__":
         code = f.read()
     build = api.PathOfBuildingAPI.from_import_code(code)
 
-    for it in build.items:
-        print(it)
-        print()
+    for group in build.skill_groups:
+        for skill in group:
+            print(skill.enabled)
+            print(skill.label)
+            print(skill.active)
+            print(skill.gems)
 
 # <Build banditCruel banditMerciless banditNormal targetVersion viewMode>
 # <Calcs><Input */>
