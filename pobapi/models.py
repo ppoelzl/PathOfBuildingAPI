@@ -32,6 +32,7 @@ class Item:
     rarity: str
     name: str
     base: str
+    uid: str
     shaper: bool
     elder: bool
     quality: Union[int, None]

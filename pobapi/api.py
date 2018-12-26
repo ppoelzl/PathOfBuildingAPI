@@ -91,7 +91,7 @@ class PathOfBuildingAPI:
 
     @util.CachedProperty
     @util.accumulate
-    def trees(self) -> List[models.Tree]:
+    def trees(self) -> List[models.Tree]:  # TODO: Read URL and skill tree nodes
         for spec in self.xml.find("Tree").findall("Spec"):
             url = spec.find("URL").text.strip("\n\r\t")
             sockets = {int(s.get("nodeId")): int(s.get("itemId")) for s in spec.findall("Socket")}
@@ -112,15 +112,17 @@ class PathOfBuildingAPI:
     @util.CachedProperty
     @util.accumulate
     def items(self) -> List[models.Item]:
-        for text in self.xml.find("Items").findall("Item"):
-            _variant = text.get("variantAlt")
+        for text in self.xml.find("Items").findall("Item"):  # TODO: Implement support for second Watcher's Eye mod.
+            _variant = text.get("variantAlt")  # 'variantAlt' is for the second Watcher's Eye unique mod.
+            # The 3-stat variant obtained from Uber Elder is not yet implemented in Path of Building.
             if not _variant:
                 _variant = text.get("variant")
             _mod_ranges = [float(i.get("range")) for i in text.findall("ModRange")]
             item = text.text.strip("\n\r\t").splitlines()
             rarity = util.get_stat(item, "Rarity: ").capitalize()
             name = item[1]
-            base = item[1] if item[2].startswith(("Crafted: true", "Unique ID:")) else item[2]
+            base = item[1] if rarity in ("Normal", "Magic") else item[2]
+            uid = util.get_stat(item, "Unique ID: ")
             shaper = True if util.get_stat(item, "Shaper Item") else False
             elder = True if util.get_stat(item, "Elder Item") else False
             quality = int(util.get_stat(item, "Quality: ", default=0)) or None
@@ -131,15 +133,15 @@ class PathOfBuildingAPI:
             item_level = int(util.get_stat(item, "Item Level: ", default=1))
             implicit = int(util.get_stat(item, "Implicits: "))
             item_text = "\n".join(util.text_parse(util.item_text(item), _variant, _mod_ranges))
-            yield models.Item(rarity, name, base, shaper, elder, quality, sockets, level_req, item_level, implicit,
+            yield models.Item(rarity, name, base, uid, shaper, elder, quality, sockets, level_req, item_level, implicit,
                               item_text)
 
-    @util.CachedProperty
+    @util.CachedProperty  # TODO
     def current_item_set(self) -> Dict[str, int]:
         return {item.get("name"): int(item.get("itemId"))
                 for item in self.xml.find("Items").findall("Slot")}
 
-    @util.CachedProperty
+    @util.CachedProperty  # TODO
     def item_sets(self) -> Dict[Dict[str, int]]:
         return {slot.get("name"): int(slot.get("itemId"))
                 for item_set in self.xml.findall("ItemSet") for slot in item_set.findall("Slot")}
