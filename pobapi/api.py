@@ -64,7 +64,7 @@ class PathOfBuildingAPI:
                 enabled_ = True if gem.get("enabled") == "true" else False
                 level = int(gem.get("level"))
                 quality = int(gem.get("quality"))
-                yield models.Gems(name, enabled_, level, quality)
+                yield models.Gem(name, enabled_, level, quality)
         for skill in self.xml.find("Skills").findall("Skill"):
             enabled = True if skill.get("enabled") == "true" else False
             label = skill.get("label")
@@ -73,13 +73,13 @@ class PathOfBuildingAPI:
             yield models.Skill(enabled, label, active, gems)
 
     @util.CachedProperty
-    def active_skill(self) -> models.Gems:
+    def active_skill(self) -> models.Gem:
         index = self.active_skill_group.active - 1
         return self.active_skill_group.gems[index]
 
     @util.CachedProperty
     @util.accumulate
-    def skill_gems(self) -> List[models.Gems]:  # Added for convenience
+    def skill_gems(self) -> List[models.Gem]:  # Added for convenience
         for group in self.skill_groups:
             for gem in group.gems:
                 yield gem
@@ -112,38 +112,37 @@ class PathOfBuildingAPI:
     @util.CachedProperty
     @util.accumulate
     def items(self) -> List[models.Item]:
-        for text in self.xml.find("Items").findall("Item"):  # TODO: Implement support for second Watcher's Eye mod.
-            _variant = text.get("variantAlt")  # 'variantAlt' is for the second Watcher's Eye unique mod.
+        for text in self.xml.find("Items").findall("Item"):
+            variant = text.get("variant")
+            alt_variant = text.get("variantAlt")  # 'variantAlt' is for the second Watcher's Eye unique mod.
             # The 3-stat variant obtained from Uber Elder is not yet implemented in Path of Building.
-            if not _variant:
-                _variant = text.get("variant")
-            _mod_ranges = [float(i.get("range")) for i in text.findall("ModRange")]
+            mod_ranges = [float(i.get("range")) for i in text.findall("ModRange")]
             item = text.text.strip("\n\r\t").splitlines()
-            rarity = util.get_stat(item, "Rarity: ").capitalize()
+            rarity = util._get_stat(item, "Rarity: ").capitalize()
             name = item[1]
-            base = item[1] if rarity in ("Normal", "Magic") else item[2]
-            uid = util.get_stat(item, "Unique ID: ")
-            shaper = True if util.get_stat(item, "Shaper Item") else False
-            elder = True if util.get_stat(item, "Elder Item") else False
-            quality = int(util.get_stat(item, "Quality: ", default=0)) or None
-            sockets = util.get_stat(item, "Sockets: ")
+            base = name if rarity in ("Normal", "Magic") else item[2]
+            uid = util._get_stat(item, "Unique ID: ")
+            shaper = True if util._get_stat(item, "Shaper Item") else False
+            elder = True if util._get_stat(item, "Elder Item") else False
+            quality = int(util._get_stat(item, "Quality: ", default=0)) or None
+            sockets = util._get_stat(item, "Sockets: ")
             if sockets:
                 sockets = tuple(sockets.split("-"))
-            level_req = int(util.get_stat(item, "Item Level: ", default=1))
-            item_level = int(util.get_stat(item, "Item Level: ", default=1))
-            implicit = int(util.get_stat(item, "Implicits: "))
-            item_text = "\n".join(util.text_parse(util.item_text(item), _variant, _mod_ranges))
+            level_req = int(util._get_stat(item, "Item Level: ", default=1))
+            item_level = int(util._get_stat(item, "Item Level: ", default=1))
+            implicit = int(util._get_stat(item, "Implicits: "))
+            item_text = "\n".join(util._text_parse(util._item_text(item), variant, alt_variant, mod_ranges))
             yield models.Item(rarity, name, base, uid, shaper, elder, quality, sockets, level_req, item_level, implicit,
                               item_text)
 
-    @util.CachedProperty  # TODO
+    @util.CachedProperty  # TODO: Flasks active?
     def current_item_set(self) -> Dict[str, int]:
-        return {item.get("name"): int(item.get("itemId"))
+        return {item.get("name"): self.items[int(item.get("itemId")) - 1]
                 for item in self.xml.find("Items").findall("Slot")}
 
-    @util.CachedProperty  # TODO
+    @util.CachedProperty  # TODO: Flasks active?
     def item_sets(self) -> Dict[Dict[str, int]]:
-        return {slot.get("name"): int(slot.get("itemId"))
+        return {slot.get("name"): self.items[int(slot.get("itemId")) - 1]
                 for item_set in self.xml.findall("ItemSet") for slot in item_set.findall("Slot")}
 
     @util.CachedProperty

@@ -73,7 +73,7 @@ def test_active_skill_group(build):
     assert isinstance(build.active_skill_group.active, (int, type(None)))
     assert isinstance(build.active_skill_group.gems, list)
     for i in build.active_skill_group.gems:
-        assert isinstance(i, models.Gems)
+        assert isinstance(i, models.Gem)
         assert isinstance(i.name, str)
         assert isinstance(i.enabled, bool)
         assert isinstance(i.level, int)
@@ -81,7 +81,7 @@ def test_active_skill_group(build):
 
 
 def test_active_skill(build):
-    assert isinstance(build.active_skill, models.Gems)
+    assert isinstance(build.active_skill, models.Gem)
     assert isinstance(build.active_skill.name, str)
     assert isinstance(build.active_skill.enabled, bool)
     assert isinstance(build.active_skill.level, int)
@@ -104,7 +104,7 @@ def test_skill_groups(build):
         assert isinstance(i.active, (int, type(None)))
         assert isinstance(i.gems, list)
         for j in i.gems:
-            assert isinstance(j, models.Gems)
+            assert isinstance(j, models.Gem)
             assert isinstance(j.name, str)
             assert isinstance(j.enabled, bool)
             assert isinstance(j.level, int)
@@ -112,7 +112,7 @@ def test_skill_groups(build):
     assert build.skill_groups[1]  # test indexing
     # assert build.main_skill_group == build().skill_groups[0]  could use data classes for this
     assert isinstance(build.active_skill_group, models.Skill)
-    assert isinstance(build.active_skill, models.Gems)
+    assert isinstance(build.active_skill, models.Gem)
 
 
 def test_items(build):

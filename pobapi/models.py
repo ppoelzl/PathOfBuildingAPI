@@ -2,11 +2,11 @@
 from dataclasses import dataclass
 from typing import Dict, List, Tuple, Union
 
-__all__ = ["Gems", "Skill", "Tree", "Item"]
+__all__ = ["Gem", "Skill", "Tree", "Item"]
 
 
 @dataclass
-class Gems:
+class Gem:
     name: str
     enabled: bool
     level: int
@@ -18,7 +18,7 @@ class Skill:
     enabled: bool
     label: str
     active: Union[int, None]
-    gems: List[Gems]
+    gems: List[Gem]
 
 
 @dataclass
