@@ -61,3 +61,42 @@ class Item:
             text += f"Implicits: {self.implicit}\n"
         text += f"{self.text}"
         return text
+
+
+@dataclass
+class Set:
+    weapon1: int
+    weapon1_as1: int
+    weapon1_as2: int
+    weapon1_swap: int
+    weapon1_swap_as1: int
+    weapon1_swap_as2: int
+    weapon2: int
+    weapon2_as1: int
+    weapon2_as2: int
+    weapon2_swap: int
+    weapon2_swap_as1: int
+    weapon2_swap_as2: int
+    helmet: int
+    helmet_as1: int
+    helmet_as2: int
+    body_armour: int
+    body_armour_as1: int
+    body_armour_as2: int
+    gloves: int
+    gloves_as1: int
+    gloves_as2: int
+    boots: int
+    boots_as1: int
+    boots_as2: int
+    amulet: int
+    ring1: int
+    ring2: int
+    belt: int
+    belt_as1: int
+    belt_as2: int
+    flask1: int
+    flask2: int
+    flask3: int
+    flask4: int
+    flask5: int
