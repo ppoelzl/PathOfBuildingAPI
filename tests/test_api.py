@@ -55,11 +55,11 @@ def test_config(build):
 
 def test_item_sets(build):
     for i in build.item_sets:
-        assert isinstance(i, dict)
+        assert isinstance(i, models.Set)
 
 
 def test_current_item_set(build):
-    assert isinstance(build.current_item_set, dict)
+    assert isinstance(build.current_item_set, models.Set)
 
 
 def test_current_item_set_index(build):
