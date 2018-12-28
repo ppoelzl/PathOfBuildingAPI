@@ -2,11 +2,12 @@
 from __future__ import annotations
 from typing import Dict, Iterator, List, Union
 # Project
-from pobapi.constants import CONFIG_MAP, STATS_MAP
 from pobapi import config
+from pobapi.constants import CONFIG_MAP, STATS_MAP, SET_MAP
 from pobapi import models
 from pobapi import stats
 from pobapi import util
+from pobapi.util import _get_stat, _item_text, _text_parse
 # Third-Party
 from defusedxml import lxml
 
@@ -102,10 +103,6 @@ class PathOfBuildingAPI:
         return self.xml.find("Notes").text.rstrip("\n\r\t")
 
     @util.CachedProperty
-    def active_item_set(self) -> int:
-        return int(self.xml.find("Items").get("activeItemSet"))
-
-    @util.CachedProperty
     def second_weapon_set(self) -> bool:
         return True if self.xml.find("Items").get("useSecondWeaponSet") == "true" else False
 
@@ -118,32 +115,35 @@ class PathOfBuildingAPI:
             # The 3-stat variant obtained from Uber Elder is not yet implemented in Path of Building.
             mod_ranges = [float(i.get("range")) for i in text.findall("ModRange")]
             item = text.text.strip("\n\r\t").splitlines()
-            rarity = util._get_stat(item, "Rarity: ").capitalize()
+            rarity = _get_stat(item, "Rarity: ").capitalize()
             name = item[1]
             base = name if rarity in ("Normal", "Magic") else item[2]
-            uid = util._get_stat(item, "Unique ID: ")
-            shaper = True if util._get_stat(item, "Shaper Item") else False
-            elder = True if util._get_stat(item, "Elder Item") else False
-            quality = int(util._get_stat(item, "Quality: ", default=0)) or None
-            sockets = util._get_stat(item, "Sockets: ")
+            uid = _get_stat(item, "Unique ID: ")
+            shaper = True if _get_stat(item, "Shaper Item") else False
+            elder = True if _get_stat(item, "Elder Item") else False
+            quality = int(_get_stat(item, "Quality: ", default=0)) or None
+            sockets = _get_stat(item, "Sockets: ")
             if sockets:
                 sockets = tuple(sockets.split("-"))
-            level_req = int(util._get_stat(item, "Item Level: ", default=1))
-            item_level = int(util._get_stat(item, "Item Level: ", default=1))
-            implicit = int(util._get_stat(item, "Implicits: "))
-            item_text = "\n".join(util._text_parse(util._item_text(item), variant, alt_variant, mod_ranges))
+            level_req = int(_get_stat(item, "Item Level: ", default=1))
+            item_level = int(_get_stat(item, "Item Level: ", default=1))
+            implicit = int(_get_stat(item, "Implicits: "))
+            item_text = "\n".join(_text_parse(_item_text(item), variant, alt_variant, mod_ranges))
             yield models.Item(rarity, name, base, uid, shaper, elder, quality, sockets, level_req, item_level, implicit,
                               item_text)
 
     @util.CachedProperty  # TODO: Flasks active?
     def current_item_set(self) -> Dict[str, int]:
-        return {item.get("name"): self.items[int(item.get("itemId")) - 1]
-                for item in self.xml.find("Items").findall("Slot")}
+        index = int(self.xml.find("Items").get("activeItemSet")) - 1
+        return self.item_sets[index]
 
+    @util.accumulate
     @util.CachedProperty  # TODO: Flasks active?
-    def item_sets(self) -> Dict[Dict[str, int]]:
-        return {slot.get("name"): self.items[int(slot.get("itemId")) - 1]
-                for item_set in self.xml.findall("ItemSet") for slot in item_set.findall("Slot")}
+    def item_sets(self) -> models.Set:
+        kwargs = {SET_MAP[slot.get("name")]: int(slot.get("ItemId")) if not int(slot.get("ItemId")) == 0 else None
+                  for item_set in self.xml.findall("ItemSet")
+                  for slot in item_set.findall("Slot")}
+        yield models.Set(**kwargs)
 
     @util.CachedProperty
     def config(self) -> config.Config:
