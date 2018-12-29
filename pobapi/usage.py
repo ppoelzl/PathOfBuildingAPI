@@ -6,11 +6,10 @@ if __name__ == "__main__":
     build = api.PathOfBuildingAPI.from_import_code(code)
 
     for group in build.skill_groups:
-        for skill in group:
-            print(skill.enabled)
-            print(skill.label)
-            print(skill.active)
-            print(skill.gems)
+        print(group.enabled)
+        print(group.label)
+        print(group.active)
+        print(group.gems)
 
 # <Build banditCruel banditMerciless banditNormal targetVersion viewMode>
 # <Calcs><Input */>

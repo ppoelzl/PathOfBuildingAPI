@@ -137,13 +137,13 @@ class PathOfBuildingAPI:
         index = int(self.xml.find("Items").get("activeItemSet")) - 1
         return self.item_sets[index]
 
-    @util.accumulate
     @util.CachedProperty  # TODO: Flasks active?
-    def item_sets(self) -> models.Set:
-        kwargs = {SET_MAP[slot.get("name")]: int(slot.get("ItemId")) if not int(slot.get("ItemId")) == 0 else None
-                  for item_set in self.xml.findall("ItemSet")
-                  for slot in item_set.findall("Slot")}
-        yield models.Set(**kwargs)
+    @util.accumulate
+    def item_sets(self):
+        for item_set in self.xml.find("Items").findall("ItemSet"):
+            kwargs = {SET_MAP[slot.get("name")]: int(slot.get("itemId")) if not int(slot.get("itemId")) == 0 else None
+                      for slot in item_set.findall("Slot")}
+            yield models.Set(**kwargs)
 
     @util.CachedProperty
     def config(self) -> config.Config:

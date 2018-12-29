@@ -305,4 +305,12 @@ SET_MAP = {
     "Ring 1": "ring1",
     "Weapon 2 Swap": "weapon2_swap",
     "Helmet": "helmet",
-    "Boots Abyssal Socket 1": "boots_as1"}
+    "Boots Abyssal Socket 1": "boots_as1",
+    "Weapon 1 Abyssal Socket 1": "weapon1_as1",
+    "Weapon 1 Abyssal Socket 2": "weapon1_as2",
+    "Weapon 2 Abyssal Socket 1": "weapon2_as1",
+    "Weapon 2 Abyssal Socket 2": "weapon2_as2",
+    "Weapon 1Swap Abyssal Socket 1": "weapon1_swap_as1",
+    "Weapon 1Swap Abyssal Socket 2": "weapon1_swap_as2",
+    "Weapon 2Swap Abyssal Socket 1": "weapon2_swap_as1",
+    "Weapon 2Swap Abyssal Socket 2": "weapon2_swap_as2"}
