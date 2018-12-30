@@ -58,12 +58,8 @@ def test_item_sets(build):
         assert isinstance(i, models.Set)
 
 
-def test_current_item_set(build):
-    assert isinstance(build.current_item_set, models.Set)
-
-
-def test_current_item_set_index(build):
-    assert isinstance(build.active_item_set, int)
+def test_active_item_set(build):
+    assert isinstance(build.active_item_set, models.Set)
 
 
 def test_active_skill_group(build):
@@ -92,6 +88,7 @@ def test_trees(build):
     for i in build.trees:
         assert isinstance(i, models.Tree)
         assert isinstance(i.url, str)
+        assert isinstance(i.nodes, list)
         assert isinstance(i.sockets, dict)
     assert isinstance(build.active_skill_tree, models.Tree)
 

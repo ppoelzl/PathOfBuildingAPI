@@ -1,13 +1,13 @@
 # Built-ins
 from __future__ import annotations
-from typing import Dict, Iterator, List, Union
+from typing import List, Union
 # Project
 from pobapi import config
 from pobapi.constants import CONFIG_MAP, STATS_MAP, SET_MAP
 from pobapi import models
 from pobapi import stats
 from pobapi import util
-from pobapi.util import _get_stat, _item_text, _text_parse
+from pobapi.util import _get_stat, _item_text, _nodes, _text_parse
 # Third-Party
 from defusedxml import lxml
 
@@ -58,7 +58,8 @@ class PathOfBuildingAPI:
 
     @util.CachedProperty
     @util.accumulate
-    def skill_groups(self) -> Iterator[models.Skill]:
+    def skill_groups(self) -> List[models.Skill]:
+        @util.accumulate
         def _gems(skill_):
             for gem in skill_:
                 name = gem.get("nameSpec")
@@ -70,7 +71,7 @@ class PathOfBuildingAPI:
             enabled = True if skill.get("enabled") == "true" else False
             label = skill.get("label")
             active = int(skill.get("mainActiveSkill")) if not skill.get("mainActiveSkill") == "nil" else None
-            gems = list(_gems(skill))
+            gems = _gems(skill)
             yield models.Skill(enabled, label, active, gems)
 
     @util.CachedProperty
@@ -92,11 +93,12 @@ class PathOfBuildingAPI:
 
     @util.CachedProperty
     @util.accumulate
-    def trees(self) -> List[models.Tree]:  # TODO: Read URL and skill tree nodes
+    def trees(self) -> List[models.Tree]:
         for spec in self.xml.find("Tree").findall("Spec"):
             url = spec.find("URL").text.strip("\n\r\t")
+            nodes = _nodes(url)
             sockets = {int(s.get("nodeId")): int(s.get("itemId")) for s in spec.findall("Socket")}
-            yield models.Tree(url, sockets)
+            yield models.Tree(url, nodes, sockets)
 
     @util.CachedProperty
     def notes(self) -> str:
@@ -133,13 +135,13 @@ class PathOfBuildingAPI:
                               item_text)
 
     @util.CachedProperty  # TODO: Flasks active?
-    def current_item_set(self) -> Dict[str, int]:
+    def active_item_set(self) -> models.Set:
         index = int(self.xml.find("Items").get("activeItemSet")) - 1
         return self.item_sets[index]
 
     @util.CachedProperty  # TODO: Flasks active?
     @util.accumulate
-    def item_sets(self):
+    def item_sets(self) -> List[models.Set]:
         for item_set in self.xml.find("Items").findall("ItemSet"):
             kwargs = {SET_MAP[slot.get("name")]: int(slot.get("itemId")) if not int(slot.get("itemId")) == 0 else None
                       for slot in item_set.findall("Slot")}
@@ -147,7 +149,7 @@ class PathOfBuildingAPI:
 
     @util.CachedProperty
     def config(self) -> config.Config:
-        def _convert_fields(item: lxml.RestrictedElement) -> Union[True, int, str]:
+        def _convert_fields(item):
             if item.get("boolean"):
                 return True
             elif item.get("number"):

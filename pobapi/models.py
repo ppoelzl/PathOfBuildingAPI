@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from typing import Dict, List, Tuple, Union
 
-__all__ = ["Gem", "Skill", "Tree", "Item"]
+__all__ = ["Gem", "Skill", "Tree", "Item", "Set"]
 
 
 @dataclass
@@ -24,6 +24,7 @@ class Skill:
 @dataclass
 class Tree:
     url: str
+    nodes: List[int]
     sockets: Dict[int, int]
 
 
