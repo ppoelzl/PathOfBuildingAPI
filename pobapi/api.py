@@ -7,7 +7,7 @@ from pobapi.constants import CONFIG_MAP, STATS_MAP, SET_MAP
 from pobapi import models
 from pobapi import stats
 from pobapi import util
-from pobapi.util import _get_stat, _item_text, _nodes, _text_parse
+from pobapi.util import _get_stat, _item_text, _skill_tree_nodes, _text_parse
 # Third-Party
 from defusedxml import lxml
 
@@ -96,7 +96,7 @@ class PathOfBuildingAPI:
     def trees(self) -> List[models.Tree]:
         for spec in self.xml.find("Tree").findall("Spec"):
             url = spec.find("URL").text.strip("\n\r\t")
-            nodes = _nodes(url)
+            nodes = _skill_tree_nodes(url)
             sockets = {int(s.get("nodeId")): int(s.get("itemId")) for s in spec.findall("Socket")}
             yield models.Tree(url, nodes, sockets)
 

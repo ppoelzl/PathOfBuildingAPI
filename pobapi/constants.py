@@ -1,6 +1,7 @@
 """Constants taken from the game and PathOfBuilding."""
 
 # Collections of game objects.
+TREE_OFFSET = 7  # Skill tree node data is offset 7 bytes from the start.
 BANDITS = ("Kraityn", "Alira", "Oak")
 CLASS_NAMES = ("Duelist", "Marauder", "Ranger", "Scion", "Shadow", "Templar", "Witch")
 ASCENDANCY_NAMES = ("Ascendant", "Assassin", "Berserker", "Champion", "Chieftain", "Deadeye", "Elementalist",

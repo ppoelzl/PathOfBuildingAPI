@@ -1,8 +1,11 @@
 # Built-ins
 import base64
 import decimal
+import struct
 from typing import Iterator, List
 import zlib
+# Project
+from pobapi.constants import TREE_OFFSET
 # Third-Party
 import requests
 
@@ -60,13 +63,9 @@ def fetch_import_code(import_code: str) -> str:
         return decompressed_xml
 
 
-@accumulate
-def _nodes(url):
+def _skill_tree_nodes(url):
     bin_tree = base64.urlsafe_b64decode(url)
-    position = 7
-    while position < len(bin_tree) - 1:
-        yield int.from_bytes(bin_tree[position:position + 2], byteorder='big')
-        position += 2
+    return struct.unpack_from("!" + "H" * ((len(bin_tree) - TREE_OFFSET) // 2), bin_tree, offset=TREE_OFFSET)
 
 
 def _get_stat(text: List[str], stat: str, default=None) -> str:
