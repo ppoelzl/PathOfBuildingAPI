@@ -134,12 +134,12 @@ class PathOfBuildingAPI:
             yield models.Item(rarity, name, base, uid, shaper, elder, quality, sockets, level_req, item_level, implicit,
                               item_text)
 
-    @util.CachedProperty  # TODO: Flasks active?
+    @util.CachedProperty
     def active_item_set(self) -> models.Set:
         index = int(self.xml.find("Items").get("activeItemSet")) - 1
         return self.item_sets[index]
 
-    @util.CachedProperty  # TODO: Flasks active?
+    @util.CachedProperty
     @util.accumulate
     def item_sets(self) -> List[models.Set]:
         for item_set in self.xml.find("Items").findall("ItemSet"):
