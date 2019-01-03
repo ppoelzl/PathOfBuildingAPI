@@ -65,15 +65,14 @@ def fetch_import_code(import_code: str) -> str:
 
 def _skill_tree_nodes(url):
     bin_tree = base64.urlsafe_b64decode(url)
-    return struct.unpack_from("!" + "H" * ((len(bin_tree) - TREE_OFFSET) // 2), bin_tree, offset=TREE_OFFSET)
+    return list(struct.unpack_from("!" + "H" * ((len(bin_tree) - TREE_OFFSET) // 2), bin_tree, offset=TREE_OFFSET))
 
 
-def _get_stat(text: List[str], stat: str, default=None) -> str:
+def _get_stat(text: List[str], stat: str) -> str:
     for line in text:
         if line.startswith(stat):
             _, _, result = line.partition(stat)
             return result
-    return default
 
 
 def _item_text(text: List[str]) -> Iterator[str]:

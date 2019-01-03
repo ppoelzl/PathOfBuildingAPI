@@ -10,6 +10,8 @@ if __name__ == "__main__":
         print(group.label)
         print(group.active)
         print(group.gems)
+    for i in build.items:
+        print(i)
 
 # <Build banditCruel banditMerciless banditNormal targetVersion viewMode>
 # <Calcs><Input */>

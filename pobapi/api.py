@@ -123,12 +123,12 @@ class PathOfBuildingAPI:
             uid = _get_stat(item, "Unique ID: ")
             shaper = True if _get_stat(item, "Shaper Item") else False
             elder = True if _get_stat(item, "Elder Item") else False
-            quality = int(_get_stat(item, "Quality: ", default=0)) or None
+            quality = int(_get_stat(item, "Quality: ")) if _get_stat(item, "Quality: ") else None
             sockets = _get_stat(item, "Sockets: ")
             if sockets:
                 sockets = tuple(sockets.split("-"))
-            level_req = int(_get_stat(item, "Item Level: ", default=1))
-            item_level = int(_get_stat(item, "Item Level: ", default=1))
+            level_req = int(_get_stat(item, "LevelReq: ") or 1)
+            item_level = int(_get_stat(item, "Item Level: ") or 1)
             implicit = int(_get_stat(item, "Implicits: "))
             item_text = "\n".join(_text_parse(_item_text(item), variant, alt_variant, mod_ranges))
             yield models.Item(rarity, name, base, uid, shaper, elder, quality, sockets, level_req, item_level, implicit,
