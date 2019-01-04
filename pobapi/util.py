@@ -2,7 +2,7 @@
 import base64
 import decimal
 import struct
-from typing import Iterator, List
+from typing import Any, Callable, Iterator, List
 import zlib
 # Project
 from pobapi.constants import TREE_OFFSET
@@ -11,13 +11,14 @@ import requests
 
 
 class CachedProperty:
-    def __init__(self, func):
+    def __init__(self, func: Callable):
         self.__name__ = func.__name__
-        self.__module__ = func.__module__
+        # self.__module__ = func.__module__
+        # __module__ not yet implemented for collections.abc.Callable
         self.__doc__ = func.__doc__
         self._func = func
 
-    def __get__(self, obj, cls=None):
+    def __get__(self, obj: Callable, cls: Callable = None) -> Any:
         if obj is None:
             return self
         value = self._func(obj)
@@ -25,9 +26,9 @@ class CachedProperty:
         return value
 
 
-def accumulate(func):
-    def _accumulate_helper(*args, **kw):
-        return list(func(*args, **kw))
+def accumulate(func: Callable) -> Callable:
+    def _accumulate_helper(*args, **kwargs) -> List:
+        return list(func(*args, **kwargs))
     return _accumulate_helper
 
 
@@ -63,7 +64,7 @@ def fetch_import_code(import_code: str) -> str:
         return decompressed_xml
 
 
-def _skill_tree_nodes(url):
+def _skill_tree_nodes(url: str) -> List[int]:
     bin_tree = base64.urlsafe_b64decode(url)
     return list(struct.unpack_from("!" + "H" * ((len(bin_tree) - TREE_OFFSET) // 2), bin_tree, offset=TREE_OFFSET))
 

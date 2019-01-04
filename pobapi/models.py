@@ -1,6 +1,6 @@
 # Built-ins
 from dataclasses import dataclass
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Optional, Tuple
 
 __all__ = ["Gem", "Skill", "Tree", "Item", "Set"]
 
@@ -17,7 +17,7 @@ class Gem:
 class Skill:
     enabled: bool
     label: str
-    active: Union[int, None]
+    active: Optional[int]
     gems: List[Gem]
 
 
@@ -36,11 +36,11 @@ class Item:
     uid: str
     shaper: bool
     elder: bool
-    quality: Union[int, None]
-    sockets: Union[Tuple[str], None]
+    quality: Optional[int]
+    sockets: Optional[Tuple[str]]
     level_req: int
     item_level: int
-    implicit: Union[int, None]
+    implicit: Optional[int]
     text: str
 
     def __str__(self):
@@ -66,38 +66,38 @@ class Item:
 
 @dataclass
 class Set:
-    weapon1: Union[int, None]
-    weapon1_as1: Union[int, None]
-    weapon1_as2: Union[int, None]
-    weapon1_swap: Union[int, None]
-    weapon1_swap_as1: Union[int, None]
-    weapon1_swap_as2: Union[int, None]
-    weapon2: Union[int, None]
-    weapon2_as1: Union[int, None]
-    weapon2_as2: Union[int, None]
-    weapon2_swap: Union[int, None]
-    weapon2_swap_as1: Union[int, None]
-    weapon2_swap_as2: Union[int, None]
-    helmet: Union[int, None]
-    helmet_as1: Union[int, None]
-    helmet_as2: Union[int, None]
-    body_armour: Union[int, None]
-    body_armour_as1: Union[int, None]
-    body_armour_as2: Union[int, None]
-    gloves: Union[int, None]
-    gloves_as1: Union[int, None]
-    gloves_as2: Union[int, None]
-    boots: Union[int, None]
-    boots_as1: Union[int, None]
-    boots_as2: Union[int, None]
-    amulet: Union[int, None]
-    ring1: Union[int, None]
-    ring2: Union[int, None]
-    belt: Union[int, None]
-    belt_as1: Union[int, None]
-    belt_as2: Union[int, None]
-    flask1: Union[int, None]
-    flask2: Union[int, None]
-    flask3: Union[int, None]
-    flask4: Union[int, None]
-    flask5: Union[int, None]
+    weapon1: Optional[int]
+    weapon1_as1: Optional[int]
+    weapon1_as2: Optional[int]
+    weapon1_swap: Optional[int]
+    weapon1_swap_as1: Optional[int]
+    weapon1_swap_as2: Optional[int]
+    weapon2: Optional[int]
+    weapon2_as1: Optional[int]
+    weapon2_as2: Optional[int]
+    weapon2_swap: Optional[int]
+    weapon2_swap_as1: Optional[int]
+    weapon2_swap_as2: Optional[int]
+    helmet: Optional[int]
+    helmet_as1: Optional[int]
+    helmet_as2: Optional[int]
+    body_armour: Optional[int]
+    body_armour_as1: Optional[int]
+    body_armour_as2: Optional[int]
+    gloves: Optional[int]
+    gloves_as1: Optional[int]
+    gloves_as2: Optional[int]
+    boots: Optional[int]
+    boots_as1: Optional[int]
+    boots_as2: Optional[int]
+    amulet: Optional[int]
+    ring1: Optional[int]
+    ring2: Optional[int]
+    belt: Optional[int]
+    belt_as1: Optional[int]
+    belt_as2: Optional[int]
+    flask1: Optional[int]
+    flask2: Optional[int]
+    flask3: Optional[int]
+    flask4: Optional[int]
+    flask5: Optional[int]

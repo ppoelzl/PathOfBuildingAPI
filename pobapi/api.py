@@ -1,6 +1,6 @@
 # Built-ins
 from __future__ import annotations
-from typing import List, Union
+from typing import List, Optional
 # Project
 from pobapi import config
 from pobapi.constants import CONFIG_MAP, STATS_MAP, SET_MAP
@@ -35,7 +35,7 @@ class PathOfBuildingAPI:
         return self.xml.find("Build").get("className")
 
     @util.CachedProperty
-    def ascendancy_name(self) -> Union[str, None]:
+    def ascendancy_name(self) -> Optional[str]:
         return self.xml.find("Build").get("ascendClassName")
 
     @util.CachedProperty
@@ -43,7 +43,7 @@ class PathOfBuildingAPI:
         return int(self.xml.find("Build").get("level"))
 
     @util.CachedProperty
-    def bandit(self) -> Union[str, None]:
+    def bandit(self) -> Optional[str]:
         return self.xml.find("Build").get("bandit")
 
     @util.CachedProperty
@@ -123,10 +123,10 @@ class PathOfBuildingAPI:
             uid = _get_stat(item, "Unique ID: ")
             shaper = True if _get_stat(item, "Shaper Item") else False
             elder = True if _get_stat(item, "Elder Item") else False
-            quality = int(_get_stat(item, "Quality: ")) if _get_stat(item, "Quality: ") else None
-            sockets = _get_stat(item, "Sockets: ")
-            if sockets:
-                sockets = tuple(sockets.split("-"))
+            _quality = _get_stat(item, "Quality: ")
+            quality = int(_quality) if _quality else None
+            _sockets = _get_stat(item, "Sockets: ")
+            sockets = tuple(tuple(group.split("-")) for group in _sockets.split()) if _sockets else None
             level_req = int(_get_stat(item, "LevelReq: ") or 1)
             item_level = int(_get_stat(item, "Item Level: ") or 1)
             implicit = int(_get_stat(item, "Implicits: "))
@@ -143,7 +143,7 @@ class PathOfBuildingAPI:
     @util.accumulate
     def item_sets(self) -> List[models.Set]:
         for item_set in self.xml.find("Items").findall("ItemSet"):
-            kwargs = {SET_MAP[slot.get("name")]: int(slot.get("itemId")) if not int(slot.get("itemId")) == 0 else None
+            kwargs = {SET_MAP[slot.get("name")]: int(slot.get("itemId")) if not slot.get("itemId") == "0" else None
                       for slot in item_set.findall("Slot")}
             yield models.Set(**kwargs)
 
