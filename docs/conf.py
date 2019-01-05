@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Path Of Building API'
-copyright = '2018, Peter Poelzl'
+copyright = '2019, Peter Poelzl'
 author = 'Peter Poelzl'
 
 # The short X.Y version
@@ -43,6 +43,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
+    'sphinx_autodoc_typehints'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

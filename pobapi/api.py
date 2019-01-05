@@ -17,6 +17,7 @@ __all__ = ["PathOfBuildingAPI"]
 
 
 class PathOfBuildingAPI:
+    """Instances of this class are single Path Of Building pastebins."""
     def __init__(self, xml: str):
         self.xml = lxml.fromstring(xml)
 
