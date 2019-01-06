@@ -10,6 +10,7 @@ Welcome to Path Of Building API's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   api
 
 
 Indices and tables

@@ -19,14 +19,26 @@ __all__ = ["PathOfBuildingAPI"]
 class PathOfBuildingAPI:
     """Instances of this class are single Path Of Building pastebins."""
     def __init__(self, xml: str):
+        """
+        Instances of this class are single Path Of Building pastebins.
+        :param xml: XML document in Path Of Building's export format.
+        """
         self.xml = lxml.fromstring(xml)
 
     @classmethod
     def from_url(cls, url: str) -> PathOfBuildingAPI:
+        """
+        Instantiate from a pastebin.com link generated with Path Of Building.
+        :param url: pastebin.com link generated with Path Of Building.
+        """
         return cls(util.fetch_url(url))
 
     @classmethod
     def from_import_code(cls, import_code: str) -> PathOfBuildingAPI:
+        """
+        Instantiate from an import code generated with Path Of Building.
+        :param import_code: import code generated with Path Of Building.
+        """
         return cls(util.fetch_import_code(import_code))
 
     #
