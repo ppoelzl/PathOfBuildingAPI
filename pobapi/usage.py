@@ -1,9 +1,9 @@
-from pobapi import api
+import pobapi
 
 if __name__ == "__main__":
     with open("../resources/import_code.txt") as f:
         code = f.read()
-    build = api.PathOfBuildingAPI.from_import_code(code)
+    build = pobapi.from_import_code(code)
 
     for group in build.skill_groups:
         print(group.enabled)

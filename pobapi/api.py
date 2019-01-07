@@ -13,7 +13,7 @@ from defusedxml import lxml
 
 """API Provider for PathOfBuilding's XML export format."""
 
-__all__ = ["PathOfBuildingAPI"]
+__all__ = ["PathOfBuildingAPI", "from_url", "from_import_code"]
 
 
 class PathOfBuildingAPI:
@@ -24,22 +24,6 @@ class PathOfBuildingAPI:
         :param xml: XML document in Path Of Building's export format.
         """
         self.xml = lxml.fromstring(xml)
-
-    @classmethod
-    def from_url(cls, url: str) -> PathOfBuildingAPI:
-        """
-        Instantiate from a pastebin.com link generated with Path Of Building.
-        :param url: pastebin.com link generated with Path Of Building.
-        """
-        return cls(util.fetch_url(url))
-
-    @classmethod
-    def from_import_code(cls, import_code: str) -> PathOfBuildingAPI:
-        """
-        Instantiate from an import code generated with Path Of Building.
-        :param import_code: import code generated with Path Of Building.
-        """
-        return cls(util.fetch_import_code(import_code))
 
     #
 
@@ -172,3 +156,19 @@ class PathOfBuildingAPI:
         kwargs = {CONFIG_MAP[i.get("name")]: _convert_fields(i) for i in self.xml.find("Config").findall("Input")}
         kwargs["character_level"] = self.level
         return config.Config(**kwargs)
+
+
+def from_url(url: str) -> PathOfBuildingAPI:
+    """
+    Instantiate from a pastebin.com link generated with Path Of Building.
+    :param url: pastebin.com link generated with Path Of Building.
+    """
+    return PathOfBuildingAPI(util.fetch_url(url))
+
+
+def from_import_code(import_code: str) -> PathOfBuildingAPI:
+    """
+    Instantiate from an import code generated with Path Of Building.
+    :param import_code: import code generated with Path Of Building.
+    """
+    return PathOfBuildingAPI(util.fetch_import_code(import_code))
