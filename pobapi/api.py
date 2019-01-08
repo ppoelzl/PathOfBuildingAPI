@@ -1,5 +1,4 @@
 # Built-ins
-from __future__ import annotations
 from typing import List, Optional
 # Project
 from pobapi import config
@@ -17,45 +16,62 @@ __all__ = ["PathOfBuildingAPI", "from_url", "from_import_code"]
 
 
 class PathOfBuildingAPI:
-    """Instances of this class are single Path Of Building pastebins."""
-    def __init__(self, xml: str):
-        """
-        Instances of this class are single Path Of Building pastebins.
-        :param xml: XML document in Path Of Building's export format.
-        """
-        self.xml = lxml.fromstring(xml)
+    """Instances of this class are single Path Of Building pastebins.
 
-    #
+    :param xml: XML document in Path Of Building's export format."""
+    def __init__(self, xml: str):
+        self.xml = lxml.fromstring(xml)
 
     @util.CachedProperty
     def class_name(self) -> str:
+        """Get a character's class.
+
+        :return: One out of the seven character classes."""
         return self.xml.find("Build").get("className")
 
     @util.CachedProperty
     def ascendancy_name(self) -> Optional[str]:
+        """Get a character's ascendancy class.
+
+        :return: One out of the 19 ascendancy classes, if ascended."""
         return self.xml.find("Build").get("ascendClassName")
 
     @util.CachedProperty
     def level(self) -> int:
+        """Get a character's level.
+
+        :return: Character level."""
         return int(self.xml.find("Build").get("level"))
 
     @util.CachedProperty
     def bandit(self) -> Optional[str]:
+        """Get a character's bandit choice.
+
+        :return: Character bandit choice."""
         return self.xml.find("Build").get("bandit")
 
     @util.CachedProperty
     def active_skill_group(self) -> models.Skill:
+        """Get a character's main skill setup.
+
+        :return: Main skill setup."""
         index = int(self.xml.find("Build").get("mainSocketGroup")) - 1
         return self.skill_groups[index]
 
     @util.CachedProperty
     def stats(self) -> stats.Stats:
+        """Namespace for character stats.
+
+        :return: Character stats."""
         kwargs = {STATS_MAP[i.get("stat")]: float(i.get("value")) for i in self.xml.find("Build").findall("PlayerStat")}
         return stats.Stats(**kwargs)
 
     @util.CachedProperty
     @util.accumulate
     def skill_groups(self) -> List[models.Skill]:
+        """Get a character's skill setups.
+
+        :return: Skill setups."""
         @util.accumulate
         def _gems(skill_):
             for gem in skill_:
@@ -73,24 +89,36 @@ class PathOfBuildingAPI:
 
     @util.CachedProperty
     def active_skill(self) -> models.Gem:
+        """Get a character's main skill.
+
+        :return: Main skill."""
         index = self.active_skill_group.active - 1
         return self.active_skill_group.gems[index]
 
     @util.CachedProperty
     @util.accumulate
     def skill_gems(self) -> List[models.Gem]:  # Added for convenience
+        """Get a list of all skill gems on a character.
+
+        :return: Skill gems."""
         for group in self.skill_groups:
             for gem in group.gems:
                 yield gem
 
     @util.CachedProperty
     def active_skill_tree(self) -> models.Tree:
+        """Get a character's current skill tree.
+
+        :return: Skill tree."""
         index = int(self.xml.find("Tree").get("activeSpec")) - 1
         return self.trees[index]
 
     @util.CachedProperty
     @util.accumulate
     def trees(self) -> List[models.Tree]:
+        """Get a list of all skill trees of a character.
+
+        :return: Skill trees."""
         for spec in self.xml.find("Tree").findall("Spec"):
             url = spec.find("URL").text.strip("\n\r\t")
             nodes = _skill_tree_nodes(url)
@@ -159,16 +187,14 @@ class PathOfBuildingAPI:
 
 
 def from_url(url: str) -> PathOfBuildingAPI:
-    """
-    Instantiate from a pastebin.com link generated with Path Of Building.
-    :param url: pastebin.com link generated with Path Of Building.
-    """
+    """Instantiate from a pastebin.com link generated with Path Of Building.
+
+    :param url: pastebin.com link generated with Path Of Building."""
     return PathOfBuildingAPI(util.fetch_url(url))
 
 
 def from_import_code(import_code: str) -> PathOfBuildingAPI:
-    """
-    Instantiate from an import code generated with Path Of Building.
-    :param import_code: import code generated with Path Of Building.
-    """
+    """Instantiate from an import code generated with Path Of Building.
+
+    :param import_code: import code generated with Path Of Building."""
     return PathOfBuildingAPI(util.fetch_import_code(import_code))
