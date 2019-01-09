@@ -127,15 +127,25 @@ class PathOfBuildingAPI:
 
     @util.CachedProperty
     def notes(self) -> str:
+        """Get notes of a build's author.
+
+        :return: Wall of text."""
         return self.xml.find("Notes").text.rstrip("\n\r\t")
 
     @util.CachedProperty
     def second_weapon_set(self) -> bool:
+        """Get whether a character primarily uses their second weapon set.
+
+        :return: Truth value.
+        """
         return True if self.xml.find("Items").get("useSecondWeaponSet") == "true" else False
 
     @util.CachedProperty
     @util.accumulate
     def items(self) -> List[models.Item]:
+        """Get a list of all items of a Path Of Building build.
+        
+        :return: Items."""
         for text in self.xml.find("Items").findall("Item"):
             variant = text.get("variant")
             alt_variant = text.get("variantAlt")  # 'variantAlt' is for the second Watcher's Eye unique mod.
@@ -161,12 +171,18 @@ class PathOfBuildingAPI:
 
     @util.CachedProperty
     def active_item_set(self) -> models.Set:
+        """Get the item set a character is currently wearing.
+
+        :return: Item set."""
         index = int(self.xml.find("Items").get("activeItemSet")) - 1
         return self.item_sets[index]
 
     @util.CachedProperty
     @util.accumulate
     def item_sets(self) -> List[models.Set]:
+        """Get a list of all item sets of a character.
+
+        :return: Item sets."""
         for item_set in self.xml.find("Items").findall("ItemSet"):
             kwargs = {SET_MAP[slot.get("name")]: int(slot.get("itemId")) if not slot.get("itemId") == "0" else None
                       for slot in item_set.findall("Slot")}
@@ -174,6 +190,9 @@ class PathOfBuildingAPI:
 
     @util.CachedProperty
     def config(self) -> config.Config:
+        """Namespace for Path Of Building config tab's options and values.
+
+        :return: Path Of Building config."""
         def _convert_fields(item):
             if item.get("boolean"):
                 return True
