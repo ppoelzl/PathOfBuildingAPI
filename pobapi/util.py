@@ -11,6 +11,11 @@ import requests
 
 
 class CachedProperty:
+    """Used as a decorator for caching properties. Works like the built-in @property decorator, except that a result is
+    computed on first access only, with subsequent access returning the computed result directly.
+    Note that the result replaces the decorated function on first access.
+
+    :return: Cached result."""
     def __init__(self, func: Callable):
         self.__name__ = func.__name__
         # self.__module__ = func.__module__
@@ -27,12 +32,19 @@ class CachedProperty:
 
 
 def accumulate(func: Callable) -> Callable:
+    """Used as a decorator to accumulate the results a generator yields into a list.
+    Note that this is useful for list comprehensions that are cleaner written with a generator approach.
+
+    :return: Generator results."""
     def _accumulate_helper(*args, **kwargs) -> List:
         return list(func(*args, **kwargs))
     return _accumulate_helper
 
 
 def fetch_url(url: str, timeout: float = 6.0) -> str:
+    """Gets Path Of Building import code shared with pastebin.com.
+
+    :return: Decompressed XML build document."""
     if url.startswith("https://pastebin.com/"):
         raw = url.replace("https://pastebin.com/", "https://pastebin.com/raw/")
         try:
@@ -53,6 +65,9 @@ def fetch_url(url: str, timeout: float = 6.0) -> str:
 
 
 def fetch_import_code(import_code: str) -> str:
+    """Decodes and unzips a Path Of Building import code.
+
+    :return: Decompressed XML build document."""
     try:
         base64_decode = base64.urlsafe_b64decode(import_code)
         decompressed_xml = zlib.decompress(base64_decode)
