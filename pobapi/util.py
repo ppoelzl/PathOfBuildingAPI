@@ -42,7 +42,7 @@ def accumulate(func: Callable) -> Callable:
 
 
 def fetch_url(url: str, timeout: float = 6.0) -> str:
-    """Gets Path Of Building import code shared with pastebin.com.
+    """Get a Path Of Building import code shared with pastebin.com.
 
     :return: Decompressed XML build document."""
     if url.startswith("https://pastebin.com/"):
@@ -80,11 +80,17 @@ def fetch_import_code(import_code: str) -> str:
 
 
 def _skill_tree_nodes(url: str) -> List[int]:
+    """Get a list of passive tree node IDs.
+
+    :return: Passive tree node IDs."""
     bin_tree = base64.urlsafe_b64decode(url)
     return list(struct.unpack_from("!" + "H" * ((len(bin_tree) - TREE_OFFSET) // 2), bin_tree, offset=TREE_OFFSET))
 
 
 def _get_stat(text: List[str], stat: str) -> str:
+    """Get the value of an item affix.
+
+    :return: Item affix value."""
     for line in text:
         if line.startswith(stat):
             _, _, result = line.partition(stat)
@@ -92,6 +98,9 @@ def _get_stat(text: List[str], stat: str) -> str:
 
 
 def _item_text(text: List[str]) -> Iterator[str]:
+    """Get all affixes on an item.
+
+    :return: Generator for an item's affixes."""
     for index, line in enumerate(text):
         if line.startswith("Implicits: "):
             try:
@@ -101,6 +110,9 @@ def _item_text(text: List[str]) -> Iterator[str]:
 
 
 def _text_parse(text: Iterator[str], variant: str, alt_variant: str, mod_ranges: List[float]) -> Iterator[str]:
+    """Get the correct variant and item affix values for items made in Path Of Building.
+
+    :return: Generator for corrected variants and item affix values"""
     counter = 0  # We have to advance this every time we get a line with text to replace, not every time we substitute.
     for line in text:
         if line.startswith("{variant:"):  # We want to skip all mods of alternative item versions.
@@ -121,6 +133,9 @@ def _text_parse(text: Iterator[str], variant: str, alt_variant: str, mod_ranges:
 
 
 def _calculate_mod_text(line: str, value: float) -> str:
+    """Calculate an item affix's correct value from range and offset.
+
+    :return: Corrected item affix value."""
     start, stop = line.partition("(")[-1].partition(")")[0].split("-")
     width = float(stop) - float(start) + 1
     # Python's round() function uses banker's rounding from 3.0 onwards, we have to emulate Lua's 'towards 0' rounding.
