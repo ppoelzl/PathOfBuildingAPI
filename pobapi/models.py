@@ -1,10 +1,12 @@
 # Built-ins
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
-
+# Third-party
+from dataslots import with_slots
 __all__ = ["Gem", "Skill", "Tree", "Item", "Set"]
 
 
+@with_slots
 @dataclass
 class Gem:
     name: str
@@ -13,6 +15,7 @@ class Gem:
     quality: int
 
 
+@with_slots
 @dataclass
 class Skill:
     enabled: bool
@@ -21,6 +24,7 @@ class Skill:
     gems: List[Gem]
 
 
+@with_slots
 @dataclass
 class Tree:
     url: str
@@ -28,6 +32,7 @@ class Tree:
     sockets: Dict[int, int]
 
 
+@with_slots
 @dataclass
 class Item:
     rarity: str
@@ -64,6 +69,7 @@ class Item:
         return text
 
 
+@with_slots
 @dataclass
 class Set:
     weapon1: Optional[int]

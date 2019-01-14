@@ -2,6 +2,8 @@
 from dataclasses import dataclass, InitVar
 # Project
 from pobapi.constants import MONSTER_DAMAGE_TABLE, MONSTER_LIFE_TABLE
+# Third-party
+from dataslots import with_slots
 
 __all__ = ["Config"]
 
@@ -195,6 +197,7 @@ class DPSOptions:
     elemental_equilibrium_ignore_hit_damage: bool = False
 
 
+@with_slots
 @dataclass
 class Config(GeneralConfig, SkillConfig, MapConfig, CombatConfig, DPSOptions):
     character_level: InitVar[int] = None

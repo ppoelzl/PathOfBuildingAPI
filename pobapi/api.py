@@ -7,7 +7,7 @@ from pobapi import models
 from pobapi import stats
 from pobapi import util
 from pobapi.util import _get_stat, _item_text, _skill_tree_nodes, _text_parse
-# Third-Party
+# Third-party
 from defusedxml import lxml
 
 """API Provider for PathOfBuilding's XML export format."""
