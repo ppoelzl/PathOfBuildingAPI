@@ -109,12 +109,12 @@ def _item_text(text: List[str]) -> Iterator[str]:
                 return ""
 
 
-def _text_parse(text: Iterator[str], variant: str, alt_variant: str, mod_ranges: List[float]) -> Iterator[str]:
+def _parse_text(text: List[str], variant: str, alt_variant: str, mod_ranges: List[float]) -> Iterator[str]:
     """Get the correct variant and item affix values for items made in Path Of Building.
 
     :return: Generator for corrected variants and item affix values"""
     counter = 0  # We have to advance this every time we get a line with text to replace, not every time we substitute.
-    for line in text:
+    for line in _item_text(text):
         if line.startswith("{variant:"):  # We want to skip all mods of alternative item versions.
             if variant not in line.partition("{variant:")[-1].partition("}")[0].split(","):
                 if alt_variant not in line.partition("{variant:")[-1].partition("}")[0].split(","):
@@ -130,6 +130,10 @@ def _text_parse(text: Iterator[str], variant: str, alt_variant: str, mod_ranges:
         # We are only interested in everything past the '{variant: *}' and '{range: *}' tags.
         _, _, mod = line.rpartition("}")
         yield mod
+
+
+def _get_text(text: List[str], variant: str, alt_variant: str, mod_ranges: List[float]) -> str:
+    return "\n".join(_parse_text(text, variant, alt_variant, mod_ranges))
 
 
 def _calculate_mod_text(line: str, value: float) -> str:

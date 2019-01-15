@@ -6,7 +6,7 @@ from pobapi.constants import CONFIG_MAP, STATS_MAP, SET_MAP
 from pobapi import models
 from pobapi import stats
 from pobapi import util
-from pobapi.util import _get_stat, _item_text, _skill_tree_nodes, _text_parse
+from pobapi.util import _get_stat, _item_text, _skill_tree_nodes, _get_text
 # Third-party
 from defusedxml import lxml
 
@@ -165,7 +165,7 @@ class PathOfBuildingAPI:
             level_req = int(_get_stat(item, "LevelReq: ") or 1)
             item_level = int(_get_stat(item, "Item Level: ") or 1)
             implicit = int(_get_stat(item, "Implicits: "))
-            item_text = "\n".join(_text_parse(_item_text(item), variant, alt_variant, mod_ranges))
+            item_text = _get_text(item, variant, alt_variant, mod_ranges)
             yield models.Item(rarity, name, base, uid, shaper, elder, quality, sockets, level_req, item_level, implicit,
                               item_text)
 
