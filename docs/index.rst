@@ -6,12 +6,32 @@
 Welcome to Path Of Building API's documentation!
 ================================================
 
+The User Guide
+--------------
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   user
+
+The Developer Guide
+-------------------
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   dev
+
+The API Documentation / Guide
+-----------------------------
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    api
-
 
 Indices and tables
 ==================
