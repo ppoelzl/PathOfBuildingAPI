@@ -9,6 +9,12 @@ __all__ = ["Gem", "Skill", "Tree", "Item", "Set"]
 @with_slots
 @dataclass
 class Gem:
+    """Class that holds a skill gem's data.
+
+    :param name: Skill gem name.
+    :param enabled: Whether the skill gem is in active use.
+    :param level: Skill gem level.
+    :param quality: Skill gem quality."""
     name: str
     enabled: bool
     level: int
@@ -18,6 +24,12 @@ class Gem:
 @with_slots
 @dataclass
 class Skill:
+    """Class that holds a (linked) socket group.
+
+    :param enabled: Whether the socket group is in active use.
+    :param label: Socket group label assigned in Path Of Building.
+    :param active: Main skill in socket group, if given.
+    :param gems: List of :class:`Gem <Gem>` objects in socket group."""
     enabled: bool
     label: str
     active: Optional[int]
@@ -27,6 +39,11 @@ class Skill:
 @with_slots
 @dataclass
 class Tree:
+    """Class that holds a passive skill tree.
+
+    :param url: pathofexile.com link to passive skill tree.
+    :param nodes: List of passive skill tree nodes by ID.
+    :param sockets: Dictionary of passive skill tree jewel socket location : jewel set ID."""
     url: str
     nodes: List[int]
     sockets: Dict[int, int]
@@ -35,6 +52,25 @@ class Tree:
 @with_slots
 @dataclass
 class Item:
+    """Class that holds an item.
+
+    :param rarity: Item rarity.
+    :param name: Item name.
+    :param base: Item base type.
+    :param uid: Unique item ID for items in-game.
+    Note: Items created with Path of Building do not have an UID.
+    :param shaper: Whether the item is a Shaper base type.
+    :param elder: Whether the item is an Elder base type.
+    :param quality: Item quality, if the item can have quality.
+    :param sockets: Item socket groups, if the item can have sockets.
+    Note: The format used for example a 5 socket chest armour with 2 socket groups of 3 linked blue sockets and 2 linked
+    red sockets would be ((B, B, B), (R, R)).
+    :param level_req: Required character level to equip the item.
+    :param item_level: Item level.
+    :param implicit: Number of item implicits, if the item can have implicits.
+    :param text: Item text.
+    Note: For items existing in-game, their item text is just copied. For items created with Path Of Building, their
+    affix values are calculated to match in-game items in appearance."""
     rarity: str
     name: str
     base: str
@@ -72,6 +108,7 @@ class Item:
 @with_slots
 @dataclass
 class Set:
+    """Class that holds an item set."""
     weapon1: Optional[int]
     weapon1_as1: Optional[int]
     weapon1_as2: Optional[int]
