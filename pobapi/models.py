@@ -108,7 +108,43 @@ class Item:
 @with_slots
 @dataclass
 class Set:
-    """Class that holds an item set."""
+    """Class that holds an item set.
+
+    :param weapon1: Primary weapon.
+    :param weapon1_as1 Primary weapon abyssal socket 1.
+    :param weapon1_as2: Primary weapon abyssal socket 1.
+    :param weapon1_swap: Second primary weapon.
+    :param weapon1_swap_as1: Second primary weapon abyssal socket 1.
+    :param weapon1_swap_as2: Second primary weapon abyssal socket 2.
+    :param weapon2: Secondary weapon.
+    :param weapon2_as1 Secondary weapon abyssal socket 1.
+    :param weapon2_as2: Secondary weapon abyssal socket 1.
+    :param weapon2_swap: Second secondary weapon.
+    :param weapon2_swap_as1: Second secondary weapon abyssal socket 1.
+    :param weapon2_swap_as2: Second secondary weapon abyssal socket 2.
+    :param helmet: Helmet.
+    :param helmet_as1: Helmet abyssal socket 1.
+    :param helmet_as2: Helmet abyssal socket 2.
+    :param body_armour: Body armour.
+    :param body_armour_as1: Body armour abyssal socket 1.
+    :param body_armour_as2: Body armour abyssal socket 2.
+    :param gloves: Gloves.
+    :param gloves_as1: Gloves abyssal socket 1.
+    :param gloves_as2: Gloves abyssal socket 2.
+    :param boots: Boots.
+    :param boots_as1: Boots abyssal socket 1.
+    :param boots_as2: Boots abyssal socket 2.
+    :param amulet: Amulet.
+    :param ring1: Left ring.
+    :param ring2: Right ring.
+    :param belt: Belt.
+    :param belt_as1: Belt abyssal socket 1.
+    :param belt_as2: Belt abyssal socket 2.
+    :param flask1: Flask bound to '1' by default.
+    :param flask2: Flask bound to '2' by default.
+    :param flask3: Flask bound to '3' by default.
+    :param flask4: Flask bound to '4' by default.
+    :param flask5: Flask bound to '5' by default."""
     weapon1: Optional[int]
     weapon1_as1: Optional[int]
     weapon1_as2: Optional[int]
