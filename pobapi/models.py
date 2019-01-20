@@ -58,19 +58,19 @@ class Item:
     :param name: Item name.
     :param base: Item base type.
     :param uid: Unique item ID for items in-game.
-    Note: Items created with Path of Building do not have an UID.
+        Note: Items created with Path of Building do not have an UID.
     :param shaper: Whether the item is a Shaper base type.
     :param elder: Whether the item is an Elder base type.
     :param quality: Item quality, if the item can have quality.
     :param sockets: Item socket groups, if the item can have sockets.
-    Note: The format used for example a 5 socket chest armour with 2 socket groups of 3 linked blue sockets and 2 linked
-    red sockets would be ((B, B, B), (R, R)).
+        Note: The format used for example a 5 socket chest armour with 2 socket groups of 3 linked blue sockets and 2 linked
+        red sockets would be ((B, B, B), (R, R)).
     :param level_req: Required character level to equip the item.
     :param item_level: Item level.
     :param implicit: Number of item implicits, if the item can have implicits.
     :param text: Item text.
-    Note: For items existing in-game, their item text is just copied. For items created with Path Of Building, their
-    affix values are calculated to match in-game items in appearance."""
+        Note: For items existing in-game, their item text is just copied. For items created with Path Of Building, their
+        affix values are calculated to match in-game items in appearance."""
     rarity: str
     name: str
     base: str
@@ -111,13 +111,13 @@ class Set:
     """Class that holds an item set.
 
     :param weapon1: Primary weapon.
-    :param weapon1_as1 Primary weapon abyssal socket 1.
+    :param weapon1_as1: Primary weapon abyssal socket 1.
     :param weapon1_as2: Primary weapon abyssal socket 1.
     :param weapon1_swap: Second primary weapon.
     :param weapon1_swap_as1: Second primary weapon abyssal socket 1.
     :param weapon1_swap_as2: Second primary weapon abyssal socket 2.
     :param weapon2: Secondary weapon.
-    :param weapon2_as1 Secondary weapon abyssal socket 1.
+    :param weapon2_as1: Secondary weapon abyssal socket 1.
     :param weapon2_as2: Secondary weapon abyssal socket 1.
     :param weapon2_swap: Second secondary weapon.
     :param weapon2_swap_as1: Second secondary weapon abyssal socket 1.
