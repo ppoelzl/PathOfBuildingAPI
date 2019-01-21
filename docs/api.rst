@@ -18,3 +18,16 @@ Character Stat-Sheet
 
 .. automodule:: pobapi.stats
     :members:
+
+Build Configuration
+-------------------
+
+.. automodule:: pobapi.config
+    :members:
+
+Helper Functions
+----------------
+
+.. automodule:: pobapi.util
+    :members:
+    :private-members:

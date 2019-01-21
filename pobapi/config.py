@@ -10,6 +10,23 @@ __all__ = ["Config"]
 
 @dataclass
 class GeneralConfig:
+    """Class that holds general build configuration data.
+
+    :param resistance_penalty: Resistance penalty obtained by slaying Kitava.
+        Possible values: 0, -30, -60 (default).
+    :param enemy_level: Level of enemies.
+        Possible values: 1 to 100.
+    :param enemy_physical_hit_damage: Damage enemies deal with physical hits.
+    :param detonate_dead_corpse_life: Life of corpses consumed by Detonate Dead.
+    :param is_stationary: Player is stationary.
+    :param is_moving: Player is moving.
+    :param is_on_full_life: Player is on full life.
+    :param is_on_low_life: Player is on low life.
+    :param is_on_full_energy_shield: Player is on full energy shield.
+    :param has_energy_shield: Player currently has energy shield.
+    :param minions_on_full_life: The player's minions are on full life.
+    :param ignite_mode: Controls how ignite damage is calculated.
+        Possible values: 'Average', 'Crit'"""
     resistance_penalty: int = -60  # val = (0, -30, nil) -60 is default if omitted
     enemy_level: int = None
     enemy_physical_hit_damage: float = None
@@ -200,6 +217,23 @@ class DPSOptions:
 @with_slots
 @dataclass
 class Config(GeneralConfig, SkillConfig, MapConfig, CombatConfig, DPSOptions):
+    """Class that holds build configuration data.
+
+    :param resistance_penalty: Resistance penalty obtained by slaying Kitava.
+        Possible values: 0, -30, -60 (default).
+    :param enemy_level: Level of enemies.
+        Possible values: 1 to 100.
+    :param enemy_physical_hit_damage: Damage enemies deal with physical hits.
+    :param detonate_dead_corpse_life: Life of corpses consumed by Detonate Dead.
+    :param is_stationary: Player is stationary.
+    :param is_moving: Player is moving.
+    :param is_on_full_life: Player is on full life.
+    :param is_on_low_life: Player is on low life.
+    :param is_on_full_energy_shield: Player is on full energy shield.
+    :param has_energy_shield: Player currently has energy shield.
+    :param minions_on_full_life: The player's minions are on full life.
+    :param ignite_mode: Controls how ignite damage is calculated.
+        Possible values: 'Average', 'Crit'"""
     character_level: InitVar[int] = None
 
     def __post_init__(self, character_level: int):
