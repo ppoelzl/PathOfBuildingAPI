@@ -43,6 +43,24 @@ class GeneralConfig:
 
 @dataclass
 class SkillConfig:
+    """Class that holds skill configuration data.
+
+    :param aspect_of_the_avian_avians_might: Whether Avian's Might is active.
+    :param aspect_of_the_avian_avians_flight: Whether Avian's Flight is active.
+    :param aspect_of_the_cat_cats_stealth: Whether Cat's Stealth is active.
+    :param aspect_of_the_cat_cats_agility: Whether Cats's Agility is active.
+    :param override_crab_barriers: Overridden number of crab barriers.
+    :param aspect_of_the_spider_web_stacks: Number of web stacks on enemies.
+    :param dark_pact_skeleton_life: Skeleton life points used for Dark Pact damage calculation.
+    :param ice_nova_cast_on_frostbolt: Whether the player casts Ice Nova on a Frost Bolt.
+    :param innervate_innervation: Whether the Innervate innervation buff is active.
+    :param raise_spectres_spectre_level: Level of spectres raised by Raise Spectre.
+    :param siphoning_trap_affected_enemies: Number of enemies affected by Siphoning Trap
+    :param raise_spectres_enable_curses: Whether the curses of spectres are active.
+    :param raise_spectres_blade_vortex_blade_count: Number of Blade Vortex stacks of spectres (provided they cast
+        Blade Vortex)
+    :param summon_lightning_golem_enable_wrath: Whether a Lightning Golem's wrath buff is active.
+    :param vortex_cast_on_frostbolt:Whether the player casts Vortex on a Frost Bolt."""
     aspect_of_the_avian_avians_might: bool = False
     aspect_of_the_avian_avians_flight: bool = False
     aspect_of_the_cat_cats_stealth: bool = False
@@ -233,7 +251,23 @@ class Config(GeneralConfig, SkillConfig, MapConfig, CombatConfig, DPSOptions):
     :param has_energy_shield: Player currently has energy shield.
     :param minions_on_full_life: The player's minions are on full life.
     :param ignite_mode: Controls how ignite damage is calculated.
-        Possible values: 'Average', 'Crit'"""
+        Possible values: 'Average', 'Crit'
+    :param aspect_of_the_avian_avians_might: Whether Avian's Might is active.
+    :param aspect_of_the_avian_avians_flight: Whether Avian's Flight is active.
+    :param aspect_of_the_cat_cats_stealth: Whether Cat's Stealth is active.
+    :param aspect_of_the_cat_cats_agility: Whether Cats's Agility is active.
+    :param override_crab_barriers: Overridden number of crab barriers.
+    :param aspect_of_the_spider_web_stacks: Number of web stacks on enemies.
+    :param dark_pact_skeleton_life: Skeleton life points used for Dark Pact damage calculation.
+    :param ice_nova_cast_on_frostbolt: Whether the player casts Ice Nova on a Frost Bolt.
+    :param innervate_innervation: Whether the Innervate innervation buff is active.
+    :param raise_spectres_spectre_level: Level of spectres raised by Raise Spectre.
+    :param siphoning_trap_affected_enemies: Number of enemies affected by Siphoning Trap
+    :param raise_spectres_enable_curses: Whether the curses of spectres are active.
+    :param raise_spectres_blade_vortex_blade_count: Number of Blade Vortex stacks of spectres (provided they cast
+        Blade Vortex)
+    :param summon_lightning_golem_enable_wrath: Whether a Lightning Golem's wrath buff is active.
+    :param vortex_cast_on_frostbolt:Whether the player casts Vortex on a Frost Bolt."""
     character_level: InitVar[int] = None
 
     def __post_init__(self, character_level: int):
