@@ -196,6 +196,43 @@ class CombatConfig:
 
 @dataclass
 class DPSOptions:
+    """Class that holds DPS configuration data.
+
+    :param lucky_crits: Whether the player's hits are lucky.
+    :param number_of_times_skill_has_chained: Number of times the main skill has chained.
+    :param projectile_distance: Projectile travel distance.
+    :param enemy_in_close_range: Whether enemies are in close range.
+    :param enemy_moving: Whether enemies are moving.
+    :param enemy_on_full_life: Whether enemies are on full life.
+    :param enemy_on_low_life: Whether enemies are on low life.
+    :param enemy_cursed: Whether enemies are cursed.
+    :param enemy_bleeding: Whether enemies are bleeding.
+    :param enemy_poisoned: Whether enemies are poisoned.
+    :param enemy_number_of_poison_stacks: Number of poison stacks on enemies.
+    :param enemy_maimed: Whether enemies are maimed.
+    :param enemy_hindered: Whether enemies are hindered.
+    :param enemy_blinded: Whether enemies are blinded.
+    :param enemy_taunted: Whether enemies are taunted.
+    :param enemy_burning: Whether enemies are burning.
+    :param enemy_ignited: Whether enemies are ignited.
+    :param enemy_chilled: Whether enemies are chilled.
+    :param enemy_frozen: Whether enemies are frozen.
+    :param enemy_shocked: Whether enemies are shocked.
+    :param enemy_number_of_freeze_shock_ignite: Number of enemies frozen, shocked, or ignited recently.
+    :param enemy_intimidated: Whether enemies are intimidated.
+    :param enemy_covered_in_ash:  Whether enemies are covered in ash.
+    :param enemy_rare_or_unique: Whether enemies are rare or unique.
+    :param enemy_boss: Whether enemies are bosses.
+    :param enemy_physical_damage_reduction: Enemy physical damage reduction.
+    :param enemy_fire_resist: Enemy fire resistance.
+    :param enemy_cold_resist: Enemy cold resistance.
+    :param enemy_lightning_resist: Enemy lightning resistance.
+    :param enemy_chaos_resist: Enemy chaos resistance.
+    :param enemy_hit_by_fire_damage: Whether enemies were hit by fire damage.
+    :param enemy_hit_by_cold_damage: Whether enemies were hit by cold damage.
+    :param enemy_hit_by_lightning_damage: Whether enemies were hit by lightning damage.
+    :param elemental_equilibrium_ignore_hit_damage: Whether to ignore skill hit damage resetting Elemental Equilibrium.
+    """
     lucky_crits: bool = False
     number_of_times_skill_has_chained: int = None
     projectile_distance: int = None
@@ -267,7 +304,42 @@ class Config(GeneralConfig, SkillConfig, MapConfig, CombatConfig, DPSOptions):
     :param raise_spectres_blade_vortex_blade_count: Number of Blade Vortex stacks of spectres (provided they cast
         Blade Vortex)
     :param summon_lightning_golem_enable_wrath: Whether a Lightning Golem's wrath buff is active.
-    :param vortex_cast_on_frostbolt:Whether the player casts Vortex on a Frost Bolt."""
+    :param vortex_cast_on_frostbolt:Whether the player casts Vortex on a Frost Bolt.
+        :param lucky_crits: Whether the player's hits are lucky.
+    :param number_of_times_skill_has_chained: Number of times the main skill has chained.
+    :param projectile_distance: Projectile travel distance.
+    :param enemy_in_close_range: Whether enemies are in close range.
+    :param enemy_moving: Whether enemies are moving.
+    :param enemy_on_full_life: Whether enemies are on full life.
+    :param enemy_on_low_life: Whether enemies are on low life.
+    :param enemy_cursed: Whether enemies are cursed.
+    :param enemy_bleeding: Whether enemies are bleeding.
+    :param enemy_poisoned: Whether enemies are poisoned.
+    :param enemy_number_of_poison_stacks: Number of poison stacks on enemies.
+    :param enemy_maimed: Whether enemies are maimed.
+    :param enemy_hindered: Whether enemies are hindered.
+    :param enemy_blinded: Whether enemies are blinded.
+    :param enemy_taunted: Whether enemies are taunted.
+    :param enemy_burning: Whether enemies are burning.
+    :param enemy_ignited: Whether enemies are ignited.
+    :param enemy_chilled: Whether enemies are chilled.
+    :param enemy_frozen: Whether enemies are frozen.
+    :param enemy_shocked: Whether enemies are shocked.
+    :param enemy_number_of_freeze_shock_ignite: Number of enemies frozen, shocked, or ignited recently.
+    :param enemy_intimidated: Whether enemies are intimidated.
+    :param enemy_covered_in_ash:  Whether enemies are covered in ash.
+    :param enemy_rare_or_unique: Whether enemies are rare or unique.
+    :param enemy_boss: Whether enemies are bosses.
+    :param enemy_physical_damage_reduction: Enemy physical damage reduction.
+    :param enemy_fire_resist: Enemy fire resistance.
+    :param enemy_cold_resist: Enemy cold resistance.
+    :param enemy_lightning_resist: Enemy lightning resistance.
+    :param enemy_chaos_resist: Enemy chaos resistance.
+    :param enemy_hit_by_fire_damage: Whether enemies were hit by fire damage.
+    :param enemy_hit_by_cold_damage: Whether enemies were hit by cold damage.
+    :param enemy_hit_by_lightning_damage: Whether enemies were hit by lightning damage.
+    :param elemental_equilibrium_ignore_hit_damage: Whether to ignore skill hit damage resetting Elemental Equilibrium.
+    """
     character_level: InitVar[int] = None
 
     def __post_init__(self, character_level: int):
