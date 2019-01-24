@@ -80,6 +80,38 @@ class SkillConfig:
 
 @dataclass
 class MapConfig:
+    """Class that holds mapping configuration data.
+
+    :param enemy_physical_reduction:
+    :param enemy_hexproof: Whether enemies are hexproof.
+    :param less_curse_effect:
+    :param enemy_avoid_poison_blind_bleed:
+    :param enemy_resistances:
+    :param elemental_equilibrium: Whether player have Elemental Equilibrium.
+    :param no_leech: Whether players cannot leech life/mana/energy shield.
+    :param reduced_flask_charges:
+    :param minus_max_resists:
+    :param less_aoe:
+    :param enemy_avoid_status_ailment:
+    :param enemy_increased_accuracy:
+    :param less_armour_block:
+    :param point_blank: Whether players have Point Blank.
+    :param less_recovery:
+    :param no_regen: Whether players cannot regenerate life/mana/energy shield.
+    :param enemy_takes_reduced_extra_crit_damage:
+    :param curse_assassins_mark: Level of Assassin's Mark applying to players.
+    :param curse_conductivity: Level Conductivity applying to players.
+    :param curse_despair: Level of Despair applying to players.
+    :param curse_elemental_weakness: Level of Elemental Weakness applying to players.
+    :param curse_enfeeble: Level of Enfeeble applying to players.
+    :param curse_flammability: Level of Flammability applying to players.
+    :param curse_frostbite: Level of Frostbite applying to players.
+    :param curse_poachers_mark: Level of Poacher's Mark applying to players.
+    :param curse_projectile_weakness: Level of Projectile Weakness applying to players.
+    :param curse_punishment: Level of Punishment applying to players.
+    :param curse_temporal_chains: Level of Temporal Chains applying to players.
+    :param curse_vulnerability: Level of Vulnerability applying to players.
+    :param curse_warlords_mark: Level of Warlord's Mark applying to players."""
     enemy_physical_reduction: int = None  # l:20%/m:30%/h:40%
     enemy_hexproof: bool = False
     less_curse_effect: int = None  # l:25%/m:40%/h:60%
