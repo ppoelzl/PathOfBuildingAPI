@@ -60,7 +60,7 @@ class SkillConfig:
     :param raise_spectres_blade_vortex_blade_count: Number of Blade Vortex stacks of spectres (provided they cast
         Blade Vortex)
     :param summon_lightning_golem_enable_wrath: Whether a Lightning Golem's wrath buff is active.
-    :param vortex_cast_on_frostbolt:Whether the player casts Vortex on a Frost Bolt."""
+    :param vortex_cast_on_frostbolt: Whether the player casts Vortex on a Frost Bolt."""
     aspect_of_the_avian_avians_might: bool = False
     aspect_of_the_avian_avians_flight: bool = False
     aspect_of_the_cat_cats_stealth: bool = False
@@ -81,24 +81,37 @@ class SkillConfig:
 @dataclass
 class MapConfig:
     """Class that holds mapping configuration data.
+    Note: Many map mods have different tiers for white, yellow and red maps; documented as tuples (white, yellow, red).
 
-    :param enemy_physical_reduction:
+    :param enemy_physical_reduction: Whether enemies have physical damage reduction.
+        Possible values: (20%, 30%, 40%).
     :param enemy_hexproof: Whether enemies are hexproof.
-    :param less_curse_effect:
-    :param enemy_avoid_poison_blind_bleed:
-    :param enemy_resistances:
+    :param less_curse_effect: Whether enemies have reduced effect of curses on them.
+        Possible values: (25%, 40%, 60%).
+    :param enemy_avoid_poison_blind_bleed: Whether enemies have a chance to avoid poison, blind and bleed.
+        Possible values: (25%, 45%, 65%).
+    :param enemy_resistances: Whether enemies have increased elemental and chaos resistances.
+        Possible values: ((20%, 15%), (30%, 20%), (40%, 25%)):
     :param elemental_equilibrium: Whether player have Elemental Equilibrium.
     :param no_leech: Whether players cannot leech life/mana/energy shield.
-    :param reduced_flask_charges:
-    :param minus_max_resists:
-    :param less_aoe:
-    :param enemy_avoid_status_ailment:
-    :param enemy_increased_accuracy:
-    :param less_armour_block:
+    :param reduced_flask_charges: Whether players gain reduced flask charges.
+        Possible values: (30%, 40%, 50%).
+    :param minus_max_resists: Whether players have reduced maximum resistances.
+        Possible values: (0%, 5-8%, 9-12%).
+    :param less_aoe: Whether players have less area of effect.
+        Possible values: (15%, 20%, 25%):
+    :param enemy_avoid_status_ailment: Whether enemies have a chance to avoid status ailments.
+        Possible values: (30%, 60%, 90%).
+    :param enemy_increased_accuracy: Whether enemies hav increased accuracy.
+        Possible values: (30%, 40%, 50%).
+    :param less_armour_block: Whether players have less armour and block chance.
+        Possible values: ((20%, 20%), (25%, 30%), (30%, 40%)).
     :param point_blank: Whether players have Point Blank.
-    :param less_recovery:
+    :param less_recovery: Whether players have less life/mana/energy shield recovery rate.
+        Possible values: (20%, 40%, 60%).
     :param no_regen: Whether players cannot regenerate life/mana/energy shield.
-    :param enemy_takes_reduced_extra_crit_damage:
+    :param enemy_takes_reduced_extra_crit_damage: Whether enemies take reduced extra damage from critical strikes.
+        Possible values: (25-30%, 31-35%, 36-40%).
     :param curse_assassins_mark: Level of Assassin's Mark applying to players.
     :param curse_conductivity: Level Conductivity applying to players.
     :param curse_despair: Level of Despair applying to players.
