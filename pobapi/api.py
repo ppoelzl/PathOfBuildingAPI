@@ -6,7 +6,7 @@ from pobapi.constants import CONFIG_MAP, STATS_MAP, SET_MAP
 from pobapi import models
 from pobapi import stats
 from pobapi import util
-from pobapi.util import _get_stat, _item_text, _skill_tree_nodes, _get_text
+from pobapi.util import _get_stat, _skill_tree_nodes, _get_text
 # Third-party
 from defusedxml import lxml
 
