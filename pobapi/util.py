@@ -6,7 +6,7 @@ from typing import Any, Callable, Iterator, List
 import zlib
 # Project
 from pobapi.constants import TREE_OFFSET
-# Third-Party
+# Third-party
 import requests
 
 
@@ -41,7 +41,7 @@ def accumulate(func: Callable) -> Callable:
     return _accumulate_helper
 
 
-def fetch_url(url: str, timeout: float = 6.0) -> str:
+def fetch_xml_from_url(url: str, timeout: float = 6.0) -> str:
     """Get a Path Of Building import code shared with pastebin.com.
 
     :return: Decompressed XML build document."""
@@ -59,12 +59,12 @@ def fetch_url(url: str, timeout: float = 6.0) -> str:
                 requests.TooManyRedirects) as e:
             print(e, "Something went wrong, check it out.")
         else:
-            return fetch_import_code(request.text)
+            return fetch_xml_from_import_code(request.text)
     else:
         raise ValueError(url, "is not a valid pastebin.com URL.")
 
 
-def fetch_import_code(import_code: str) -> str:
+def fetch_xml_from_import_code(import_code: str) -> str:
     """Decodes and unzips a Path Of Building import code.
 
     :return: Decompressed XML build document."""
@@ -109,30 +109,30 @@ def _item_text(text: List[str]) -> Iterator[str]:
                 return ""
 
 
-def _parse_text(text: List[str], variant: str, alt_variant: str, mod_ranges: List[float]) -> Iterator[str]:
-    """Get the correct variant and item affix values for items made in Path Of Building.
-
-    :return: Generator for corrected variants and item affix values"""
-    counter = 0  # We have to advance this every time we get a line with text to replace, not every time we substitute.
-    for line in _item_text(text):
-        if line.startswith("{variant:"):  # We want to skip all mods of alternative item versions.
-            if variant not in line.partition("{variant:")[-1].partition("}")[0].split(","):
-                if alt_variant not in line.partition("{variant:")[-1].partition("}")[0].split(","):
-                    continue
-        # We have to check for '{range:' used in range tags to filter unsupported mods.
-        if "Adds (" in line and "{range:" in line:  # 'Adds (A-B) to (C-D) to something' mods need to be replaced twice.
-            value = mod_ranges[counter]
-            line = _calculate_mod_text(line, value)
-        if "(" in line and "{range:" in line:
-            value = mod_ranges[counter]
-            line = _calculate_mod_text(line, value)
-            counter += 1
-        # We are only interested in everything past the '{variant: *}' and '{range: *}' tags.
-        _, _, mod = line.rpartition("}")
-        yield mod
-
-
 def _get_text(text: List[str], variant: str, alt_variant: str, mod_ranges: List[float]) -> str:
+    def _parse_text(text_, variant_, alt_variant_, mod_ranges_):
+        """Get the correct variant and item affix values for items made in Path Of Building.
+
+        :return: Multiline string of correct item variants and item affix values."""
+        counter = 0
+        # We have to advance this every time we get a line with text to replace, not every time we substitute.
+        for line in _item_text(text_):
+            if line.startswith("{variant:"):  # We want to skip all mods of alternative item versions.
+                if variant_ not in line.partition("{variant:")[-1].partition("}")[0].split(","):
+                    if alt_variant_ not in line.partition("{variant:")[-1].partition("}")[0].split(","):
+                        continue
+            # We have to check for '{range:' used in range tags to filter unsupported mods.
+            if "Adds (" in line and "{range:" in line:
+                # 'Adds (A-B) to (C-D) to something' mods need to be replaced twice.
+                value = mod_ranges_[counter]
+                line = _calculate_mod_text(line, value)
+            if "(" in line and "{range:" in line:
+                value = mod_ranges_[counter]
+                line = _calculate_mod_text(line, value)
+                counter += 1
+            # We are only interested in everything past the '{variant: *}' and '{range: *}' tags.
+            _, _, mod = line.rpartition("}")
+            yield mod
     return "\n".join(_parse_text(text, variant, alt_variant, mod_ranges))
 
 

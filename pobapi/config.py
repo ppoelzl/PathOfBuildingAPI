@@ -352,8 +352,8 @@ class Config(GeneralConfig, SkillConfig, MapConfig, CombatConfig, DPSOptions):
     :param raise_spectres_blade_vortex_blade_count: Number of Blade Vortex stacks of spectres (provided they cast
         Blade Vortex)
     :param summon_lightning_golem_enable_wrath: Whether a Lightning Golem's wrath buff is active.
-    :param vortex_cast_on_frostbolt:Whether the player casts Vortex on a Frost Bolt.
-        :param enemy_physical_reduction: Whether enemies have physical damage reduction.
+    :param vortex_cast_on_frostbolt: Whether the player casts Vortex on a Frost Bolt.
+    :param enemy_physical_reduction: Whether enemies have physical damage reduction.
         Possible values: (20%, 30%, 40%).
     :param enemy_hexproof: Whether enemies are hexproof.
     :param less_curse_effect: Whether enemies have reduced effect of curses on them.

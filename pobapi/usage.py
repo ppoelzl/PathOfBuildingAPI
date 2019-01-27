@@ -12,12 +12,3 @@ if __name__ == "__main__":
         print(group.gems)
     for i in build.items:
         print(i)
-
-# <Build banditCruel banditMerciless banditNormal targetVersion viewMode>
-# <Calcs><Input */>
-# <Calcs><Section */>
-# <Skills defaultGemLevel>
-# <Skills defaultGemQuality>
-# <Skills sortGemsByDPS>
-# <TreeView *>
-# <Config><Input */>

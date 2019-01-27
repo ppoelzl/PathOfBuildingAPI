@@ -26,14 +26,14 @@ class PathOfBuildingAPI:
     def class_name(self) -> str:
         """Get a character's class.
 
-        :return: One out of the seven character classes."""
+        :return: Character class."""
         return self.xml.find("Build").get("className")
 
     @util.CachedProperty
     def ascendancy_name(self) -> Optional[str]:
         """Get a character's ascendancy class.
 
-        :return: One out of the 19 ascendancy classes, if ascended."""
+        :return: Character ascendancy class, if ascended."""
         return self.xml.find("Build").get("ascendClassName")
 
     @util.CachedProperty
@@ -209,11 +209,11 @@ def from_url(url: str) -> PathOfBuildingAPI:
     """Instantiate from a pastebin.com link generated with Path Of Building.
 
     :param url: pastebin.com link generated with Path Of Building."""
-    return PathOfBuildingAPI(util.fetch_url(url))
+    return PathOfBuildingAPI(util.fetch_xml_from_url(url))
 
 
 def from_import_code(import_code: str) -> PathOfBuildingAPI:
     """Instantiate from an import code generated with Path Of Building.
 
     :param import_code: import code generated with Path Of Building."""
-    return PathOfBuildingAPI(util.fetch_import_code(import_code))
+    return PathOfBuildingAPI(util.fetch_xml_from_import_code(import_code))

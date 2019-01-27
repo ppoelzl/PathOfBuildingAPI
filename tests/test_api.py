@@ -13,7 +13,7 @@ import pytest
 def build():
     with open("../resources/import_code.txt") as f:
         code = f.read()
-    soup = util.fetch_import_code(code)
+    soup = util.fetch_xml_from_import_code(code)
     return api.PathOfBuildingAPI(soup)
 
 
