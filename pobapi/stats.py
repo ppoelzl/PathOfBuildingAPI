@@ -9,7 +9,8 @@ __all__ = ["Stats"]
 @with_slots
 @dataclass
 class Stats:
-    """Class that holds character stat-sheet data.
+    """Stats(*args)
+    Class that holds character stat-sheet data.
 
     :param average_hit: Average hit damage.
     :param average_damage: Average hit damage after accuracy check.

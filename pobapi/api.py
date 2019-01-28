@@ -206,14 +206,14 @@ class PathOfBuildingAPI:
 
 
 def from_url(url: str) -> PathOfBuildingAPI:
-    """Instantiate from a pastebin.com link generated with Path Of Building.
+    """Instantiate build class from a pastebin.com link generated with Path Of Building.
 
     :param url: pastebin.com link generated with Path Of Building."""
     return PathOfBuildingAPI(util.fetch_xml_from_url(url))
 
 
 def from_import_code(import_code: str) -> PathOfBuildingAPI:
-    """Instantiate from an import code generated with Path Of Building.
+    """Instantiate build class from an import code generated with Path Of Building.
 
     :param import_code: import code generated with Path Of Building."""
     return PathOfBuildingAPI(util.fetch_xml_from_import_code(import_code))

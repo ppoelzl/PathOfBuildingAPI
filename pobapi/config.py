@@ -318,7 +318,8 @@ class DPSOptions:
 @with_slots
 @dataclass
 class Config(GeneralConfig, SkillConfig, MapConfig, CombatConfig, DPSOptions):
-    """Class that holds build configuration data.
+    """Config(*args)
+    Class that holds build configuration data.
         Note: Many map mods have different tiers for white, yellow and red maps;
         documented as tuples (white, yellow, red).
 

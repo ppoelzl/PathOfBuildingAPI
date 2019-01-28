@@ -78,7 +78,7 @@ class Item:
     shaper: bool
     elder: bool
     quality: Optional[int]
-    sockets: Optional[Tuple[str]]
+    sockets: Optional[Tuple[Tuple[str]]]
     level_req: int
     item_level: int
     implicit: Optional[int]
@@ -108,7 +108,8 @@ class Item:
 @with_slots
 @dataclass
 class Set:
-    """Class that holds an item set.
+    """Set(*args)
+    Class that holds an item set.
 
     :param weapon1: Primary weapon.
     :param weapon1_as1: Primary weapon abyssal socket 1.
