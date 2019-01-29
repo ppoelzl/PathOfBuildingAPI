@@ -1,20 +1,22 @@
 """Constants taken from the game and PathOfBuilding."""
 
-TREE_OFFSET = 7  # Skill tree node data is offset 7 bytes from the start.
+#: Skill tree node data is offset 7 bytes from the start.
+TREE_OFFSET = 7
 
-# Collections of game objects.
+#: Collections of game objects.
 BANDITS = ("Kraityn", "Alira", "Oak")
 CLASS_NAMES = ("Duelist", "Marauder", "Ranger", "Scion", "Shadow", "Templar", "Witch")
 ASCENDANCY_NAMES = ("Ascendant", "Assassin", "Berserker", "Champion", "Chieftain", "Deadeye", "Elementalist",
                     "Gladiator", "Guardian", "Hierophant", "Inquisitor", "Juggernaut", "Necromancer", "Occultist",
                     "Pathfinder", "Raider", "Saboteur", "Slayer", "Trickster")
 
-# Taken from DefaultMonsterStats.dat
+#: Taken from DefaultMonsterStats.dat
 MONSTER_DAMAGE_TABLE = (5, 6, 6, 7, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 24, 26, 28, 30, 32, 34, 36,
                         39, 41, 44, 47, 50, 53, 56, 59, 63, 67, 71, 75, 80, 84, 89, 94, 100, 106, 112, 118, 125, 131,
                         139, 147, 155, 163, 172, 181, 191, 202, 212, 224, 236, 248, 262, 275, 290, 305, 321, 338, 355,
                         374, 393, 413, 434, 456, 480, 504, 530, 556, 584, 614, 645, 677, 711, 746, 783, 822, 862, 905,
                         949, 996, 1045, 1096, 1149, 1205, 1264, 1325, 1390, 1457, 1527, 1601, 1678, 1758)
+#: Taken from DefaultMonsterStats.dat
 MONSTER_LIFE_TABLE = (15, 18, 21, 25, 29, 33, 38, 43, 49, 55, 61, 68, 76, 85, 94, 104, 114, 126, 138, 152, 166, 182,
                       199, 217, 236, 257, 280, 304, 331, 359, 389, 422, 456, 494, 534, 577, 624, 673, 726, 783, 844,
                       910, 980, 1055, 1135, 1221, 1313, 1411, 1516, 1629, 1749, 1878, 2015, 2162, 2319, 2486, 2665,
@@ -22,7 +24,7 @@ MONSTER_LIFE_TABLE = (15, 18, 21, 25, 29, 33, 38, 43, 49, 55, 61, 68, 76, 85, 94
                       8410, 8984, 9595, 10246, 10940, 11679, 12466, 13304, 14198, 15149, 16161, 17240, 18388, 19610,
                       20911, 22296, 23770, 25338, 27007, 28784, 30673, 32684, 34823, 37098, 39519, 42093, 44831)
 
-# Mapping between PathOfBuilding's export format and this API.
+#: Mapping between PathOfBuilding's export format and this API.
 CONFIG_MAP = {
     "resistancePenalty": "resistance_penalty",
     "enemyLevel": "enemy_level",
@@ -195,6 +197,7 @@ CONFIG_MAP = {
     "enemyConditionHitByColdDamage": "enemy_hit_by_cold_damage",
     "enemyConditionHitByLightningDamage": "enemy_hit_by_lightning_damage",
     "EEIgnoreHitDamage": "elemental_equilibrium_ignore_hit_damage"}
+#: Mapping between PathOfBuilding's export format and this API.
 STATS_MAP = {
     "AverageHit": "average_hit",
     "AverageDamage": "average_damage",
@@ -280,6 +283,7 @@ STATS_MAP = {
     "EnduranceChargesMax": "endurance_charges_maximum",
     "ActiveTotemLimit": "active_totem_limit",
     "ActiveMinionLimit": "active_minion_limit"}
+#: Mapping between PathOfBuilding's export format and this API.
 SET_MAP = {
     "Gloves": "gloves",
     "Weapon 1": "weapon1",
