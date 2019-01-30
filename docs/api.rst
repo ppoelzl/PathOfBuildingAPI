@@ -24,8 +24,6 @@ Build Configuration
 
 .. automodule:: pobapi.config
     :members:
-    :show-inheritance:
-    :inherited-members:
 
 Helper Functions
 ----------------
