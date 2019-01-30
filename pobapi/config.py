@@ -92,7 +92,7 @@ class MapConfig:
         Possible values: (25%, 45%, 65%).
     :param enemy_resistances: Whether enemies have increased elemental and chaos resistances.
         Possible values: ((20%, 15%), (30%, 20%), (40%, 25%)).
-    :param elemental_equilibrium: Whether player have Elemental Equilibrium.
+    :param elemental_equilibrium: Whether players have Elemental Equilibrium.
     :param no_leech: Whether players cannot leech life/mana/energy shield.
     :param reduced_flask_charges: Whether players gain reduced flask charges.
         Possible values: (30%, 40%, 50%).
@@ -159,6 +159,88 @@ class MapConfig:
 
 @dataclass
 class CombatConfig:
+    """Class that holds combat configuration data.
+    :param use_power_charges: Whether the player uses power charges.
+    :param max_power_charges: Whether the player is at maximum power charges.
+    :param use_frenzy_charges: Whether the player uses frenzy charges.
+    :param max_frenzy_charges: Whether the player is at maximum frenzy charges.
+    :param use_endurance_charges: Whether the player uses endurance charges.
+    :param max_endurance_charges: Whether the player is at maximum endurance charges.
+    :param use_siphoning_charges: Whether the player uses siphoning charges.
+    :param max_siphoning_charges: Whether the player is at maximum siphoning charges.
+    :param minions_use_power_charges: Whether the player's minions use power charges.
+    :param minions_use_frenzy_charges: Whether the player's minions use frenzy charges.
+    :param minions_use_endurance_charges: Whether the player's minions use endurance charges.
+    :param onslaught: Whether the player has onslaught.
+    :param unholy_might: Whether the player has unholy might.
+    :param phasing: Whether the player has phasing.
+    :param fortify: Whether the player has fortify.
+    :param tailwind: Whether the player has tailwind.
+    :param adrenaline: Whether the player has adrenaline.
+    :param rage: Whether the player has rage.
+    :param leeching: Whether the player is leeching.
+    :param using_flask: Whether the player is using a flask.
+    :param has_totem: Whether the player has a totem.
+    :param on_consecrated_ground: Whether the player is on consecrated ground.
+    :param on_burning_ground: Whether the player is on burning ground.
+    :param on_chilled_ground: Whether the player is on chilled ground.
+    :param on_shocked_ground: Whether the player is on shocked ground.
+    :param burning: Whether the player is burning.
+    :param ignited: Whether the player is ignited.
+    :param chilled: Whether the player is chilled.
+    :param frozen: Whether the player is frozen.
+    :param shocked: Whether the player is shocked.
+    :param bleeding: Whether the player is bleeding.
+    :param poisoned: Whether the player is poisoned.
+    :param number_of_poison_stacks: Number of poison stacks on the player.
+    :param only_one_nearby_enemy: Whether there is only one enemy nearby.
+    :param hit_recently: Whether the player has hit recently.
+    :param crit_recently: Whether the player has crit recently.
+    :param killed_recently: Whether the player has killed recently.
+    :param number_of_enemies_killed_recently: Number of enemies killed by the player recently.
+    :param totems_killed_recently: Whether the player's totems killed recently.
+    :param number_of_totems_killed_recently: Number of enemies killed by the player's totems recently.
+    :param minions_killed_recently: Whether the player's minions killed recently.
+    :param number_of_minions_killed_recently: Number of enemies killed by the player's minions recently.
+    :param killed_affected_by_dot: Whether the player has killed an enemy affected by dot recently.
+    :param number_of_shocked_enemies_killed_recently: Number of shocked enemies killed by the player recently.
+    :param frozen_enemy_recently: Whether the player has frozen an enemy recently.
+    :param shattered_enemy_recently: Whether the player has shattered an enemy recently.
+    :param ignited_enemy_recently: Whether the player has ignited an enemy recently.
+    :param shocked_enemy_recently: Whether the player has shocked an enemy recently.
+    :param number_of_poisons_applied_recently: Number of poisons applied by the player recently.
+    :param been_hit_recently: Whether the player has been hit recently.
+    :param been_crit_recently: Whether the player has been crit recently.
+    :param been_savage_hit_recently: Whether the player has been savage hit recently.
+    :param hit_by_fire_damage_recently: Whether the player has been hit by fire damage recently.
+    :param hit_by_cold_damage_recently: Whether the player has been hit by cold damage recently.
+    :param hit_by_lightning_damage_recently: Whether the player has been hit by lightning damage recently.
+    :param blocked_recently: Whether the player has blocked recently.
+    :param blocked_attack_recently: Whether the player has blocked an attack recently.
+    :param blocked_spell_recently: Whether the player has blocked a spell recently.
+    :param energy_shield_recharge_started_recently: Whether the player's energy shield recharge started recently.
+    :param pendulum_of_destruction: Controls pendulum of destruction mode.
+        Possible values: ('Area', 'Damage').
+    :param elemental_conflux: Controls elemental conflux mode.
+        Possible values: ('Chilling', 'Shocking', 'Igniting', 'All').
+    :param bastion_of_hope: Whether the player has bastion of hope.
+    :param her_embrace: Whether the player is in her embrace.
+    :param used_skill_recently: Whether the player has used a skill recently.
+    :param attacked_recently: Whether the player has attacked recently.
+    :param cast_spell_recently: Whether the player has cast a spell recently.
+    :param used_fire_skill_recently: Whether the player has used a fire skill recently.
+    :param used_cold_skill_recently: Whether the player has used a cold skill recently.
+    :param used_minion_skill_recently: Whether the player has used a minion skill recently.
+    :param used_movement_skill_recently: Whether the player has used a movement skill recently.
+    :param used_vaal_skill_recently: Whether the player has used a vaal skill recently.
+    :param used_warcry_recently: Whether the player has used a warcry recently.
+    :param number_of_mines_detonated_recently: Number of mines detonated recently.
+    :param number_of_traps_triggered_recently: Number of traps triggered recently.
+    :param consumed_corpses_recently: Whether the player has consumed corpses recently.
+    :param number_of_corpses_consumed_recently: Number of corpses consumed by the player recently.
+    :param taunted_enemy_recently: Whether the player haws taunted an enemy recently.
+    :param blocked_hit_from_unique_enemy_in_past_ten_seconds:
+    Whether the player has blocked a hit from an unique enemy in the past ten seconds."""
     use_power_charges: bool = False
     max_power_charges: int = None
     use_frenzy_charges: bool = False
@@ -218,8 +300,8 @@ class CombatConfig:
     blocked_attack_recently: bool = False
     blocked_spell_recently: bool = False
     energy_shield_recharge_started_recently: bool = False
-    pendulum_of_destruction: str = False  # val = (Area / Damage)
-    elemental_conflux: str = False  # val = (Chilling / Shocking / Igniting / All)
+    pendulum_of_destruction: str = False
+    elemental_conflux: str = False
     bastion_of_hope: bool = False
     her_embrace: bool = False
     used_skill_recently: bool = False
@@ -329,15 +411,15 @@ class Config(GeneralConfig, SkillConfig, MapConfig, CombatConfig, DPSOptions):
         Possible values: 1 to 100.
     :param enemy_physical_hit_damage: Damage enemies deal with physical hits.
     :param detonate_dead_corpse_life: Life of corpses consumed by Detonate Dead.
-    :param is_stationary: Player is stationary.
-    :param is_moving: Player is moving.
-    :param is_on_full_life: Player is on full life.
-    :param is_on_low_life: Player is on low life.
-    :param is_on_full_energy_shield: Player is on full energy shield.
-    :param has_energy_shield: Player currently has energy shield.
-    :param minions_on_full_life: The player's minions are on full life.
+    :param is_stationary: Whether the player is stationary.
+    :param is_moving: Whether the player is moving.
+    :param is_on_full_life: Whether the player is on full life.
+    :param is_on_low_life: Whether the player is on low life.
+    :param is_on_full_energy_shield: Whether the player is on full energy shield.
+    :param has_energy_shield: Whether the player currently has energy shield.
+    :param minions_on_full_life: Whether the player's minions are on full life.
     :param ignite_mode: Controls how ignite damage is calculated.
-        Possible values: 'Average', 'Crit'
+        Possible values: ('Average', 'Crit')
     :param aspect_of_the_avian_avians_might: Whether Avian's Might is active.
     :param aspect_of_the_avian_avians_flight: Whether Avian's Flight is active.
     :param aspect_of_the_cat_cats_stealth: Whether Cat's Stealth is active.
@@ -348,10 +430,10 @@ class Config(GeneralConfig, SkillConfig, MapConfig, CombatConfig, DPSOptions):
     :param ice_nova_cast_on_frostbolt: Whether the player casts Ice Nova on a Frost Bolt.
     :param innervate_innervation: Whether the Innervate innervation buff is active.
     :param raise_spectres_spectre_level: Level of spectres raised by Raise Spectre.
-    :param siphoning_trap_affected_enemies: Number of enemies affected by Siphoning Trap
+    :param siphoning_trap_affected_enemies: Number of enemies affected by Siphoning Trap.
     :param raise_spectres_enable_curses: Whether the curses of spectres are active.
     :param raise_spectres_blade_vortex_blade_count: Number of Blade Vortex stacks of spectres (provided they cast
-        Blade Vortex)
+        Blade Vortex).
     :param summon_lightning_golem_enable_wrath: Whether a Lightning Golem's wrath buff is active.
     :param vortex_cast_on_frostbolt: Whether the player casts Vortex on a Frost Bolt.
     :param enemy_physical_reduction: Whether enemies have physical damage reduction.
@@ -396,6 +478,87 @@ class Config(GeneralConfig, SkillConfig, MapConfig, CombatConfig, DPSOptions):
     :param curse_temporal_chains: Level of Temporal Chains applying to players.
     :param curse_vulnerability: Level of Vulnerability applying to players.
     :param curse_warlords_mark: Level of Warlord's Mark applying to players.
+    :param use_power_charges: Whether the player uses power charges.
+    :param max_power_charges: Whether the player is at maximum power charges.
+    :param use_frenzy_charges: Whether the player uses frenzy charges.
+    :param max_frenzy_charges: Whether the player is at maximum frenzy charges.
+    :param use_endurance_charges: Whether the player uses endurance charges.
+    :param max_endurance_charges: Whether the player is at maximum endurance charges.
+    :param use_siphoning_charges: Whether the player uses siphoning charges.
+    :param max_siphoning_charges: Whether the player is at maximum siphoning charges.
+    :param minions_use_power_charges: Whether the player's minions use power charges.
+    :param minions_use_frenzy_charges: Whether the player's minions use frenzy charges.
+    :param minions_use_endurance_charges: Whether the player's minions use endurance charges.
+    :param onslaught: Whether the player has onslaught.
+    :param unholy_might: Whether the player has unholy might.
+    :param phasing: Whether the player has phasing.
+    :param fortify: Whether the player has fortify.
+    :param tailwind: Whether the player has tailwind.
+    :param adrenaline: Whether the player has adrenaline.
+    :param rage: Whether the player has rage.
+    :param leeching: Whether the player is leeching.
+    :param using_flask: Whether the player is using a flask.
+    :param has_totem: Whether the player has a totem.
+    :param on_consecrated_ground: Whether the player is on consecrated ground.
+    :param on_burning_ground: Whether the player is on burning ground.
+    :param on_chilled_ground: Whether the player is on chilled ground.
+    :param on_shocked_ground: Whether the player is on shocked ground.
+    :param burning: Whether the player is burning.
+    :param ignited: Whether the player is ignited.
+    :param chilled: Whether the player is chilled.
+    :param frozen: Whether the player is frozen.
+    :param shocked: Whether the player is shocked.
+    :param bleeding: Whether the player is bleeding.
+    :param poisoned: Whether the player is poisoned.
+    :param number_of_poison_stacks: Number of poison stacks on the player.
+    :param only_one_nearby_enemy: Whether there is only one enemy nearby.
+    :param hit_recently: Whether the player has hit recently.
+    :param crit_recently: Whether the player has crit recently.
+    :param killed_recently: Whether the player has killed recently.
+    :param number_of_enemies_killed_recently: Number of enemies killed by the player recently.
+    :param totems_killed_recently: Whether the player's totems killed recently.
+    :param number_of_totems_killed_recently: Number of enemies killed by the player's totems recently.
+    :param minions_killed_recently: Whether the player's minions killed recently.
+    :param number_of_minions_killed_recently: Number of enemies killed by the player's minions recently.
+    :param killed_affected_by_dot: Whether the player has killed an enemy affected by dot recently.
+    :param number_of_shocked_enemies_killed_recently: Number of shocked enemies killed by the player recently.
+    :param frozen_enemy_recently: Whether the player has frozen an enemy recently.
+    :param shattered_enemy_recently: Whether the player has shattered an enemy recently.
+    :param ignited_enemy_recently: Whether the player has ignited an enemy recently.
+    :param shocked_enemy_recently: Whether the player has shocked an enemy recently.
+    :param number_of_poisons_applied_recently: Number of poisons applied by the player recently.
+    :param been_hit_recently: Whether the player has been hit recently.
+    :param been_crit_recently: Whether the player has been crit recently.
+    :param been_savage_hit_recently: Whether the player has been savage hit recently.
+    :param hit_by_fire_damage_recently: Whether the player has been hit by fire damage recently.
+    :param hit_by_cold_damage_recently: Whether the player has been hit by cold damage recently.
+    :param hit_by_lightning_damage_recently: Whether the player has been hit by lightning damage recently.
+    :param blocked_recently: Whether the player has blocked recently.
+    :param blocked_attack_recently: Whether the player has blocked an attack recently.
+    :param blocked_spell_recently: Whether the player has blocked a spell recently.
+    :param energy_shield_recharge_started_recently: Whether the player's energy shield recharge started recently.
+    :param pendulum_of_destruction: Controls pendulum of destruction mode.
+        Possible values: ('Area', 'Damage').
+    :param elemental_conflux: Controls elemental conflux mode.
+        Possible values: ('Chilling', 'Shocking', 'Igniting', 'All').
+    :param bastion_of_hope: Whether the player has bastion of hope.
+    :param her_embrace: Whether the player is in her embrace.
+    :param used_skill_recently: Whether the player has used a skill recently.
+    :param attacked_recently: Whether the player has attacked recently.
+    :param cast_spell_recently: Whether the player has cast a spell recently.
+    :param used_fire_skill_recently: Whether the player has used a fire skill recently.
+    :param used_cold_skill_recently: Whether the player has used a cold skill recently.
+    :param used_minion_skill_recently: Whether the player has used a minion skill recently.
+    :param used_movement_skill_recently: Whether the player has used a movement skill recently.
+    :param used_vaal_skill_recently: Whether the player has used a vaal skill recently.
+    :param used_warcry_recently: Whether the player has used a warcry recently.
+    :param number_of_mines_detonated_recently: Number of mines detonated recently.
+    :param number_of_traps_triggered_recently: Number of traps triggered recently.
+    :param consumed_corpses_recently: Whether the player has consumed corpses recently.
+    :param number_of_corpses_consumed_recently: Number of corpses consumed by the player recently.
+    :param taunted_enemy_recently: Whether the player haws taunted an enemy recently.
+    :param blocked_hit_from_unique_enemy_in_past_ten_seconds:
+    Whether the player has blocked a hit from an unique enemy in the past ten seconds.
     :param lucky_crits: Whether the player's hits are lucky.
     :param number_of_times_skill_has_chained: Number of times the main skill has chained.
     :param projectile_distance: Projectile travel distance.
