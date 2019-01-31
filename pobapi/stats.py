@@ -18,14 +18,14 @@ class Stats:
     :param attack_speed: Attack speed.
     :param trap_throwing_speed: Trap throwing speed.
     :param trap_cooldown: Trap throwing cooldown.
-    :param mine_laying_speed: Mine laying speed
+    :param mine_laying_speed: Mine laying speed.
     :param totem_placement_speed: Totem placement speed.
-    :param pre_effective_crit_chance: Crit chance as displayed in-game (doesn't factor in accuracy and luck)
-    :param crit_chance: Effective crit chance, factors in accuracy and luck
+    :param pre_effective_crit_chance: Crit chance as displayed in-game (doesn't factor in accuracy and luck).
+    :param crit_chance: Effective crit chance, factors in accuracy and luck.
     :param crit_multiplier: Critical strike multiplier.
     :param hit_chance: Chance to hit with attacks.
     :param total_dps: Total Damage per second.
-    :param total_dot: Total damage over time (per second)
+    :param total_dot: Total damage over time (per second).
     :param bleed_dps: Bleeding damage per second.
     :param ignite_dps: Ignite damage per second.
     :param ignite_damage: Ignite hit damage.
@@ -36,7 +36,7 @@ class Stats:
     :param total_dps_with_poison: Total damage per second including poison damage.
     :param average_damage_with_poison: Average hit damage including poison.
     :param decay_dps: Decay damage per second.
-    :param skill_cooldown: Skill coodown time.
+    :param skill_cooldown: Skill cooldown time.
     :param area_of_effect_radius: Area of effect radius.
     :param mana_cost: Mana cost of skill.
     :param strength: Strength attribute.

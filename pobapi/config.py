@@ -24,11 +24,11 @@ class Config:
     :param detonate_dead_corpse_life: Life of corpses consumed by Detonate Dead.
     :param is_stationary: Whether the player is stationary.
     :param is_moving: Whether the player is moving.
-    :param is_on_full_life: Whether the player is on full life.
-    :param is_on_low_life: Whether the player is on low life.
-    :param is_on_full_energy_shield: Whether the player is on full energy shield.
+    :param is_on_full_life: Whether the player is on Full Life.
+    :param is_on_low_life: Whether the player is on Low Life.
+    :param is_on_full_energy_shield: Whether the player is on Full Energy Shield.
     :param has_energy_shield: Whether the player currently has energy shield.
-    :param minions_on_full_life: Whether the player's minions are on full life.
+    :param minions_on_full_life: Whether the player's minions are on Full Life.
     :param ignite_mode: Controls how ignite damage is calculated.
         Possible values: ('Average', 'Crit')
     :param aspect_of_the_avian_avians_might: Whether Avian's Might is active.
@@ -100,13 +100,13 @@ class Config:
     :param minions_use_power_charges: Whether the player's minions use power charges.
     :param minions_use_frenzy_charges: Whether the player's minions use frenzy charges.
     :param minions_use_endurance_charges: Whether the player's minions use endurance charges.
-    :param onslaught: Whether the player has onslaught.
-    :param unholy_might: Whether the player has unholy might.
-    :param phasing: Whether the player has phasing.
-    :param fortify: Whether the player has fortify.
-    :param tailwind: Whether the player has tailwind.
-    :param adrenaline: Whether the player has adrenaline.
-    :param rage: Whether the player has rage.
+    :param onslaught: Whether the player has Onslaught.
+    :param unholy_might: Whether the player has Unholy Might.
+    :param phasing: Whether the player has Phasing.
+    :param fortify: Whether the player has Fortify.
+    :param tailwind: Whether the player has Tailwind.
+    :param adrenaline: Whether the player has Adrenaline.
+    :param rage: Whether the player has Rage.
     :param leeching: Whether the player is leeching.
     :param using_flask: Whether the player is using a flask.
     :param has_totem: Whether the player has a totem.
@@ -131,7 +131,7 @@ class Config:
     :param number_of_totems_killed_recently: Number of enemies killed by the player's totems recently.
     :param minions_killed_recently: Whether the player's minions killed recently.
     :param number_of_minions_killed_recently: Number of enemies killed by the player's minions recently.
-    :param killed_affected_by_dot: Whether the player has killed an enemy affected by dot recently.
+    :param killed_affected_by_dot: Whether the player has killed an enemy affected by damage over time recently.
     :param number_of_shocked_enemies_killed_recently: Number of shocked enemies killed by the player recently.
     :param frozen_enemy_recently: Whether the player has frozen an enemy recently.
     :param shattered_enemy_recently: Whether the player has shattered an enemy recently.
@@ -148,12 +148,12 @@ class Config:
     :param blocked_attack_recently: Whether the player has blocked an attack recently.
     :param blocked_spell_recently: Whether the player has blocked a spell recently.
     :param energy_shield_recharge_started_recently: Whether the player's energy shield recharge started recently.
-    :param pendulum_of_destruction: Controls pendulum of destruction mode.
+    :param pendulum_of_destruction: Controls Pendulum of Destruction mode.
         Possible values: ('Area', 'Damage').
-    :param elemental_conflux: Controls elemental conflux mode.
+    :param elemental_conflux: Controls Elemental Conflux mode.
         Possible values: ('Chilling', 'Shocking', 'Igniting', 'All').
-    :param bastion_of_hope: Whether the player has bastion of hope.
-    :param her_embrace: Whether the player is in her embrace.
+    :param bastion_of_hope: Whether the player has Bastion of Hope.
+    :param her_embrace: Whether the player is in Her Embrace.
     :param used_skill_recently: Whether the player has used a skill recently.
     :param attacked_recently: Whether the player has attacked recently.
     :param cast_spell_recently: Whether the player has cast a spell recently.
@@ -380,7 +380,8 @@ class Config:
     enemy_hit_by_cold_damage: bool = False
     enemy_hit_by_lightning_damage: bool = False
     elemental_equilibrium_ignore_hit_damage: bool = False
-
+    # The fields in the post init method are the only values in Path of Building's configuration tab that are
+    # calculated, but can also be overridden so we potentially have to initialise them at a later point in time.
     character_level: InitVar[int] = None
 
     def __post_init__(self, character_level: int):
