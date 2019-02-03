@@ -30,6 +30,33 @@ To activate on Windows:
 Basic usage
 -----------
 
+``>>>import pobapi``
+
+``>>>build = pobapi.from_url(URL)``
+
+``>>>print(build.ascendancy)``
+``Elementalist``
+
+``>>>for item in build.items:``
+``>>>  if item.name == "Inpulsa's Broken Heart":``
+``>>>        print(item)``
+``Inpulsa's Broken Heart``
+``Sadist Garb``
+``Quality: 20``
+``Sockets: (("B", "B", "B", "B", "B", "B"))``
+``LevelReq: 68``
+``Implicits: 0``
+``+70 to maximum Life``
+``35% increased Damage if you have Shocked an Enemy Recently``
+``33% increased Effect of Shock``
+``Unaffected by Shock``
+``Shocked Enemies you Kill Explode, dealing 5% of``
+``their Maximum Life as Lightning Damage which cannot Shock``
+
+``>>>if "Arc" in build.skill_names:``
+``>>>    print("Meta build.)``
+``Meta build.``
+
 Documentation
 -------------
 
