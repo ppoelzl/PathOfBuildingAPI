@@ -37,14 +37,19 @@ Basic usage
 ``>>>print(build.ascendancy)``
 ``Elementalist``
 
+``>>>print(build.bandit)``
+``Alira``
+
 ``>>>for item in build.items:``
 ``>>>  if item.name == "Inpulsa's Broken Heart":``
 ``>>>        print(item)``
-``Inpulsa's Broken Heart``
-``Sadist Garb``
+``Rarity: Unique``
+``Name: Inpulsa's Broken Heart``
+``Base: Sadist Garb``
 ``Quality: 20``
-``Sockets: (("B", "B", "B", "B", "B", "B"))``
+``Sockets: (("B", "B", "G", "G", "G", "B"))``
 ``LevelReq: 68``
+``ItemLvl: 80``
 ``Implicits: 0``
 ``+70 to maximum Life``
 ``35% increased Damage if you have Shocked an Enemy Recently``
@@ -53,9 +58,12 @@ Basic usage
 ``Shocked Enemies you Kill Explode, dealing 5% of``
 ``their Maximum Life as Lightning Damage which cannot Shock``
 
-``>>>if "Arc" in build.skill_names:``
-``>>>    print("Meta build.)``
-``Meta build.``
+``>>>if "Arc" == build.active_skill.name and "Storm Brand" in build.skill_names:``
+``>>>    print("Backup plan.")``
+``Backup plan.``
+
+``>>>print(build.stats.life):``
+``6800``
 
 Documentation
 -------------
