@@ -10,11 +10,15 @@ Meanwhile we are looking forward to community feedback to accommodate most use c
 Introduction
 ------------
 
-Path of Building API is an opinionated interface between
-`Path of Building's <https://github.com/Openarl/PathOfBuilding>`_ import format and Python code.
+Path Of Building API is an opinionated library for processing `Path of Building
+<https://github.com/Openarl/PathOfBuilding>`_ pastebins.
+It is aimed at community developers:
+	* looking to add Path of Building functionality to their apps.
+	* upgrading from existing solutions.
 
 Features
 --------
+
 * Look up and process:
     * Character stats (DPS, life, etc.)
     * Skill trees
@@ -24,7 +28,7 @@ Features
     * Build author's notes
 * Exposes (almost) all of Path of Building's stats and attributes in a simple and pythonic way.
 * Low memory footprint through slots and dynamically generated attributes.
-* Automatically calculates mod values on theorycrafted items.
+* Automatically calculates numerical values on theorycrafted items.
 
 Setup Instructions
 --------------------
@@ -65,6 +69,7 @@ Setup repository:
 
 Basic Usage
 -----------
+
 >>> import pobapi
 >>> with open("../resources/import_code.txt") as f:
 ...    code = f.read()
