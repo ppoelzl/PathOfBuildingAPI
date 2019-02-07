@@ -49,6 +49,10 @@ class Tree:
     sockets: Dict[int, int]
 
 
+SocketGroup = Tuple[str]
+GroupOfSocketGroups = Tuple[SocketGroup]
+
+
 @with_slots
 @dataclass
 class Item:
@@ -78,7 +82,7 @@ class Item:
     shaper: bool
     elder: bool
     quality: Optional[int]
-    sockets: Optional[Tuple[Tuple[str]]]
+    sockets: Optional[GroupOfSocketGroups]
     level_req: int
     item_level: int
     implicit: Optional[int]
