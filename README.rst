@@ -16,6 +16,18 @@ It is aimed at community developers:
     * looking to add Path of Building functionality to their apps.
     * upgrading from existing solutions.
 
+As PoB pastebins became the standard way to share theorycrafting and characters,
+more and more community tools interact with PoB pastebins
+and users increasingly expect such functionality (link),
+This project provides a comprehensive toolbox for interacting with them.
+
+Benefits from using this library:
+* Focus on your app's core competences
+* Spend your free time on unique features
+* Backwards-compatibility as PoB's export format changes
+* Tested and secure codebase
+
+
 Features
 --------
 
