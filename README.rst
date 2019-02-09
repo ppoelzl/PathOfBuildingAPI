@@ -4,24 +4,26 @@ Path of Building API
 Pre-release Software Warning
 ----------------------------
 
-This library is currently in pre-release status and may change in the future.
-Meanwhile we are looking forward to community feedback to accommodate most use cases.
+| This library is currently in pre-release status and may change in the near future.
+| Meanwhile I am looking forward to community feedback to accommodate most use cases.
+| Pull requests are gladly accepted and much appreciated!
 
 Introduction
 ------------
 
-Path Of Building API is an opinionated library for processing `Path of Building
-<https://github.com/Openarl/PathOfBuilding>`_ pastebins.
-It is aimed at community developers:
-    * looking to add Path of Building functionality to their apps.
-    * upgrading from existing solutions.
+| Path Of Building API provides a comprehensive toolbox for processing
+    `Path of Building <https://github.com/Openarl/PathOfBuilding>`_ pastebins.
+| It is aimed at community developers:
 
-As PoB pastebins became the standard way to share theorycrafting and characters,
-more and more community tools interact with PoB pastebins
-and users increasingly expect such functionality (link),
-This project provides a comprehensive toolbox for interacting with them.
+* looking to add Path of Building functionality to their apps.
+* upgrading from existing solutions.
+
+| As PoB pastebins became the standard way to share theorycrafting and characters,
+| community tools want to interact with them and users `increasingly expect such functionality
+    <https://www.reddit.com/r/pathofexile/comments/aca7vl/path_of_leveling_a_tool_written_in_java_with_an/>`_.
 
 Benefits from using this library:
+
 * Focus on your app's core competences
 * Spend your free time on unique features
 * Backwards-compatibility as PoB's export format changes
@@ -38,7 +40,7 @@ Features
     * Gear and item sets
     * Path of Building configuration settings
     * Build author's notes
-* Exposes (almost) all of Path of Building's stats and attributes in a simple and pythonic way.
+* Exposes all of Path of Building's relevant stats and attributes in a simple and pythonic way.
 * Low memory footprint through slots and dynamically generated attributes.
 * Automatically calculates mod values on theorycrafted items.
 * Secure against most XML attacks thanks to the defusedxml library.
@@ -130,4 +132,4 @@ Please file a `GitHub issue <https://developer.github.com/v3/issues/>`_ in this 
 License
 -------
 
-`EUPL v1.2 <https://eupl.eu/>`_ (Think about it as an equivalent to LGPL + Affero Clause).
+`EUPL v1.2 <https://eupl.eu/>`_ (Think about it as an equivalent to LGPL + Affero clause).
