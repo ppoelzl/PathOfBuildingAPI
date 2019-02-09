@@ -43,7 +43,14 @@ Features
 * Exposes all of Path of Building's relevant stats and attributes in a simple and pythonic way.
 * Low memory footprint through slots and dynamically generated attributes.
 * Automatically calculates mod values on theorycrafted items.
-* Secure against most XML attacks thanks to the defusedxml library.
+* Secure against XML attacks thanks to the `defusedxml <https://pypi.org/project/defusedxml/>`_ library.
+
+Requirements
+------------
+* `Python 3.7+ <https://www.python.org/>`_
+* `defusedxml <https://pypi.org/project/defusedxml/>`_
+* `lxml <https://pypi.org/project/lxml/>`_
+* `requests <https://pypi.org/project/requests/>`_
 
 Setup Instructions
 --------------------
