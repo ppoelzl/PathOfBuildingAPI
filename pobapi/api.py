@@ -22,7 +22,7 @@ class PathOfBuildingAPI:
 
     :param xml: XML document in Path Of Building's export format."""
 
-    def __init__(self, xml: str):
+    def __init__(self, xml: bytes):
         self.xml = lxml.fromstring(xml)
 
     @util.CachedProperty
@@ -145,7 +145,7 @@ class PathOfBuildingAPI:
         """Get notes of a build's author.
 
         :return: Wall of text."""
-        return self.xml.find("Notes").text.rstrip("\n\r\t")
+        return self.xml.find("Notes").text.strip("\n\r\t").rstrip("\n\r\t")
 
     @util.CachedProperty
     def second_weapon_set(self) -> bool:
@@ -191,20 +191,10 @@ class PathOfBuildingAPI:
             item_level = int(_get_stat(item, "Item Level: ") or 1)
             implicit = int(_get_stat(item, "Implicits: "))
             item_text = _get_text(item, variant, alt_variant, mod_ranges)
-            yield models.Item(
-                rarity,
-                name,
-                base,
-                uid,
-                shaper,
-                elder,
-                quality,
-                sockets,
-                level_req,
-                item_level,
-                implicit,
-                item_text,
-            )
+            # fmt: off
+            yield models.Item(rarity, name, base, uid, shaper, elder, quality, sockets,
+                              level_req, item_level, implicit, item_text)
+            # fmt: on
 
     @util.CachedProperty
     def active_item_set(self) -> models.Set:

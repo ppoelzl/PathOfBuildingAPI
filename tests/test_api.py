@@ -1,128 +1,136 @@
 # Project
 from pobapi import api
 from pobapi import config
-from pobapi import models
 from pobapi import stats
-from pobapi import util
-from pobapi.constants import CLASS_NAMES, ASCENDANCY_NAMES, BANDITS
+
 # Third-Party
 import pytest
 
 
 @pytest.fixture(scope="module")
 def build():
-    with open("../resources/import_code.txt") as f:
+    with open("../resources/test_code.txt") as f:
         code = f.read()
-    soup = util.fetch_xml_from_import_code(code)
-    return api.PathOfBuildingAPI(soup)
+    return api.from_import_code(code)
 
 
 def test_class_name(build):
-    assert build.class_name in CLASS_NAMES
+    assert build.class_name == "Scion"
 
 
 def test_ascendancy_name(build):
-    assert build.ascendancy_name in ASCENDANCY_NAMES or None
+    assert build.ascendancy_name == "Ascendant"
 
 
 def test_level(build):
-    assert 1 <= build.level <= 100
+    assert build.level == 1
 
 
 def test_bandit(build):
-    assert build.bandit in BANDITS or None
+    assert build.bandit == "Alira"
 
 
 def test_notes(build):
-    assert isinstance(build.notes, str)
-    assert build.notes.endswith("\n\r\t") is False
+    assert build.notes == "Test string."
 
 
 def test_second_weapon_set(build):
-    assert isinstance(build.second_weapon_set, bool)
+    assert build.second_weapon_set is True
 
 
 def test_stats(build):
     assert isinstance(build.stats, stats.Stats)
-    assert 1 <= build.stats.life
-    assert 0 <= build.stats.mana
+    assert build.stats.life == 149
+    assert build.stats.mana == 60
 
 
 def test_config(build):
     assert isinstance(build.config, config.Config)
-    assert build.config.enemy_boss in (False, True, "Shaper")
-
-
-def test_item_sets(build):
-    for i in build.item_sets:
-        assert isinstance(i, models.Set)
+    assert build.config.enemy_boss == "Shaper"
 
 
 def test_active_item_set(build):
-    assert isinstance(build.active_item_set, models.Set)
+    assert build.active_item_set.body_armour == 2
 
 
 def test_active_skill_group(build):
-    assert isinstance(build.active_skill_group, models.Skill)
-    assert isinstance(build.active_skill_group.enabled, bool)
-    assert isinstance(build.active_skill_group.label, str)
-    assert isinstance(build.active_skill_group.active, (int, type(None)))
-    assert isinstance(build.active_skill_group.gems, list)
-    for i in build.active_skill_group.gems:
-        assert isinstance(i, models.Gem)
-        assert isinstance(i.name, str)
-        assert isinstance(i.enabled, bool)
-        assert isinstance(i.level, int)
-        assert isinstance(i.quality, int)
+    assert build.active_skill_group.enabled is True
+    assert build.active_skill_group.label == "Test label."
+    assert build.active_skill_group.active == 1
+    print(build.active_skill_group.gems)
+    test_list = [
+        ("Arc", True, 20, 1),
+        ("Curse On Hit", True, 20, 2),
+        ("Conductivity", True, 20, 3),
+    ]
+    for g, t in zip(build.active_skill_group.gems, test_list):
+        assert g.name == t[0]
+        assert g.enabled == t[1]
+        assert g.level == t[2]
+        assert g.quality == t[3]
+
+
+def test_skill_gems(build):
+    test_list_active = [
+        ("Arc", True, 20, 1),
+        ("Curse On Hit", True, 20, 2),
+        ("Conductivity", True, 20, 3),
+    ]
+    test_list_passive = [
+        ("Herald of Ash", True, 20, 0),
+        ("Herald of Ice", True, 20, 0),
+        ("Herald of Thunder", True, 20, 0),
+    ]
+    for g, t in zip(build.skill_gems, test_list_active + test_list_passive):
+        assert g.name == t[0]
+        assert g.enabled == t[1]
+        assert g.level == t[2]
+        assert g.quality == t[3]
 
 
 def test_active_skill(build):
-    assert isinstance(build.active_skill, models.Gem)
-    assert isinstance(build.active_skill.name, str)
-    assert isinstance(build.active_skill.enabled, bool)
-    assert isinstance(build.active_skill.level, int)
-    assert isinstance(build.active_skill.quality, int)
+    t = ("Arc", True, 20, 1)
+    assert build.active_skill.name == t[0]
+    assert build.active_skill.enabled == t[1]
+    assert build.active_skill.level == t[2]
+    assert build.active_skill.quality == t[3]
 
 
-def test_trees(build):
-    for i in build.trees:
-        assert isinstance(i, models.Tree)
-        assert isinstance(i.url, str)
-        assert isinstance(i.nodes, list)
-        assert isinstance(i.sockets, dict)
-    assert isinstance(build.active_skill_tree, models.Tree)
-
-
-def test_skill_groups(build):
-    for i in build.skill_groups:
-        assert isinstance(i, models.Skill)
-        assert isinstance(i.enabled, bool)
-        assert isinstance(i.label, str)
-        assert isinstance(i.active, (int, type(None)))
-        assert isinstance(i.gems, list)
-        for j in i.gems:
-            assert isinstance(j, models.Gem)
-            assert isinstance(j.name, str)
-            assert isinstance(j.enabled, bool)
-            assert isinstance(j.level, int)
-            assert isinstance(j.quality, int)
-    assert build.skill_groups[1]  # test indexing
-    # assert build.main_skill_group == build().skill_groups[0]  could use data classes for this
-    assert isinstance(build.active_skill_group, models.Skill)
-    assert isinstance(build.active_skill, models.Gem)
+def test_active_skill_tree(build):
+    assert (
+        build.active_skill_tree.url
+        == "https://www.pathofexile.com/passive-skill-tree/AAAABAABAJitGFbaYthNgsdodCj6lKD56A=="
+    )
+    # fmt: off
+    assert build.active_skill_tree.nodes == \
+        [2650, 46618, 8059, 6309, 31178, 9982, 38572, 45611, 57082, 51490, 38495, 44461,
+         59327, 0, 4, 1, 152, 44312, 22234, 25304, 19842, 51048, 29736, 64148, 41209]
+    # fmt: on
+    assert build.active_skill_tree.sockets == {}
 
 
 def test_items(build):
     for i in build.items:
-        assert isinstance(i, models.Item)
-        assert isinstance(i.rarity, str)
-        assert isinstance(i.name, str)
-        assert isinstance(i.base, str)
-        assert isinstance(i.shaper, bool)
-        assert isinstance(i.elder, bool)
-        assert isinstance(i.quality, (int, type(None)))
-        assert isinstance(i.sockets, (tuple, type(None)))
-        assert isinstance(i.level_req, int)
-        assert isinstance(i.item_level, int)
-        assert isinstance(i.implicit, (int, type(None)))
-        assert isinstance(i.text, str)
+        if i.name == "Inpulsa's Broken Heart":
+            assert i.rarity == "Unique"
+            assert i.name == "Inpulsa's Broken Heart"
+            assert i.base == "Sadist Garb"
+            assert i.shaper is True
+            assert i.elder is False
+            assert i.quality == 20
+            assert i.sockets == (("R", "G", "B"), ("B", "B", "B"))
+            assert i.level_req == 68
+            assert i.item_level == 1
+            assert i.implicit == 2
+            assert (
+                i.text
+                == """45% increased Damage
+5% increased maximum Life
++70 to maximum Life
+35% increased Damage if you have Shocked an Enemy Recently
+33% increased Effect of Shock
+Unaffected by Shock
+Shocked Enemies you Kill Explode, dealing 5% of
+their Maximum Life as Lightning Damage which cannot Shock
+Corrupted"""
+            )

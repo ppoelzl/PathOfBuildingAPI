@@ -2,7 +2,7 @@
 import base64
 import decimal
 import struct
-from typing import Any, Callable, Iterator, List
+from typing import Any, Callable, Iterator, List, Union
 import zlib
 
 # Project
@@ -46,7 +46,7 @@ def accumulate(func: Callable) -> Callable:
     return _accumulate_helper
 
 
-def fetch_xml_from_url(url: str, timeout: float = 6.0) -> str:
+def fetch_xml_from_url(url: str, timeout: float = 6.0) -> bytes:
     """Get a Path Of Building import code shared with pastebin.com.
 
     :return: Decompressed XML build document."""
@@ -71,7 +71,7 @@ def fetch_xml_from_url(url: str, timeout: float = 6.0) -> str:
         raise ValueError(url, "is not a valid pastebin.com URL.")
 
 
-def fetch_xml_from_import_code(import_code: str) -> str:
+def fetch_xml_from_import_code(import_code: str) -> bytes:
     """Decodes and unzips a Path Of Building import code.
 
     :return: Decompressed XML build document."""
@@ -101,14 +101,15 @@ def _skill_tree_nodes(url: str) -> List[int]:
     )
 
 
-def _get_stat(text: List[str], stat: str) -> str:
+def _get_stat(text: List[str], stat: str) -> Union[str, type(True)]:
     """Get the value of an item affix.
+    If an affix is found without a value, returns True instead.
 
-    :return: Item affix value."""
+    :return: Item affix value or True."""
     for line in text:
         if line.startswith(stat):
             _, _, result = line.partition(stat)
-            return result
+            return result or True
 
 
 def _item_text(text: List[str]) -> Iterator[str]:

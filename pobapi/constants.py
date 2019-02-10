@@ -3,30 +3,6 @@
 #: Skill tree node data is offset 7 bytes from the start.
 TREE_OFFSET = 7
 
-#: Collections of game objects.
-BANDITS = ("Kraityn", "Alira", "Oak")
-CLASS_NAMES = ("Duelist", "Marauder", "Ranger", "Scion", "Shadow", "Templar", "Witch")
-ASCENDANCY_NAMES = (
-    "Ascendant",
-    "Assassin",
-    "Berserker",
-    "Champion",
-    "Chieftain",
-    "Deadeye",
-    "Elementalist",
-    "Gladiator",
-    "Guardian",
-    "Hierophant",
-    "Inquisitor",
-    "Juggernaut",
-    "Necromancer",
-    "Occultist",
-    "Pathfinder",
-    "Raider",
-    "Saboteur",
-    "Slayer",
-    "Trickster",
-)
 #: Taken from DefaultMonsterStats.dat
 # fmt: off
 MONSTER_DAMAGE_TABLE = (5, 6, 6, 7, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21,
