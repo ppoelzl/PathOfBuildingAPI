@@ -4,8 +4,10 @@ import decimal
 import struct
 from typing import Any, Callable, Iterator, List
 import zlib
+
 # Project
 from pobapi.constants import TREE_OFFSET
+
 # Third-party
 import requests
 
@@ -16,6 +18,7 @@ class CachedProperty:
     Note that the result replaces the decorated function on first access.
 
     :return: Cached result."""
+
     def __init__(self, func: Callable):
         self.__name__ = func.__name__
         # self.__module__ = func.__module__
@@ -36,8 +39,10 @@ def accumulate(func: Callable) -> Callable:
     Note that this is useful for list comprehensions that are cleaner written with a generator approach.
 
     :return: Generator results."""
+
     def _accumulate_helper(*args, **kwargs) -> List:
         return list(func(*args, **kwargs))
+
     return _accumulate_helper
 
 
@@ -53,10 +58,12 @@ def fetch_xml_from_url(url: str, timeout: float = 6.0) -> str:
             raise ValueError(e, url, "is not a valid URL.") from e
         except requests.Timeout as e:
             print(e, "Connection timed out, try again or raise the timeout.")
-        except (requests.ConnectionError,
-                requests.HTTPError,
-                requests.RequestException,
-                requests.TooManyRedirects) as e:
+        except (
+            requests.ConnectionError,
+            requests.HTTPError,
+            requests.RequestException,
+            requests.TooManyRedirects,
+        ) as e:
             print(e, "Something went wrong, check it out.")
         else:
             return fetch_xml_from_import_code(request.text)
@@ -70,6 +77,7 @@ def fetch_xml_from_import_code(import_code: str) -> str:
     :return: Decompressed XML build document."""
     try:
         base64_decode = base64.urlsafe_b64decode(import_code)
+        print(base64_decode)
         decompressed_xml = zlib.decompress(base64_decode)
     except (TypeError, ValueError) as e:
         print(e, "Something went wrong while decoding. Fix it.")
@@ -84,7 +92,13 @@ def _skill_tree_nodes(url: str) -> List[int]:
 
     :return: Passive tree node IDs."""
     bin_tree = base64.urlsafe_b64decode(url)
-    return list(struct.unpack_from("!" + "H" * ((len(bin_tree) - TREE_OFFSET) // 2), bin_tree, offset=TREE_OFFSET))
+    return list(
+        struct.unpack_from(
+            "!" + "H" * ((len(bin_tree) - TREE_OFFSET) // 2),
+            bin_tree,
+            offset=TREE_OFFSET,
+        )
+    )
 
 
 def _get_stat(text: List[str], stat: str) -> str:
@@ -104,12 +118,14 @@ def _item_text(text: List[str]) -> Iterator[str]:
     for index, line in enumerate(text):
         if line.startswith("Implicits: "):
             try:
-                yield from text[index + 1:]
+                yield from text[index + 1 :]
             except KeyError:
                 return ""
 
 
-def _get_text(text: List[str], variant: str, alt_variant: str, mod_ranges: List[float]) -> str:
+def _get_text(
+    text: List[str], variant: str, alt_variant: str, mod_ranges: List[float]
+) -> str:
     def _parse_text(text_, variant_, alt_variant_, mod_ranges_):
         """Get the correct variant and item affix values for items made in Path Of Building.
 
@@ -117,9 +133,15 @@ def _get_text(text: List[str], variant: str, alt_variant: str, mod_ranges: List[
         counter = 0
         # We have to advance this every time we get a line with text to replace, not every time we substitute.
         for line in _item_text(text_):
-            if line.startswith("{variant:"):  # We want to skip all mods of alternative item versions.
-                if variant_ not in line.partition("{variant:")[-1].partition("}")[0].split(","):
-                    if alt_variant_ not in line.partition("{variant:")[-1].partition("}")[0].split(","):
+            if line.startswith(
+                "{variant:"
+            ):  # We want to skip all mods of alternative item versions.
+                if variant_ not in line.partition("{variant:")[-1].partition("}")[
+                    0
+                ].split(","):
+                    if alt_variant_ not in line.partition("{variant:")[-1].partition(
+                        "}"
+                    )[0].split(","):
                         continue
             # We have to check for '{range:' used in range tags to filter unsupported mods.
             if "Adds (" in line and "{range:" in line:
@@ -133,6 +155,7 @@ def _get_text(text: List[str], variant: str, alt_variant: str, mod_ranges: List[
             # We are only interested in everything past the '{variant: *}' and '{range: *}' tags.
             _, _, mod = line.rpartition("}")
             yield mod
+
     return "\n".join(_parse_text(text, variant, alt_variant, mod_ranges))
 
 

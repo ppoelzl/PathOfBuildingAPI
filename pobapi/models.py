@@ -1,8 +1,10 @@
 # Built-ins
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
+
 # Third-party
 from dataslots import with_slots
+
 __all__ = ["Gem", "Skill", "Tree", "Item", "Set"]
 
 
@@ -15,6 +17,7 @@ class Gem:
     :param enabled: Whether the skill gem is in active use.
     :param level: Skill gem level.
     :param quality: Skill gem quality."""
+
     name: str
     enabled: bool
     level: int
@@ -30,6 +33,7 @@ class Skill:
     :param label: Socket group label assigned in Path Of Building.
     :param active: Main skill in socket group, if given.
     :param gems: List of :class:`Gem <Gem>` objects in socket group."""
+
     enabled: bool
     label: str
     active: Optional[int]
@@ -44,6 +48,7 @@ class Tree:
     :param url: pathofexile.com link to passive skill tree.
     :param nodes: List of passive skill tree nodes by ID.
     :param sockets: Dictionary of passive skill tree jewel socket location : jewel set ID."""
+
     url: str
     nodes: List[int]
     sockets: Dict[int, int]
@@ -75,6 +80,7 @@ class Item:
     :param text: Item text.
         Note: For items existing in-game, their item text is just copied. For items created with Path Of Building, their
         affix values are calculated to match in-game items in appearance."""
+
     rarity: str
     name: str
     base: str
@@ -150,6 +156,7 @@ class Set:
     :param flask3: Flask bound to '3' by default.
     :param flask4: Flask bound to '4' by default.
     :param flask5: Flask bound to '5' by default."""
+
     weapon1: Optional[int]
     weapon1_as1: Optional[int]
     weapon1_as2: Optional[int]

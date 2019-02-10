@@ -1,5 +1,6 @@
 # Built-ins
 from typing import List, Optional
+
 # Project
 from pobapi import config
 from pobapi.constants import CONFIG_MAP, STATS_MAP, SET_MAP
@@ -7,6 +8,7 @@ from pobapi import models
 from pobapi import stats
 from pobapi import util
 from pobapi.util import _get_stat, _skill_tree_nodes, _get_text
+
 # Third-party
 from defusedxml import lxml
 
@@ -19,6 +21,7 @@ class PathOfBuildingAPI:
     """Instances of this class are single Path Of Building pastebins.
 
     :param xml: XML document in Path Of Building's export format."""
+
     def __init__(self, xml: str):
         self.xml = lxml.fromstring(xml)
 
@@ -63,7 +66,10 @@ class PathOfBuildingAPI:
         """Namespace for character stats.
 
         :return: Character stats."""
-        kwargs = {STATS_MAP[i.get("stat")]: float(i.get("value")) for i in self.xml.find("Build").findall("PlayerStat")}
+        kwargs = {
+            STATS_MAP[i.get("stat")]: float(i.get("value"))
+            for i in self.xml.find("Build").findall("PlayerStat")
+        }
         return stats.Stats(**kwargs)
 
     @util.CachedProperty
@@ -72,6 +78,7 @@ class PathOfBuildingAPI:
         """Get a character's skill setups.
 
         :return: Skill setups."""
+
         @util.accumulate
         def _gems(skill_):
             for gem in skill_:
@@ -80,10 +87,15 @@ class PathOfBuildingAPI:
                 level = int(gem.get("level"))
                 quality = int(gem.get("quality"))
                 yield models.Gem(name, enabled_, level, quality)
+
         for skill in self.xml.find("Skills").findall("Skill"):
             enabled = True if skill.get("enabled") == "true" else False
             label = skill.get("label")
-            active = int(skill.get("mainActiveSkill")) if not skill.get("mainActiveSkill") == "nil" else None
+            active = (
+                int(skill.get("mainActiveSkill"))
+                if not skill.get("mainActiveSkill") == "nil"
+                else None
+            )
             gems = _gems(skill)
             yield models.Skill(enabled, label, active, gems)
 
@@ -122,7 +134,10 @@ class PathOfBuildingAPI:
         for spec in self.xml.find("Tree").findall("Spec"):
             url = spec.find("URL").text.strip("\n\r\t")
             nodes = _skill_tree_nodes(url)
-            sockets = {int(s.get("nodeId")): int(s.get("itemId")) for s in spec.findall("Socket")}
+            sockets = {
+                int(s.get("nodeId")): int(s.get("itemId"))
+                for s in spec.findall("Socket")
+            }
             yield models.Tree(url, nodes, sockets)
 
     @util.CachedProperty
@@ -138,7 +153,11 @@ class PathOfBuildingAPI:
 
         :return: Truth value.
         """
-        return True if self.xml.find("Items").get("useSecondWeaponSet") == "true" else False
+        return (
+            True
+            if self.xml.find("Items").get("useSecondWeaponSet") == "true"
+            else False
+        )
 
     @util.CachedProperty
     @util.accumulate
@@ -148,7 +167,9 @@ class PathOfBuildingAPI:
         :return: Items."""
         for text in self.xml.find("Items").findall("Item"):
             variant = text.get("variant")
-            alt_variant = text.get("variantAlt")  # 'variantAlt' is for the second Watcher's Eye unique mod.
+            alt_variant = text.get(
+                "variantAlt"
+            )  # 'variantAlt' is for the second Watcher's Eye unique mod.
             # The 3-stat variant obtained from Uber Elder is not yet implemented in Path of Building.
             mod_ranges = [float(i.get("range")) for i in text.findall("ModRange")]
             item = text.text.strip("\n\r\t").splitlines()
@@ -161,13 +182,29 @@ class PathOfBuildingAPI:
             _quality = _get_stat(item, "Quality: ")
             quality = int(_quality) if _quality else None
             _sockets = _get_stat(item, "Sockets: ")
-            sockets = tuple(tuple(group.split("-")) for group in _sockets.split()) if _sockets else None
+            sockets = (
+                tuple(tuple(group.split("-")) for group in _sockets.split())
+                if _sockets
+                else None
+            )
             level_req = int(_get_stat(item, "LevelReq: ") or 1)
             item_level = int(_get_stat(item, "Item Level: ") or 1)
             implicit = int(_get_stat(item, "Implicits: "))
             item_text = _get_text(item, variant, alt_variant, mod_ranges)
-            yield models.Item(rarity, name, base, uid, shaper, elder, quality, sockets, level_req, item_level, implicit,
-                              item_text)
+            yield models.Item(
+                rarity,
+                name,
+                base,
+                uid,
+                shaper,
+                elder,
+                quality,
+                sockets,
+                level_req,
+                item_level,
+                implicit,
+                item_text,
+            )
 
     @util.CachedProperty
     def active_item_set(self) -> models.Set:
@@ -184,8 +221,12 @@ class PathOfBuildingAPI:
 
         :return: Item sets."""
         for item_set in self.xml.find("Items").findall("ItemSet"):
-            kwargs = {SET_MAP[slot.get("name")]: int(slot.get("itemId")) if not slot.get("itemId") == "0" else None
-                      for slot in item_set.findall("Slot")}
+            kwargs = {
+                SET_MAP[slot.get("name")]: int(slot.get("itemId"))
+                if not slot.get("itemId") == "0"
+                else None
+                for slot in item_set.findall("Slot")
+            }
             yield models.Set(**kwargs)
 
     @util.CachedProperty
@@ -193,6 +234,7 @@ class PathOfBuildingAPI:
         """Namespace for Path Of Building config tab's options and values.
 
         :return: Path Of Building config."""
+
         def _convert_fields(item):
             if item.get("boolean"):
                 return True
@@ -200,7 +242,11 @@ class PathOfBuildingAPI:
                 return int(item.get("number"))
             elif item.get("string"):
                 return item.get("string").capitalize()
-        kwargs = {CONFIG_MAP[i.get("name")]: _convert_fields(i) for i in self.xml.find("Config").findall("Input")}
+
+        kwargs = {
+            CONFIG_MAP[i.get("name")]: _convert_fields(i)
+            for i in self.xml.find("Config").findall("Input")
+        }
         kwargs["character_level"] = self.level
         return config.Config(**kwargs)
 

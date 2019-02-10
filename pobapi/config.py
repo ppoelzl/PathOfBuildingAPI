@@ -1,7 +1,9 @@
 # Built-ins
 from dataclasses import dataclass, InitVar
+
 # Project
 from pobapi.constants import MONSTER_DAMAGE_TABLE, MONSTER_LIFE_TABLE
+
 # Third-party
 from dataslots import with_slots
 
@@ -206,6 +208,7 @@ class Config:
     :param elemental_equilibrium_ignore_hit_damage: Whether to ignore skill hit damage resetting Elemental Equilibrium.
     :param character_level: Overridden character/enemy level used to estimate hit and evasion chances, enemy life and
         damage."""
+
     # General Build Configuration
     resistance_penalty: int = -60
     enemy_level: int = None
@@ -388,6 +391,8 @@ class Config:
         if self.enemy_level is None:
             self.enemy_level = min(character_level, 84)
         if self.enemy_physical_hit_damage is None:
-            self.enemy_physical_hit_damage = MONSTER_DAMAGE_TABLE[self.enemy_level - 1] * 1.5
+            self.enemy_physical_hit_damage = (
+                MONSTER_DAMAGE_TABLE[self.enemy_level - 1] * 1.5
+            )
         if self.detonate_dead_corpse_life is None:
             self.detonate_dead_corpse_life = MONSTER_LIFE_TABLE[self.enemy_level - 1]

@@ -1,5 +1,6 @@
 # Built-ins
 from dataclasses import dataclass
+
 # Third-party
 from dataslots import with_slots
 
@@ -95,6 +96,7 @@ class Stats:
     :param endurance_charges_maximum: Maximum endurance charges.
     :param active_totem_limit: Maximum active totems.
     :param active_minion_limit: Maximum number of minions."""
+
     average_hit: float = None
     average_damage: float = None
     cast_speed: float = None
