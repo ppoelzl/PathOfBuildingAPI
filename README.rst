@@ -29,7 +29,6 @@ Benefits from using this library:
 * Backwards-compatibility as PoB's export format changes
 * Tested and secure codebase
 
-
 Features
 --------
 
@@ -47,6 +46,7 @@ Features
 
 Requirements
 ------------
+
 * `Python 3.7+ <https://www.python.org/>`_
 * `defusedxml <https://pypi.org/project/defusedxml/>`_
 * `lxml <https://pypi.org/project/lxml/>`_
@@ -135,6 +135,11 @@ Feedback
 --------
 
 Please file a `GitHub issue <https://developer.github.com/v3/issues/>`_ in this repository for any feedback you may have.
+
+Contribution
+------------
+
+Pull requests are gladly accepted.
 
 License
 -------
