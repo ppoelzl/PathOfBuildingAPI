@@ -19,9 +19,9 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'Path Of Building API'
-copyright = '2019, Peter Poelzl'
-author = 'Peter Poelzl'
+project = pobapi.__version__
+copyright = pobapi.__copyright__
+author = pobapi.__author__
 
 # The short X.Y version
 version = pobapi.__version__
