@@ -15,7 +15,7 @@ import requests
 class CachedProperty:
     """Used as a decorator for caching properties. Works like the built-in @property decorator, except that a result is
     computed on first access only, with subsequent access returning the computed result directly.
-    Note that the result replaces the decorated function on first access.
+    .. note:: The result replaces the decorated function on first access.
 
     :return: Cached result."""
 
@@ -36,7 +36,7 @@ class CachedProperty:
 
 def accumulate(func: Callable) -> Callable:
     """Used as a decorator to accumulate the results a generator yields into a list.
-    Note that this is useful for list comprehensions that are cleaner written with a generator approach.
+    .. note:: This is useful for list comprehensions that are cleaner written with a generator approach.
 
     :return: Generator results."""
 
