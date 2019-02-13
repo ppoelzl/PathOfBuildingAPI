@@ -6,6 +6,8 @@
 Welcome to Path Of Building API's documentation!
 ================================================
 
+.. include:: ../README.rst
+
 The User Guide
 --------------
 

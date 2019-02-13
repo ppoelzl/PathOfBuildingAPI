@@ -30,7 +30,6 @@ Helper Functions
 
 .. automodule:: pobapi.util
     :members:
-    :private-members:
 
 Constants
 ---------

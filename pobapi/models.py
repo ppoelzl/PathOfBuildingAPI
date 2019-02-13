@@ -67,20 +67,23 @@ class Item:
     :param name: Item name.
     :param base: Item base type.
     :param uid: Unique item ID for items in-game.
-        .. note:: Items created in Path of Building do not have an UID.
+
+    .. note:: Items created in Path of Building do not have an UID.
 
     :param shaper: Whether the item is a Shaper base type.
     :param elder: Whether the item is an Elder base type.
     :param quality: Item quality, if the item can have quality.
     :param sockets: Item socket groups, if the item can have sockets.
-        .. note:: The format used for example a 5 socket chest armour with 2 socket groups of 3 linked blue sockets and
+
+    .. note:: The format used for example a 5 socket chest armour with 2 socket groups of 3 linked blue sockets and
         2 linked red sockets would be ((B, B, B), (R, R)).
 
     :param level_req: Required character level to equip the item.
     :param item_level: Item level.
     :param implicit: Number of item implicits, if the item can have implicits.
     :param text: Item text.
-        .. note:: For items existing in-game, their item text is just copied. For items created with Path Of Building,
+
+    .. note:: For items existing in-game, their item text is just copied. For items created with Path Of Building,
         their affix values are calculated to match in-game items in appearance."""
 
     rarity: str

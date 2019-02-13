@@ -15,8 +15,9 @@ __all__ = ["Config"]
 class Config:
     """Config(*args)
     Class that holds build configuration data.
+
     .. note:: Many map mods have different tiers for white, yellow and red maps;
-    documented as tuples (white, yellow, red).
+        documented as tuples (white, yellow, red).
 
     :param resistance_penalty: Resistance penalty obtained by slaying Kitava.
         Possible values: 0, -30, -60 (default).

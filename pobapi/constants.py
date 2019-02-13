@@ -3,8 +3,8 @@
 #: Skill tree node data is offset 7 bytes from the start.
 TREE_OFFSET = 7
 
-#: Taken from DefaultMonsterStats.dat
 # fmt: off
+#: Taken from DefaultMonsterStats.dat
 MONSTER_DAMAGE_TABLE = (5, 6, 6, 7, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21,
                         23, 24, 26, 28, 30, 32, 34, 36, 39, 41, 44, 47, 50, 53, 56, 59,
                         63, 67, 71, 75, 80, 84, 89, 94, 100, 106, 112, 118, 125, 131,
