@@ -28,6 +28,7 @@ requests==2.21.0
 six==1.12.0
 snowballstemmer==1.2.1
 Sphinx==1.8.4
+sphinx-autodoc-typehints==1.6.0
 sphinxcontrib-websupport==1.1.0
 toml==0.10.0
 unstdlib==1.7
