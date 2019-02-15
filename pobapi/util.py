@@ -2,8 +2,8 @@
 import base64
 import decimal
 import struct
-from typing import Any, Callable, Iterator, List, Union
 import zlib
+from typing import Iterator, List, Union
 
 # Project
 from pobapi.constants import TREE_OFFSET
@@ -12,43 +12,7 @@ from pobapi.constants import TREE_OFFSET
 import requests
 
 
-class CachedProperty:
-    """Used as a decorator for caching properties. Works like the built-in @property decorator, except that a result is
-    computed on first access only, with subsequent access returning the computed result directly.
-
-    .. note:: The result replaces the decorated function on first access.
-
-    :return: Cached result."""
-
-    def __init__(self, func: Callable):
-        self.__name__ = func.__name__
-        # self.__module__ = func.__module__
-        # __module__ not yet implemented for collections.abc.Callable
-        self.__doc__ = func.__doc__
-        self._func = func
-
-    def __get__(self, obj: Callable, cls: Callable = None) -> Any:
-        if obj is None:
-            return self
-        value = self._func(obj)
-        setattr(obj, self._func.__name__, value)
-        return value
-
-
-def accumulate(func: Callable) -> Callable:
-    """Used as a decorator to accumulate the results a generator yields into a list.
-
-    .. note:: This is useful for list comprehensions that are cleaner written with a generator approach.
-
-    :return: Generator results."""
-
-    def _accumulate_helper(*args, **kwargs) -> List:
-        return list(func(*args, **kwargs))
-
-    return _accumulate_helper
-
-
-def fetch_xml_from_url(url: str, timeout: float = 6.0) -> bytes:
+def _fetch_xml_from_url(url: str, timeout: float = 6.0) -> bytes:
     """Get a Path Of Building import code shared with pastebin.com.
 
     :return: Decompressed XML build document."""
@@ -68,12 +32,12 @@ def fetch_xml_from_url(url: str, timeout: float = 6.0) -> bytes:
         ) as e:
             print(e, "Something went wrong, check it out.")
         else:
-            return fetch_xml_from_import_code(request.text)
+            return _fetch_xml_from_import_code(request.text)
     else:
         raise ValueError(url, "is not a valid pastebin.com URL.")
 
 
-def fetch_xml_from_import_code(import_code: str) -> bytes:
+def _fetch_xml_from_import_code(import_code: str) -> bytes:
     """Decodes and unzips a Path Of Building import code.
 
     :return: Decompressed XML build document."""

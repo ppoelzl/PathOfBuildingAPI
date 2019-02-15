@@ -51,6 +51,7 @@ Requirements
 * `defusedxml <https://pypi.org/project/defusedxml/>`_
 * `lxml <https://pypi.org/project/lxml/>`_
 * `requests <https://pypi.org/project/requests/>`_
+* `unstdlib <https://pypi.org/project/unstdlib/>`_
 
 Setup Instructions
 --------------------

@@ -6,11 +6,13 @@ from pobapi import config
 from pobapi.constants import CONFIG_MAP, STATS_MAP, SET_MAP
 from pobapi import models
 from pobapi import stats
-from pobapi import util
 from pobapi.util import _get_stat, _skill_tree_nodes, _get_text
+from pobapi.util import _fetch_xml_from_import_code, _fetch_xml_from_url
 
 # Third-party
 from defusedxml import lxml
+from unstdlib.standard.functools_ import memoized_property
+from unstdlib.standard.list_ import listify
 
 """API Provider for PathOfBuilding's XML export format."""
 
@@ -25,35 +27,35 @@ class PathOfBuildingAPI:
     def __init__(self, xml: bytes):
         self.xml = lxml.fromstring(xml)
 
-    @util.CachedProperty
+    @memoized_property
     def class_name(self) -> str:
         """Get a character's class.
 
         :return: Character class."""
         return self.xml.find("Build").get("className")
 
-    @util.CachedProperty
+    @memoized_property
     def ascendancy_name(self) -> Optional[str]:
         """Get a character's ascendancy class.
 
         :return: Character ascendancy class, if ascended."""
         return self.xml.find("Build").get("ascendClassName")
 
-    @util.CachedProperty
+    @memoized_property
     def level(self) -> int:
         """Get a character's level.
 
         :return: Character level."""
         return int(self.xml.find("Build").get("level"))
 
-    @util.CachedProperty
+    @memoized_property
     def bandit(self) -> Optional[str]:
         """Get a character's bandit choice.
 
         :return: Character bandit choice."""
         return self.xml.find("Build").get("bandit")
 
-    @util.CachedProperty
+    @memoized_property
     def active_skill_group(self) -> models.Skill:
         """Get a character's main skill setup.
 
@@ -61,7 +63,7 @@ class PathOfBuildingAPI:
         index = int(self.xml.find("Build").get("mainSocketGroup")) - 1
         return self.skill_groups[index]
 
-    @util.CachedProperty
+    @memoized_property
     def stats(self) -> stats.Stats:
         """Namespace for character stats.
 
@@ -72,14 +74,14 @@ class PathOfBuildingAPI:
         }
         return stats.Stats(**kwargs)
 
-    @util.CachedProperty
-    @util.accumulate
+    @memoized_property
+    @listify
     def skill_groups(self) -> List[models.Skill]:
         """Get a character's skill setups.
 
         :return: Skill setups."""
 
-        @util.accumulate
+        @listify
         def _gems(skill_):
             for gem in skill_:
                 name = gem.get("nameSpec")
@@ -99,7 +101,7 @@ class PathOfBuildingAPI:
             gems = _gems(skill)
             yield models.Skill(enabled, label, active, gems)
 
-    @util.CachedProperty
+    @memoized_property
     def active_skill(self) -> models.Gem:
         """Get a character's main skill.
 
@@ -107,8 +109,8 @@ class PathOfBuildingAPI:
         index = self.active_skill_group.active - 1
         return self.active_skill_group.gems[index]
 
-    @util.CachedProperty
-    @util.accumulate
+    @memoized_property
+    @listify
     def skill_gems(self) -> List[models.Gem]:  # Added for convenience
         """Get a list of all skill gems on a character.
 
@@ -117,7 +119,7 @@ class PathOfBuildingAPI:
             for gem in group.gems:
                 yield gem
 
-    @util.CachedProperty
+    @memoized_property
     def active_skill_tree(self) -> models.Tree:
         """Get a character's current skill tree.
 
@@ -125,8 +127,8 @@ class PathOfBuildingAPI:
         index = int(self.xml.find("Tree").get("activeSpec")) - 1
         return self.trees[index]
 
-    @util.CachedProperty
-    @util.accumulate
+    @memoized_property
+    @listify
     def trees(self) -> List[models.Tree]:
         """Get a list of all skill trees of a character.
 
@@ -140,14 +142,14 @@ class PathOfBuildingAPI:
             }
             yield models.Tree(url, nodes, sockets)
 
-    @util.CachedProperty
+    @memoized_property
     def notes(self) -> str:
         """Get notes of a build's author.
 
         :return: Wall of text."""
         return self.xml.find("Notes").text.strip("\n\r\t").rstrip("\n\r\t")
 
-    @util.CachedProperty
+    @memoized_property
     def second_weapon_set(self) -> bool:
         """Get whether a character primarily uses their second weapon set.
 
@@ -159,8 +161,8 @@ class PathOfBuildingAPI:
             else False
         )
 
-    @util.CachedProperty
-    @util.accumulate
+    @memoized_property
+    @listify
     def items(self) -> List[models.Item]:
         """Get a list of all items of a Path Of Building build.
         
@@ -196,7 +198,7 @@ class PathOfBuildingAPI:
                               level_req, item_level, implicit, item_text)
             # fmt: on
 
-    @util.CachedProperty
+    @memoized_property
     def active_item_set(self) -> models.Set:
         """Get the item set a character is currently wearing.
 
@@ -204,8 +206,8 @@ class PathOfBuildingAPI:
         index = int(self.xml.find("Items").get("activeItemSet")) - 1
         return self.item_sets[index]
 
-    @util.CachedProperty
-    @util.accumulate
+    @memoized_property
+    @listify
     def item_sets(self) -> List[models.Set]:
         """Get a list of all item sets of a character.
 
@@ -219,7 +221,7 @@ class PathOfBuildingAPI:
             }
             yield models.Set(**kwargs)
 
-    @util.CachedProperty
+    @memoized_property
     def config(self) -> config.Config:
         """Namespace for Path Of Building config tab's options and values.
 
@@ -245,11 +247,11 @@ def from_url(url: str) -> PathOfBuildingAPI:
     """Instantiate build class from a pastebin.com link generated with Path Of Building.
 
     :param url: pastebin.com link generated with Path Of Building."""
-    return PathOfBuildingAPI(util.fetch_xml_from_url(url))
+    return PathOfBuildingAPI(_fetch_xml_from_url(url))
 
 
 def from_import_code(import_code: str) -> PathOfBuildingAPI:
     """Instantiate build class from an import code generated with Path Of Building.
 
     :param import_code: import code generated with Path Of Building."""
-    return PathOfBuildingAPI(util.fetch_xml_from_import_code(import_code))
+    return PathOfBuildingAPI(_fetch_xml_from_import_code(import_code))
