@@ -22,7 +22,13 @@ __all__ = ["PathOfBuildingAPI", "from_url", "from_import_code"]
 class PathOfBuildingAPI:
     """Instances of this class are single Path Of Building pastebins.
 
-    :param xml: XML document in Path Of Building's export format."""
+    :param xml: Path of Building XML document in byte format.
+
+    .. note:: XML must me in byte format, not string format.
+        This is required because the XML contains encoding information.
+
+    .. note:: To instantiate from pastebin.com links or import codes,
+        use :func:`~pobapi.api.from_url` or :func:`~pobapi.api.from_import_code` instead."""
 
     def __init__(self, xml: bytes):
         self.xml = lxml.fromstring(xml)
