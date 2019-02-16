@@ -14,7 +14,7 @@ from defusedxml import lxml
 from unstdlib.standard.functools_ import memoized_property
 from unstdlib.standard.list_ import listify
 
-"""API Provider for PathOfBuilding's XML export format."""
+"""API for PathOfBuilding's XML export format."""
 
 __all__ = ["PathOfBuildingAPI", "from_url", "from_import_code"]
 
@@ -31,35 +31,40 @@ class PathOfBuildingAPI:
     def class_name(self) -> str:
         """Get a character's class.
 
-        :return: Character class."""
+        :return: Character class.
+        :rtype: :class:`str`"""
         return self.xml.find("Build").get("className")
 
     @memoized_property
     def ascendancy_name(self) -> Optional[str]:
         """Get a character's ascendancy class.
 
-        :return: Character ascendancy class, if ascended."""
+        :return: Character ascendancy class, if ascended.
+        :rtype: :data:`~typing.Optional`\\[:class:`str`]"""
         return self.xml.find("Build").get("ascendClassName")
 
     @memoized_property
     def level(self) -> int:
         """Get a character's level.
 
-        :return: Character level."""
+        :return: Character level.
+        :rtype: :class:`int`"""
         return int(self.xml.find("Build").get("level"))
 
     @memoized_property
     def bandit(self) -> Optional[str]:
         """Get a character's bandit choice.
 
-        :return: Character bandit choice."""
+        :return: Character bandit choice.
+        :rtype: :data:`~typing.Optional`\\[:class:`str`]"""
         return self.xml.find("Build").get("bandit")
 
     @memoized_property
     def active_skill_group(self) -> models.Skill:
         """Get a character's main skill setup.
 
-        :return: Main skill setup."""
+        :return: Main skill setup.
+        :rtype: :class:`~pobapi.models.Skill`"""
         index = int(self.xml.find("Build").get("mainSocketGroup")) - 1
         return self.skill_groups[index]
 
@@ -67,7 +72,8 @@ class PathOfBuildingAPI:
     def stats(self) -> stats.Stats:
         """Namespace for character stats.
 
-        :return: Character stats."""
+        :return: Character stats.
+        :rtype: :class:`~pobapi.stats.Stats`"""
         kwargs = {
             STATS_MAP[i.get("stat")]: float(i.get("value"))
             for i in self.xml.find("Build").findall("PlayerStat")
@@ -79,7 +85,8 @@ class PathOfBuildingAPI:
     def skill_groups(self) -> List[models.Skill]:
         """Get a character's skill setups.
 
-        :return: Skill setups."""
+        :return: Skill setups.
+        :rtype: :data:`~typing.List`\\[:class:`~pobapi.models.Skill`]"""
 
         @listify
         def _gems(skill_):
@@ -105,7 +112,8 @@ class PathOfBuildingAPI:
     def active_skill(self) -> models.Gem:
         """Get a character's main skill.
 
-        :return: Main skill."""
+        :return: Main skill.
+        :rtype: :class:`~pobapi.models.Gem`"""
         index = self.active_skill_group.active - 1
         return self.active_skill_group.gems[index]
 
@@ -114,7 +122,8 @@ class PathOfBuildingAPI:
     def skill_gems(self) -> List[models.Gem]:  # Added for convenience
         """Get a list of all skill gems on a character.
 
-        :return: Skill gems."""
+        :return: Skill gems.
+        :rtype: :data:`~typing.List`\\[:class:`~pobapi.models.Gem`]"""
         for group in self.skill_groups:
             for gem in group.gems:
                 yield gem
@@ -123,7 +132,8 @@ class PathOfBuildingAPI:
     def active_skill_tree(self) -> models.Tree:
         """Get a character's current skill tree.
 
-        :return: Skill tree."""
+        :return: Skill tree.
+        :rtype: :class:`~pobapi.models.Tree`"""
         index = int(self.xml.find("Tree").get("activeSpec")) - 1
         return self.trees[index]
 
@@ -132,7 +142,8 @@ class PathOfBuildingAPI:
     def trees(self) -> List[models.Tree]:
         """Get a list of all skill trees of a character.
 
-        :return: Skill trees."""
+        :return: Skill trees.
+        :rtype: :data:`~typing.List`\\[:class:`~pobapi.models.Tree`]"""
         for spec in self.xml.find("Tree").findall("Spec"):
             url = spec.find("URL").text.strip("\n\r\t")
             nodes = _skill_tree_nodes(url)
@@ -146,7 +157,8 @@ class PathOfBuildingAPI:
     def notes(self) -> str:
         """Get notes of a build's author.
 
-        :return: Wall of text."""
+        :return: Build notes.
+        :rtype: :class:`str`"""
         return self.xml.find("Notes").text.strip("\n\r\t").rstrip("\n\r\t")
 
     @memoized_property
@@ -154,7 +166,7 @@ class PathOfBuildingAPI:
         """Get whether a character primarily uses their second weapon set.
 
         :return: Truth value.
-        """
+        :rtype: :class:`bool`"""
         return (
             True
             if self.xml.find("Items").get("useSecondWeaponSet") == "true"
@@ -166,7 +178,8 @@ class PathOfBuildingAPI:
     def items(self) -> List[models.Item]:
         """Get a list of all items of a Path Of Building build.
         
-        :return: Items."""
+        :return: Items.
+        :rtype: :data:`~typing.List`\\[:class:`~pobapi.models.Item`]"""
         for text in self.xml.find("Items").findall("Item"):
             variant = text.get("variant")
             alt_variant = text.get(
@@ -202,7 +215,8 @@ class PathOfBuildingAPI:
     def active_item_set(self) -> models.Set:
         """Get the item set a character is currently wearing.
 
-        :return: Item set."""
+        :return: Item set.
+        :rtype: :class:`~pobapi.models.Set`"""
         index = int(self.xml.find("Items").get("activeItemSet")) - 1
         return self.item_sets[index]
 
@@ -211,7 +225,8 @@ class PathOfBuildingAPI:
     def item_sets(self) -> List[models.Set]:
         """Get a list of all item sets of a character.
 
-        :return: Item sets."""
+        :return: Item sets.
+        :rtype: :data:`~typing.List`\\[:class:`~pobapi.models.Set`]"""
         for item_set in self.xml.find("Items").findall("ItemSet"):
             kwargs = {
                 SET_MAP[slot.get("name")]: int(slot.get("itemId"))
@@ -225,7 +240,8 @@ class PathOfBuildingAPI:
     def config(self) -> config.Config:
         """Namespace for Path Of Building config tab's options and values.
 
-        :return: Path Of Building config."""
+        :return: Path Of Building config.
+        :rtype: :class:`~pobapi.config.Config`"""
 
         def _convert_fields(item):
             if item.get("boolean"):
