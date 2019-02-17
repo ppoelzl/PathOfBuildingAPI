@@ -94,9 +94,8 @@ Basic Usage
 -----------
 
 >>> import pobapi
->>> with open("../resources/import_code.txt") as f:
-...    code = f.read()
->>> build = pobapi.from_import_code(code)
+>>> url = "https://pastebin.com/bQRjfedq"
+>>> build = pobapi.from_url(url)
 >>> print(build.ascendancy_name)
 Elementalist
 >>> print(build.bandit)
@@ -123,9 +122,9 @@ their Maximum Life as Lightning Damage which cannot Shock
 Unaffected by Shock
 >>> if "Blade Vortex" or "Vaal Blade Vortex" == build.active_skill.name:
 ...     if "Storm Brand" in build.skill_names:
-...         print("Backup plan.")
+...         print(build.config.brand_attached)
 ...
-Backup plan.
+True
 
 Documentation
 -------------
@@ -140,7 +139,13 @@ Please file a `GitHub issue <https://developer.github.com/v3/issues/>`_ in this 
 Contribution
 ------------
 
-Pull requests are gladly accepted.
+Pull requests are gladly accepted. Check out the :ref:`Developer Guide. <dev:Developer Guide>`
+
+To-Do
+-----
+
+* Support enchantments
+* Support passive tree keystones
 
 License
 -------
