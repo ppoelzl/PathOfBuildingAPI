@@ -24,15 +24,3 @@ Build Configuration
 
 .. automodule:: pobapi.config
     :members:
-
-Helper Functions
-----------------
-
-.. automodule:: pobapi.util
-    :members:
-
-Constants
----------
-
-.. automodule:: pobapi.constants
-    :members:

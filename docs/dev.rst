@@ -1,5 +1,5 @@
 Developer Guide
-===============
+***************
 
 Reporting Bugs
 --------------

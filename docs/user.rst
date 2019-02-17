@@ -1,5 +1,5 @@
 User Guide
-==========
+**********
 
 Introduction
 ------------
@@ -17,19 +17,10 @@ Design Choices
 | This is deliberate to ensure easy adoption and development.
 | The focus is more on getting the data in the right format, so it feels native to Python.
 
-Using this library
-------------------
+Getting Started
+---------------
 
-The library is divided into roughly 4 components:
-
-* Main interface (api.py)
-* Dataclass templates (models.py, config.py, stats.py)
-* Internals (util.py)
-* Data (constants.py)
-
-| All user interaction is handled through the main interface.
-| However, when in doubt of the type or format of a stat, have a look at the dataclass templates.
+| Create a new API object with :func:`pobapi.api.from_url` or :func:`pobapi.api.from_import_code`.
+| Access PoB build information through attributes of the object.
 
 Full documentation available :ref:`here <api:API>`.
-
-.. note:: Internals are subject to continued maintenance and unannounced changes.
