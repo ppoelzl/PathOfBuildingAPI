@@ -7,5 +7,5 @@ setup(
    author="Peter Pölzl",
    author_email="peter.poelzl@mailbox.org",
    packages=['pobapi'],
-   install_requires=["defusedxml", "lxml", "requests"],
+   install_requires=["defusedxml", "lxml", "requests", "unstdlib"],
 )
