@@ -40,16 +40,24 @@ class Config:
     :param aspect_of_the_cat_cats_agility: Whether Cats's Agility is active.
     :param override_crab_barriers: Overridden number of crab barriers.
     :param aspect_of_the_spider_web_stacks: Number of web stacks on enemies.
+    :param banner_planted: Whether the player has planted a banner.
+    :param banner_stages: Number of banner stages.
+    :param brand_attached: Whether the player has a brand attached.
     :param dark_pact_skeleton_life: Skeleton life points used for Dark Pact damage calculation.
+    :param herald_of_agony_stacks: Number of Virulence stacks on Herald of Agony.
     :param ice_nova_cast_on_frostbolt: Whether the player casts Ice Nova on a Frost Bolt.
     :param innervate_innervation: Whether the Innervate innervation buff is active.
     :param raise_spectres_spectre_level: Level of spectres raised by Raise Spectre.
-    :param siphoning_trap_affected_enemies: Number of enemies affected by Siphoning Trap.
     :param raise_spectres_enable_curses: Whether the curses of spectres are active.
-    :param raise_spectres_blade_vortex_blade_count: Number of Blade Vortex stacks of spectres (provided they cast
-        Blade Vortex).
+    :param raise_spectres_blade_vortex_blade_count: Number of Blade Vortex stacks of spectres.
+    :param raise_spectres_kaom_fire_beam_totem_stage: Number of fire beam stages of spectres.
+    :param raise_spectres_enable_summoned_ursa_rallying_cry: Whether the Rallying Cry of ursa spectres is active.
+    :param raise_spiders_spider_count: Number of spiders from Raise Spiders.
+    :param siphoning_trap_affected_enemies: Number of enemies affected by Siphoning Trap.
+    :param summon_holy_relic_enable_holy_relic_buff: Whether the Holy Relic buff of Summon Holy Relics is active.
     :param summon_lightning_golem_enable_wrath: Whether a Lightning Golem's wrath buff is active.
     :param vortex_cast_on_frostbolt: Whether the player casts Vortex on a Frost Bolt.
+    :param winter_orb_stages: Number of stages of Winter Orb.
     :param enemy_physical_reduction: Whether enemies have physical damage reduction.
         Possible values: (20%, 30%, 40%).
     :param enemy_hexproof: Whether enemies are hexproof.
@@ -103,6 +111,7 @@ class Config:
     :param minions_use_power_charges: Whether the player's minions use power charges.
     :param minions_use_frenzy_charges: Whether the player's minions use frenzy charges.
     :param minions_use_endurance_charges: Whether the player's minions use endurance charges.
+    :param focus: Whether the player has Focus.
     :param onslaught: Whether the player has Onslaught.
     :param unholy_might: Whether the player has Unholy Might.
     :param phasing: Whether the player has Phasing.
@@ -128,6 +137,8 @@ class Config:
     :param only_one_nearby_enemy: Whether there is only one enemy nearby.
     :param hit_recently: Whether the player has hit recently.
     :param crit_recently: Whether the player has crit recently.
+    :param skill_crit_recently: Whether one the player's skills has crit recently.
+    :param non_crit_recently: Whether the player has not crit recently.
     :param killed_recently: Whether the player has killed recently.
     :param number_of_enemies_killed_recently: Number of enemies killed by the player recently.
     :param totems_killed_recently: Whether the player's totems killed recently.
@@ -230,15 +241,24 @@ class Config:
     aspect_of_the_cat_cats_agility: bool = False
     override_crab_barriers: int = None
     aspect_of_the_spider_web_stacks: int = None
+    banner_planted: bool = False
+    banner_stages: int = None
+    brand_attached: bool = False
     dark_pact_skeleton_life: int = None
+    herald_of_agony_stacks: int = None
     ice_nova_cast_on_frostbolt: bool = False
     innervate_innervation: bool = False
     raise_spectres_spectre_level: int = None
-    siphoning_trap_affected_enemies: int = None
     raise_spectres_enable_curses: bool = False
     raise_spectres_blade_vortex_blade_count: int = None
+    raise_spectres_kaom_fire_beam_totem_stage: int = None
+    raise_spectres_enable_summoned_ursa_rallying_cry: bool = False
+    raise_spiders_spider_count: int = None
+    siphoning_trap_affected_enemies: int = None
+    summon_holy_relic_enable_holy_relic_buff: bool = False
     summon_lightning_golem_enable_wrath: bool = False
     vortex_cast_on_frostbolt: bool = False
+    winter_orb_stages: int = None
     # Map Configuration
     enemy_physical_reduction: int = None
     enemy_hexproof: bool = False
@@ -282,6 +302,7 @@ class Config:
     minions_use_power_charges: bool = False
     minions_use_frenzy_charges: bool = False
     minions_use_endurance_charges: bool = False
+    focus: bool = False
     onslaught: bool = False
     unholy_might: bool = False
     phasing: bool = False
@@ -307,6 +328,8 @@ class Config:
     only_one_nearby_enemy: bool = False
     hit_recently: bool = False
     crit_recently: bool = False
+    skill_crit_recently: bool = False
+    non_crit_recently: bool = False
     killed_recently: bool = False
     number_of_enemies_killed_recently: int = None
     totems_killed_recently: bool = False
