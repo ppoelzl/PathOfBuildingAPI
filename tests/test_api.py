@@ -9,7 +9,7 @@ import pytest
 
 @pytest.fixture(scope="module")
 def build():
-    with open("../resources/test_code.txt") as f:
+    with open("../data/test_code.txt") as f:
         code = f.read()
     return api.from_import_code(code)
 
