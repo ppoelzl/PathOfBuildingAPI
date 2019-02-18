@@ -101,7 +101,12 @@ Elementalist
 >>> print(build.bandit)
 None
 >>> print(build.stats.life)
-6911.0
+6911.
+>>> if "Blade Vortex" or "Vaal Blade Vortex" == build.active_skill.name:
+...     if "Storm Brand" in build.skill_names:
+...         print(build.config.brand_attached)
+...
+True
 >>> for item in build.items:
 ...    if item.name == "Inpulsa's Broken Heart":
 ...        print(item)
@@ -120,11 +125,6 @@ ItemLvl: 71
 Shocked Enemies you Kill Explode, dealing 5% of
 their Maximum Life as Lightning Damage which cannot Shock
 Unaffected by Shock
->>> if "Blade Vortex" or "Vaal Blade Vortex" == build.active_skill.name:
-...     if "Storm Brand" in build.skill_names:
-...         print(build.config.brand_attached)
-...
-True
 
 Documentation
 -------------
@@ -139,7 +139,7 @@ Please file a `GitHub issue <https://developer.github.com/v3/issues/>`_ in this 
 Contribution
 ------------
 
-Pull requests are gladly accepted. Check out the :ref:`Developer Guide. <dev:Developer Guide>`
+Pull requests are gladly accepted. Check out the `Developer Guide <https://pobapi.readthedocs.io/dev.html>`_.
 
 To-Do
 -----
@@ -150,4 +150,4 @@ To-Do
 License
 -------
 
-`EUPL v1.2 <https://eupl.eu/>`_ (Think about it as an equivalent to LGPL + Affero clause).
+`EUPL 1.2 <https://eupl.eu/>`_ (Think about it as an equivalent to LGPL + Affero clause).
