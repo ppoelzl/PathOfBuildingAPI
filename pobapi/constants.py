@@ -3,6 +3,35 @@
 #: Skill tree node data is offset 7 bytes from the start.
 TREE_OFFSET = 7
 
+#: Skill tree IDs of keystones.
+KEYSTONE_IDS = {
+    "acrobatics": 54307,
+    "ancestral_bond": 41970,
+    "arrow_dancing": 54922,
+    "avatar_of_fire": 44941,
+    "blood_magic": 57279,
+    "chaos_inoculation": 11455,
+    "conduit": 23540,
+    "crimson_dance": 17818,
+    "eldritch_battery": 56075,
+    "elemental_equilibrium": 39085,
+    "ghost_reaver": 24426,
+    "iron_grip": 12926,
+    "iron_reflexes": 10661,
+    "mind_over_matter": 34098,
+    "minion_instability": 18663,
+    "necromantic_aegis": 45175,
+    "pain_attunement": 31703,
+    "perfect_agony": 23407,
+    "phase_acrobatics": 14914,
+    "point_blank": 42178,
+    "resolute_technique": 31961,
+    "runebinder": 42343,
+    "unwavering_stance": 40907,
+    "vaal_pact": 10808,
+    "zealots_oath": 63425,
+}
+
 # fmt: off
 #: Taken from DefaultMonsterStats.dat
 MONSTER_DAMAGE_TABLE = (5, 6, 6, 7, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21,
