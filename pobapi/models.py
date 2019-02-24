@@ -1,5 +1,5 @@
 # Built-ins
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from typing import Dict, List, Optional, Tuple
 
 # Third-party
@@ -52,6 +52,69 @@ class Tree:
     url: str
     nodes: List[int]
     sockets: Dict[int, int]
+
+
+@with_slots
+@dataclass
+class Keystones:
+    """Class that holds keystone data.
+
+    :param acrobatics: Whether the player has Acrobatics.
+    :param ancestral_bond: Whether the player has Ancestral Bond.
+    :param arrow_dancing: Whether the player has Arrow Dancing.
+    :param avatar_of_fire: Whether the player has Avatar of Fire.
+    :param blood_magic: Whether the player has Blood Magic.
+    :param chaos_inoculation: Whether the player has Chaos Inoculation.
+    :param conduit: Whether the player has Conduit.
+    :param crimson_dance: Whether the player has Crimson Dance.
+    :param eldritch_battery: Whether the player has Eldritch Battery.
+    :param elemental_equilibrium: Whether the player has Elemental Equilibrium.
+    :param ghost_reaver: Whether the player has Ghost Reaver.
+    :param iron_grip: Whether the player has Iron Grip.
+    :param iron_reflexes: Whether the player has Iron Reflexes.
+    :param mind_over_matter: Whether the player has Mind Over Matter.
+    :param minion_instability: Whether the player has Minion Instability.
+    :param necromantic_aegis: Whether the player has Necromantic  Aegis.
+    :param pain_attunement: Whether the player has Pain Attunement.
+    :param perfect_agony: Whether the player has Perfect Agony.
+    :param phase_acrobatics: Whether the player has Phase Acrobatics.
+    :param point_blank: Whether the player has Point Blank.
+    :param resolute_technique: Whether the player has Resolute Technique.
+    :param runebinder: Whether the player has Runebinder.
+    :param unwavering_stance: Whether the player has Unwavering Stance.
+    :param vaal_pact: Whether the player has Vaal Pact.
+    :param zealots_oath: Whether the player has Zealots Oath."""
+
+    acrobatics: bool
+    ancestral_bond: bool
+    arrow_dancing: bool
+    avatar_of_fire: bool
+    blood_magic: bool
+    chaos_inoculation: bool
+    conduit: bool
+    crimson_dance: bool
+    eldritch_battery: bool
+    elemental_equilibrium: bool
+    ghost_reaver: bool
+    iron_grip: bool
+    iron_reflexes: bool
+    mind_over_matter: bool
+    minion_instability: bool
+    necromantic_aegis: bool
+    pain_attunement: bool
+    perfect_agony: bool
+    phase_acrobatics: bool
+    point_blank: bool
+    resolute_technique: bool
+    runebinder: bool
+    unwavering_stance: bool
+    vaal_pact: bool
+    zealots_oath: bool
+
+    def __iter__(self):
+        for k, v in asdict(self).items():
+            if v:
+                yield k
 
 
 SocketGroup = Tuple[str]

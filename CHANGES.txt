@@ -1,2 +1,8 @@
+v0.2.0
+Added support for passive tree keystones.
+
+v0.1.1
+Fixed a bug with passive tree node ID parsing.
+
 v0.1.0
 Initial alpha release.

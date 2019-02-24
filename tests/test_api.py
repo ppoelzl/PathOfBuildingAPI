@@ -108,6 +108,10 @@ def test_active_skill_tree(build):
     assert build.active_skill_tree.sockets == {}
 
 
+def test_keystones(build):
+    assert 39085 in build.active_skill_tree.nodes  # 39085: Elemental Equilibrium
+
+
 def test_items(build):
     for i in build.items:
         if i.name == "Inpulsa's Broken Heart":

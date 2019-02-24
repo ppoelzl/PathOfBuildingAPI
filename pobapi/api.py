@@ -160,6 +160,20 @@ class PathOfBuildingAPI:
             yield models.Tree(url, nodes, sockets)
 
     @memoized_property
+    def keystones(self) -> models.Keystones:
+        """Namespace for a character's keystones.
+
+        Iterate over the keystones property to only get active keystones.
+
+        :return: Keystones.
+        :rtype: :class:`~pobapi.models.Keystones`"""
+        kwargs = {
+            keystone: True if id_ in self.active_skill_tree.nodes else False
+            for keystone, id_ in KEYSTONE_IDS.items()
+        }
+        return models.Keystones(**kwargs)
+
+    @memoized_property
     def notes(self) -> str:
         """Get notes of a build's author.
 

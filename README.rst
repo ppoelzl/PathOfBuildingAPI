@@ -145,7 +145,6 @@ To-Do
 -----
 
 * Support enchantments
-* Support passive tree keystones
 
 License
 -------
