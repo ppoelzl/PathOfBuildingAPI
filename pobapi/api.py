@@ -3,7 +3,7 @@ from typing import List, Optional
 
 # Project
 from pobapi import config
-from pobapi.constants import CONFIG_MAP, STATS_MAP, SET_MAP
+from pobapi.constants import CONFIG_MAP, KEYSTONE_IDS, STATS_MAP, SET_MAP
 from pobapi import models
 from pobapi import stats
 from pobapi.util import _get_stat, _skill_tree_nodes, _get_text
@@ -92,7 +92,7 @@ class PathOfBuildingAPI:
         """Get a character's skill setups.
 
         :return: Skill setups.
-        :rtype: :data:`~typing.List`\\[:class:`~pobapi.models.Skill`]"""
+        :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Skill`]"""
 
         @listify
         def _gems(skill_):
@@ -129,7 +129,7 @@ class PathOfBuildingAPI:
         """Get a list of all skill gems on a character.
 
         :return: Skill gems.
-        :rtype: :data:`~typing.List`\\[:class:`~pobapi.models.Gem`]"""
+        :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Gem`]"""
         for group in self.skill_groups:
             for gem in group.gems:
                 yield gem
@@ -149,7 +149,7 @@ class PathOfBuildingAPI:
         """Get a list of all skill trees of a character.
 
         :return: Skill trees.
-        :rtype: :data:`~typing.List`\\[:class:`~pobapi.models.Tree`]"""
+        :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Tree`]"""
         for spec in self.xml.find("Tree").findall("Spec"):
             url = spec.find("URL").text.strip("\n\r\t")
             nodes = _skill_tree_nodes(url)
@@ -185,7 +185,7 @@ class PathOfBuildingAPI:
         """Get a list of all items of a Path Of Building build.
         
         :return: Items.
-        :rtype: :data:`~typing.List`\\[:class:`~pobapi.models.Item`]"""
+        :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Item`]"""
         for text in self.xml.find("Items").findall("Item"):
             variant = text.get("variant")
             alt_variant = text.get(
@@ -232,7 +232,7 @@ class PathOfBuildingAPI:
         """Get a list of all item sets of a character.
 
         :return: Item sets.
-        :rtype: :data:`~typing.List`\\[:class:`~pobapi.models.Set`]"""
+        :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Set`]"""
         for item_set in self.xml.find("Items").findall("ItemSet"):
             kwargs = {
                 SET_MAP[slot.get("name")]: int(slot.get("itemId"))
