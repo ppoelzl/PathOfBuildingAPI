@@ -103,8 +103,7 @@ def test_active_skill_tree(build):
     )
     # fmt: off
     assert build.active_skill_tree.nodes == \
-        [2650, 46618, 8059, 6309, 31178, 9982, 38572, 45611, 57082, 51490, 38495, 44461,
-         59327, 0, 4, 1, 152, 44312, 22234, 25304, 19842, 51048, 29736, 64148, 41209]
+        [39085, 6230, 55906, 55373, 33479, 26740, 10490, 38048, 63976]
     # fmt: on
     assert build.active_skill_tree.sockets == {}
 

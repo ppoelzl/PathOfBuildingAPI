@@ -57,6 +57,7 @@ def _skill_tree_nodes(url: str) -> List[int]:
     """Get a list of passive tree node IDs.
 
     :return: Passive tree node IDs."""
+    _, _, url = url.rpartition("/")
     bin_tree = base64.urlsafe_b64decode(url)
     return list(
         struct.unpack_from(
