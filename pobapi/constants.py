@@ -15,6 +15,7 @@ KEYSTONE_IDS = {
     "crimson_dance": 17818,
     "eldritch_battery": 56075,
     "elemental_equilibrium": 39085,
+    "elemental_overload": 22088,
     "ghost_reaver": 24426,
     "iron_grip": 12926,
     "iron_reflexes": 10661,
