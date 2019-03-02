@@ -1,3 +1,6 @@
+v0.2.3
+Added timeout option to url parsing function.
+
 v0.2.2
 Added logging and more helpful error messages.
 
