@@ -1,3 +1,6 @@
+v0.2.1
+Fixed intersphinx support for the requests module.
+
 v0.2.0
 Added support for passive tree keystones.
 

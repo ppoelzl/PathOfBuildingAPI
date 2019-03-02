@@ -1,6 +1,6 @@
 from .api import *
 
-__version__ = "0.2.0"
-__project__ = "Path Of Building API"
-__copyright__ = "2019, Peter Pölzl"
-__author__ = "Peter Pölzl"
+VERSION = "0.2.1"
+PROJECT = "Path Of Building API"
+COPYRIGHT = "2019, Peter Pölzl"
+AUTHOR = "Peter Pölzl"

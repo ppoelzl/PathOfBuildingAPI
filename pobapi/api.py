@@ -2,10 +2,8 @@
 from typing import List, Optional
 
 # Project
-from pobapi import config
+from pobapi import config, models, stats
 from pobapi.constants import CONFIG_MAP, KEYSTONE_IDS, STATS_MAP, SET_MAP
-from pobapi import models
-from pobapi import stats
 from pobapi.util import _get_stat, _skill_tree_nodes, _get_text
 from pobapi.util import _fetch_xml_from_import_code, _fetch_xml_from_url
 

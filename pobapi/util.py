@@ -15,6 +15,9 @@ import requests
 def _fetch_xml_from_url(url: str, timeout: float = 6.0) -> bytes:
     """Get a Path Of Building import code shared with pastebin.com.
 
+    :raises: :class:`~requests.URLRequired`, :class:`~requests.Timeout`, :class:`~requests.ConnectionError`,
+        :class:`~requests.HTTPError`, :class:`~requests.TooManyRedirects`, :class:`~requests.RequestException`
+
     :return: Decompressed XML build document."""
     if url.startswith("https://pastebin.com/"):
         raw = url.replace("https://pastebin.com/", "https://pastebin.com/raw/")
@@ -39,6 +42,8 @@ def _fetch_xml_from_url(url: str, timeout: float = 6.0) -> bytes:
 
 def _fetch_xml_from_import_code(import_code: str) -> bytes:
     """Decodes and unzips a Path Of Building import code.
+
+    :raises: :class:`TypeError`, :class:`ValueError`
 
     :return: Decompressed XML build document."""
     try:

@@ -20,14 +20,14 @@ import pobapi
 
 # -- Project information -----------------------------------------------------
 
-project = pobapi.__version__
-copyright = pobapi.__copyright__
-author = pobapi.__author__
+project = pobapi.VERSION
+copyright = pobapi.COPYRIGHT
+author = pobapi.AUTHOR
 
 # The short X.Y version
-version = pobapi.__version__
+version = pobapi.VERSION
 # The full version, including alpha/beta/rc tags
-release = pobapi.__version__
+release = pobapi.VERSION
 
 
 # -- General configuration ---------------------------------------------------
@@ -187,7 +187,9 @@ autosectionlabel_prefix_document = True
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/', None),
+    'requests': ('http://docs.python-requests.org/en/latest/', None)}
 
 # -- Options for todo extension ----------------------------------------------
 
