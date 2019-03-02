@@ -57,7 +57,6 @@ def _fetch_xml_from_import_code(import_code: str) -> bytes:
     :return: Decompressed XML build document."""
     try:
         base64_decode = base64.urlsafe_b64decode(import_code)
-        print(base64_decode)
         decompressed_xml = zlib.decompress(base64_decode)
     except (TypeError, ValueError):
         logger.exception("Error while decoding.")
