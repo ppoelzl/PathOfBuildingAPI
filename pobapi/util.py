@@ -1,6 +1,7 @@
 # Built-ins
 import base64
 import decimal
+import logging
 import struct
 import zlib
 from typing import Iterator, List, Union
@@ -10,6 +11,8 @@ from pobapi.constants import TREE_OFFSET
 
 # Third-party
 import requests
+
+logger = logging.getLogger(__name__)
 
 
 def _fetch_xml_from_url(url: str, timeout: float = 6.0) -> bytes:
@@ -23,21 +26,27 @@ def _fetch_xml_from_url(url: str, timeout: float = 6.0) -> bytes:
         raw = url.replace("https://pastebin.com/", "https://pastebin.com/raw/")
         try:
             request = requests.get(raw, timeout=timeout)
-        except requests.URLRequired as e:
-            raise ValueError(e, url, "is not a valid URL.") from e
-        except requests.Timeout as e:
-            print(e, "Connection timed out, try again or raise the timeout.")
-        except (
-            requests.ConnectionError,
-            requests.HTTPError,
-            requests.RequestException,
-            requests.TooManyRedirects,
-        ) as e:
-            print(e, "Something went wrong, check it out.")
+            request.raise_for_status()
+        except requests.URLRequired:
+            logger.exception(f"{url} is not a valid URL.")
+        except requests.Timeout:
+            logger.exception(
+                f"Connection timed out, try again or raise the timeout ({timeout}s)."
+            )
+        except requests.ConnectionError:
+            logger.exception(
+                f"There was a network problem (e.g. DNS failure, refused connection, etc)."
+            )
+        except requests.HTTPError:
+            logger.exception(f"HTTP request returned unsuccessful status code.")
+        except requests.TooManyRedirects:
+            logger.exception(f"Request exceeds the maximum number of redirects.")
+        except requests.RequestException:
+            logger.exception(f"Some other unspecified fatal error; cannot continue.")
         else:
             return _fetch_xml_from_import_code(request.text)
     else:
-        raise ValueError(url, "is not a valid pastebin.com URL.")
+        logger.exception(f"{url} is not a valid pastebin.com URL.")
 
 
 def _fetch_xml_from_import_code(import_code: str) -> bytes:
@@ -50,10 +59,10 @@ def _fetch_xml_from_import_code(import_code: str) -> bytes:
         base64_decode = base64.urlsafe_b64decode(import_code)
         print(base64_decode)
         decompressed_xml = zlib.decompress(base64_decode)
-    except (TypeError, ValueError) as e:
-        print(e, "Something went wrong while decoding. Fix it.")
-    except zlib.error as e:
-        print(e, "Something went wrong while decompressing. Fix it.")
+    except (TypeError, ValueError):
+        logger.exception("Error while decoding.")
+    except zlib.error:
+        logger.exception("Error while decompressing.")
     else:
         return decompressed_xml
 
