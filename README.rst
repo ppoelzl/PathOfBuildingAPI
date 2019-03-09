@@ -48,6 +48,7 @@ Requirements
 ------------
 
 * `Python 3.7+ <https://www.python.org/>`_
+* `dataslots <https://pypi.org/project/dataslots/>`_
 * `defusedxml <https://pypi.org/project/defusedxml/>`_
 * `lxml <https://pypi.org/project/lxml/>`_
 * `requests <https://pypi.org/project/requests/>`_

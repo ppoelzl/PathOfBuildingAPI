@@ -1,3 +1,6 @@
+v0.2.4
+Fixed missing dependency: dataslots.
+
 v0.2.3
 Added timeout option to url parsing function.
 
