@@ -40,8 +40,8 @@ Features
     * Path of Building configuration settings
     * Build author's notes
 * Exposes all of Path of Building's relevant stats and attributes in a simple and pythonic way.
-* Low memory footprint through slots and dynamically generated attributes.
 * Automatically calculates mod values on theorycrafted items.
+* Low memory footprint through slots and dynamically generated attributes.
 * Secure against XML attacks thanks to the `defusedxml <https://pypi.org/project/defusedxml/>`_ library.
 
 Requirements
