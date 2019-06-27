@@ -91,16 +91,6 @@ class PathOfBuildingAPI:
 
         :return: Skill setups.
         :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Skill`]"""
-
-        @listify
-        def _gems(skill_):
-            for gem in skill_:
-                name = gem.get("nameSpec")
-                enabled_ = True if gem.get("enabled") == "true" else False
-                level = int(gem.get("level"))
-                quality = int(gem.get("quality"))
-                yield models.Gem(name, enabled_, level, quality)
-
         for skill in self.xml.find("Skills").findall("Skill"):
             enabled = True if skill.get("enabled") == "true" else False
             label = skill.get("label")
@@ -109,7 +99,7 @@ class PathOfBuildingAPI:
                 if not skill.get("mainActiveSkill") == "nil"
                 else None
             )
-            gems = _gems(skill)
+            gems = self._gems(skill)
             yield models.Skill(enabled, label, active, gems)
 
     @memoized_property
@@ -128,9 +118,10 @@ class PathOfBuildingAPI:
 
         :return: Skill gems.
         :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Gem`]"""
-        for group in self.skill_groups:
-            for gem in group.gems:
-                yield gem
+
+        for skill in self.xml.find("Skills").findall("Skill"):
+            if not skill.get("source"):
+                yield from self._gems(skill)
 
     @memoized_property
     def active_skill_tree(self) -> models.Tree:
@@ -275,6 +266,16 @@ class PathOfBuildingAPI:
         }
         kwargs["character_level"] = self.level
         return config.Config(**kwargs)
+
+    @classmethod
+    @listify
+    def _gems(cls, skill_):
+        for gem in skill_:
+            name = gem.get("nameSpec")
+            enabled_ = True if gem.get("enabled") == "true" else False
+            level = int(gem.get("level"))
+            quality = int(gem.get("quality"))
+            yield models.Gem(name, enabled_, level, quality)
 
 
 def from_url(url: str) -> PathOfBuildingAPI:
