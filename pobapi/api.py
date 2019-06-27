@@ -278,15 +278,21 @@ class PathOfBuildingAPI:
             yield models.Gem(name, enabled_, level, quality)
 
 
-def from_url(url: str) -> PathOfBuildingAPI:
+def from_url(url: str, timeout: float = 6.0) -> PathOfBuildingAPI:
     """Instantiate build class from a pastebin.com link generated with Path Of Building.
 
-    :param url: pastebin.com link generated with Path Of Building."""
-    return PathOfBuildingAPI(_fetch_xml_from_url(url))
+    :raises: :class:`~requests.URLRequired`, :class:`~requests.Timeout`, :class:`~requests.ConnectionError`,
+        :class:`~requests.HTTPError`, :class:`~requests.TooManyRedirects`, :class:`~requests.RequestException`
+
+    :param url: pastebin.com link generated with Path Of Building.
+    :param timeout: Timeout for the request."""
+    return PathOfBuildingAPI(_fetch_xml_from_url(url, timeout))
 
 
 def from_import_code(import_code: str) -> PathOfBuildingAPI:
     """Instantiate build class from an import code generated with Path Of Building.
+
+    :raises: :class:`TypeError`, :class:`ValueError`
 
     :param import_code: import code generated with Path Of Building."""
     return PathOfBuildingAPI(_fetch_xml_from_import_code(import_code))
