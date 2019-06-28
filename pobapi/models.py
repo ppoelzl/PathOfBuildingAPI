@@ -83,6 +83,7 @@ class Keystones:
     :param runebinder: Whether the player has Runebinder.
     :param unwavering_stance: Whether the player has Unwavering Stance.
     :param vaal_pact: Whether the player has Vaal Pact.
+    :param wicked_ward: Whether the player has Wicked Ward.
     :param zealots_oath: Whether the player has Zealots Oath."""
 
     acrobatics: bool
@@ -109,6 +110,7 @@ class Keystones:
     runebinder: bool
     unwavering_stance: bool
     vaal_pact: bool
+    wicked_ward: bool
     zealots_oath: bool
 
     def __iter__(self):

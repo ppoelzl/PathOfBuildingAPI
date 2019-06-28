@@ -30,6 +30,7 @@ KEYSTONE_IDS = {
     "runebinder": 42343,
     "unwavering_stance": 40907,
     "vaal_pact": 10808,
+    "wicked_ward": 23905,
     "zealots_oath": 63425,
 }
 
