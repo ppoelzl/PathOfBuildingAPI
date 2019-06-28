@@ -269,8 +269,8 @@ class PathOfBuildingAPI:
 
     @classmethod
     @listify
-    def _gems(cls, skill_):
-        for gem in skill_:
+    def _gems(cls, skill) -> List[models.Gem]:
+        for gem in skill:
             name = gem.get("nameSpec")
             enabled_ = True if gem.get("enabled") == "true" else False
             level = int(gem.get("level"))
