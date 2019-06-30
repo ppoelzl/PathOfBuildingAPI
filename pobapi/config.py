@@ -46,7 +46,9 @@ class Config:
     :param dark_pact_skeleton_life: Skeleton life points used for Dark Pact damage calculation.
     :param herald_of_agony_stacks: Number of Virulence stacks on Herald of Agony.
     :param ice_nova_cast_on_frostbolt: Whether the player casts Ice Nova on a Frost Bolt.
-    :param innervate_innervation: Whether the Innervate innervation buff is active.
+    :param infusion: Whether the Infusion Infusion buff is active.
+    :param innervate_innervation: Whether the Innervate Innervation buff is active.
+    :param intensify_stacks: Number of Intensify stacks.
     :param raise_spectres_spectre_level: Level of spectres raised by Raise Spectre.
     :param raise_spectres_enable_curses: Whether the curses of spectres are active.
     :param raise_spectres_blade_vortex_blade_count: Number of Blade Vortex stacks of spectres.
@@ -57,6 +59,8 @@ class Config:
     :param summon_holy_relic_enable_holy_relic_buff: Whether the Holy Relic buff of Summon Holy Relics is active.
     :param summon_lightning_golem_enable_wrath: Whether a Lightning Golem's wrath buff is active.
     :param vortex_cast_on_frostbolt: Whether the player casts Vortex on a Frost Bolt.
+    :param wave_of_conviction_exposure_type: Controls which Exposure damage type is selected.
+        Possible values: ('Fire', 'Cold', 'Lightning').
     :param winter_orb_stages: Number of stages of Winter Orb.
     :param enemy_physical_reduction: Whether enemies have physical damage reduction.
         Possible values: (20%, 30%, 40%).
@@ -247,7 +251,9 @@ class Config:
     dark_pact_skeleton_life: int = None
     herald_of_agony_stacks: int = None
     ice_nova_cast_on_frostbolt: bool = False
+    infusion: bool = False
     innervate_innervation: bool = False
+    intensify_stacks: int = None
     raise_spectres_spectre_level: int = None
     raise_spectres_enable_curses: bool = False
     raise_spectres_blade_vortex_blade_count: int = None
@@ -258,6 +264,7 @@ class Config:
     summon_holy_relic_enable_holy_relic_buff: bool = False
     summon_lightning_golem_enable_wrath: bool = False
     vortex_cast_on_frostbolt: bool = False
+    wave_of_conviction_exposure_type: str = None
     winter_orb_stages: int = None
     # Map Configuration
     enemy_physical_reduction: int = None
