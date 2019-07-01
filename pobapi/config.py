@@ -122,6 +122,7 @@ class Config:
     :param fortify: Whether the player has Fortify.
     :param tailwind: Whether the player has Tailwind.
     :param adrenaline: Whether the player has Adrenaline.
+    :param divinity: Whether the player has Divinity.
     :param rage: Whether the player has Rage.
     :param leeching: Whether the player is leeching.
     :param using_flask: Whether the player is using a flask.
@@ -316,6 +317,7 @@ class Config:
     fortify: bool = False
     tailwind: bool = False
     adrenaline: bool = False
+    divinity: bool = False
     rage: bool = False
     leeching: bool = False
     using_flask: bool = False
