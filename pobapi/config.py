@@ -125,6 +125,9 @@ class Config:
     :param divinity: Whether the player has Divinity.
     :param rage: Whether the player has Rage.
     :param leeching: Whether the player is leeching.
+    :param leeching_life: Whether the player is leeching Life.
+    :param leeching_energy_shield: Whether the player is leeching Energy Shield.
+    :param leeching_mana: Whether the player is leeching Mana.
     :param using_flask: Whether the player is using a flask.
     :param has_totem: Whether the player has a totem.
     :param on_consecrated_ground: Whether the player is on consecrated ground.
@@ -320,6 +323,9 @@ class Config:
     divinity: bool = False
     rage: bool = False
     leeching: bool = False
+    leeching_life: bool = False
+    leeching_energy_shield: bool = False
+    leeching_mana: bool = False
     using_flask: bool = False
     has_totem: bool = False
     on_consecrated_ground: bool = False
