@@ -111,6 +111,10 @@ class Config:
     :param use_endurance_charges: Whether the player uses endurance charges.
     :param max_endurance_charges: Whether the player is at maximum endurance charges.
     :param use_siphoning_charges: Whether the player uses siphoning charges.
+    :param use_challenger_charges: Whether the player uses Challenger Charges.
+    :param max_challenger_charges: Whether the player is at maximum Challenger Charges.
+    :param use_blitz_charges: Whether the player uses Blitz Charges.
+    :param max_blitz_charges: Whether the player is at maximum Blitz Charges.
     :param max_siphoning_charges: Whether the player is at maximum siphoning charges.
     :param minions_use_power_charges: Whether the player's minions use power charges.
     :param minions_use_frenzy_charges: Whether the player's minions use frenzy charges.
@@ -310,6 +314,10 @@ class Config:
     max_endurance_charges: int = None
     use_siphoning_charges: bool = False
     max_siphoning_charges: int = None
+    use_challenger_charges: bool = None
+    max_challenger_charges: int = None
+    use_blitz_charges: bool = None
+    max_blitz_charges: int = None
     minions_use_power_charges: bool = False
     minions_use_frenzy_charges: bool = False
     minions_use_endurance_charges: bool = False
