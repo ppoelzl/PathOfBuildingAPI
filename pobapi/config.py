@@ -42,6 +42,8 @@ class Config:
     :param aspect_of_the_spider_web_stacks: Number of web stacks on enemies.
     :param banner_planted: Whether the player has planted a banner.
     :param banner_stages: Number of banner stages.
+    :param in_bloodstorm: Whether the player is in a Bloodstorm.
+    :param in_sandstorm: Whether the player is in a Sandstorm.
     :param brand_attached: Whether the player has a brand attached.
     :param dark_pact_skeleton_life: Skeleton life points used for Dark Pact damage calculation.
     :param herald_of_agony_stacks: Number of Virulence stacks on Herald of Agony.
@@ -56,6 +58,8 @@ class Config:
     :param raise_spectres_enable_summoned_ursa_rallying_cry: Whether the Rallying Cry of ursa spectres is active.
     :param raise_spiders_spider_count: Number of spiders from Raise Spiders.
     :param siphoning_trap_affected_enemies: Number of enemies affected by Siphoning Trap.
+    :param stance: Controls whether the player is in Blood Stance or Sand Stance.
+        Possible values: ('BLOOD', 'SAND').
     :param summon_holy_relic_enable_holy_relic_buff: Whether the Holy Relic buff of Summon Holy Relics is active.
     :param summon_lightning_golem_enable_wrath: Whether a Lightning Golem's wrath buff is active.
     :param vortex_cast_on_frostbolt: Whether the player casts Vortex on a Frost Bolt.
@@ -255,6 +259,8 @@ class Config:
     aspect_of_the_spider_web_stacks: int = None
     banner_planted: bool = False
     banner_stages: int = None
+    in_bloodstorm: bool = None
+    in_sandstorm: bool = None
     brand_attached: bool = False
     dark_pact_skeleton_life: int = None
     herald_of_agony_stacks: int = None
@@ -269,6 +275,7 @@ class Config:
     raise_spectres_enable_summoned_ursa_rallying_cry: bool = False
     raise_spiders_spider_count: int = None
     siphoning_trap_affected_enemies: int = None
+    stance: str = None
     summon_holy_relic_enable_holy_relic_buff: bool = False
     summon_lightning_golem_enable_wrath: bool = False
     vortex_cast_on_frostbolt: bool = False
@@ -279,7 +286,7 @@ class Config:
     enemy_hexproof: bool = False
     less_curse_effect: int = None
     enemy_avoid_poison_blind_bleed: int = None
-    enemy_resistances: str = False
+    enemy_resistances: str = None
     elemental_equilibrium: bool = False
     no_leech: bool = False
     reduced_flask_charges: int = None
