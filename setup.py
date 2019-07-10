@@ -1,6 +1,11 @@
 # Always prefer setuptools over distutils
 from setuptools import setup
 from os import path
+import sys
+
+sys.path.insert(0, path.abspath('..'))
+
+import pobapi
 
 here = path.abspath(path.dirname(__file__))
 
@@ -13,13 +18,13 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
-    version="0.2.4",
+    version=pobapi.VERSION,
     description="API for PathOfBuilding's build sharing format.",
     long_description=long_description,
     # The project's main homepage.
     url="https://github.com/ppoelzl/PathOfBuildingAPI",
     # Author details
-    author="Peter Pölzl",
+    author=pobapi.AUTHOR,
     author_email="peter.poelzl@mailbox.org",
     # Choose your license
     license="EUPL 1.2",
