@@ -117,22 +117,20 @@ def _get_text(
             if line.startswith(
                 "{variant:"
             ):  # We want to skip all mods of alternative item versions.
-                if variant_ not in line.partition("{variant:")[-1].partition("}")[
-                    0
-                ].split(","):
-                    if alt_variant_ not in line.partition("{variant:")[-1].partition(
-                        "}"
-                    )[0].split(","):
+                item_variants = line.partition("{variant:")[-1].partition("}")[0].split(",")
+                if variant_ not in item_variants:
+                    if alt_variant_ not in item_variants:
                         continue
             # We have to check for '{range:' used in range tags to filter unsupported mods.
-            if "Adds (" in line and "{range:" in line:
-                # 'Adds (A-B) to (C-D) to something' mods need to be replaced twice.
-                value = mod_ranges_[counter]
-                line = _calculate_mod_text(line, value)
-            if "(" in line and "{range:" in line:
-                value = mod_ranges_[counter]
-                line = _calculate_mod_text(line, value)
-                counter += 1
+            if "{range:" in line:
+                if "Adds (" in line:
+                    # 'Adds (A-B) to (C-D) to something' mods need to be replaced twice.
+                    value = mod_ranges_[counter]
+                    line = _calculate_mod_text(line, value)
+                if "(" in line:
+                    value = mod_ranges_[counter]
+                    line = _calculate_mod_text(line, value)
+                    counter += 1
             # We are only interested in everything past the '{variant: *}' and '{range: *}' tags.
             _, _, mod = line.rpartition("}")
             yield mod
