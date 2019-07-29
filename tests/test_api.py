@@ -53,6 +53,10 @@ def test_active_item_set(build):
     assert build.active_item_set.body_armour == 2
 
 
+def test_item_sets(build):
+    pass
+
+
 def test_active_skill_group(build):
     assert build.active_skill_group.enabled is True
     assert build.active_skill_group.label == "Test label."
@@ -68,6 +72,10 @@ def test_active_skill_group(build):
         assert g.enabled == t[1]
         assert g.level == t[2]
         assert g.quality == t[3]
+
+
+def test_skill_groups(build):
+    pass
 
 
 def test_skill_gems(build):
@@ -106,6 +114,10 @@ def test_active_skill_tree(build):
         [39085, 6230, 55906, 55373, 33479, 26740, 10490, 38048, 63976]
     # fmt: on
     assert build.active_skill_tree.sockets == {}
+
+
+def test_trees(build):
+    pass
 
 
 def test_keystones(build):
