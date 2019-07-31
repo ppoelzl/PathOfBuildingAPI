@@ -54,7 +54,8 @@ def test_active_item_set(build):
 
 
 def test_item_sets(build):
-    pass
+    for item_set in build.item_sets:
+        assert item_set.body_armour == 2
 
 
 def test_active_skill_group(build):
@@ -75,7 +76,22 @@ def test_active_skill_group(build):
 
 
 def test_skill_groups(build):
-    pass
+    for skill_group in build.skill_groups:
+        assert skill_group.enabled is True
+        assert skill_group.label == "Test label."
+        assert skill_group.active == 1
+        print(skill_group.gems)
+        test_list = [
+            ("Arc", True, 20, 1),
+            ("Curse On Hit", True, 20, 2),
+            ("Conductivity", True, 20, 3),
+        ]
+        for g, t in zip(skill_group.gems, test_list):
+            assert g.name == t[0]
+            assert g.enabled == t[1]
+            assert g.level == t[2]
+            assert g.quality == t[3]
+        break  # TODO: support other skill groups
 
 
 def test_skill_gems(build):
@@ -117,7 +133,16 @@ def test_active_skill_tree(build):
 
 
 def test_trees(build):
-    pass
+    for tree in build.trees:
+        assert (
+                tree.url
+                == "https://www.pathofexile.com/passive-skill-tree/AAAABAABAJitGFbaYthNgsdodCj6lKD56A=="
+        )
+        # fmt: off
+        assert tree.nodes == \
+            [39085, 6230, 55906, 55373, 33479, 26740, 10490, 38048, 63976]
+        # fmt: on
+        assert tree.sockets == {}
 
 
 def test_keystones(build):
