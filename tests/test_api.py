@@ -76,22 +76,34 @@ def test_active_skill_group(build):
 
 
 def test_skill_groups(build):
-    for skill_group in build.skill_groups:
-        assert skill_group.enabled is True
-        assert skill_group.label == "Test label."
-        assert skill_group.active == 1
-        print(skill_group.gems)
-        test_list = [
-            ("Arc", True, 20, 1),
-            ("Curse On Hit", True, 20, 2),
-            ("Conductivity", True, 20, 3),
-        ]
-        for g, t in zip(skill_group.gems, test_list):
-            assert g.name == t[0]
-            assert g.enabled == t[1]
-            assert g.level == t[2]
-            assert g.quality == t[3]
-        break  # TODO: support other skill groups
+    skill_group = build.skill_groups[0]
+    assert skill_group.enabled is True
+    assert skill_group.label == "Test label."
+    assert skill_group.active == 1
+    test_list = [
+        ("Arc", True, 20, 1),
+        ("Curse On Hit", True, 20, 2),
+        ("Conductivity", True, 20, 3),
+    ]
+    for g, t in zip(skill_group.gems, test_list):
+        assert g.name == t[0]
+        assert g.enabled == t[1]
+        assert g.level == t[2]
+        assert g.quality == t[3]
+    skill_group = build.skill_groups[1]
+    assert skill_group.enabled is True
+    assert skill_group.label == ""
+    assert skill_group.active == 1
+    test_list = [
+        ("Herald of Ash", True, 20, 0),
+        ("Herald of Ice", True, 20, 0),
+        ("Herald of Thunder", True, 20, 0),
+    ]
+    for g, t in zip(skill_group.gems, test_list):
+        assert g.name == t[0]
+        assert g.enabled == t[1]
+        assert g.level == t[2]
+        assert g.quality == t[3]
 
 
 def test_skill_gems(build):
