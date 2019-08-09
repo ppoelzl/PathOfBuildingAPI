@@ -203,6 +203,7 @@ class PathOfBuildingAPI:
             uid = _get_stat(item, "Unique ID: ")
             shaper = True if _get_stat(item, "Shaper Item") else False
             elder = True if _get_stat(item, "Elder Item") else False
+            crafted = True if _get_stat(item, "(crafted)") else False
             _quality = _get_stat(item, "Quality: ")
             quality = int(_quality) if _quality else None
             _sockets = _get_stat(item, "Sockets: ")
@@ -216,7 +217,7 @@ class PathOfBuildingAPI:
             implicit = int(_get_stat(item, "Implicits: "))
             item_text = _get_text(item, variant, alt_variant, mod_ranges)
             # fmt: off
-            yield models.Item(rarity, name, base, uid, shaper, elder, quality, sockets,
+            yield models.Item(rarity, name, base, uid, shaper, elder, crafted, quality, sockets,
                               level_req, item_level, implicit, item_text)
             # fmt: on
 

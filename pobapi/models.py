@@ -137,6 +137,7 @@ class Item:
 
     :param shaper: Whether the item is a Shaper base type.
     :param elder: Whether the item is an Elder base type.
+    :param crafted: Whether the item has a crafted mod.
     :param quality: Item quality, if the item can have quality.
     :param sockets: Item socket groups, if the item can have sockets.
 
@@ -157,6 +158,7 @@ class Item:
     uid: str
     shaper: bool
     elder: bool
+    crafted: bool
     quality: Optional[int]
     sockets: Optional[GroupOfSocketGroups]
     level_req: int
@@ -173,6 +175,8 @@ class Item:
             text += f"Shaper Item\n"
         if self.elder:
             text += f"Elder Item\n"
+        if self.crafted:
+            text += f"Crafted Item\n"
         if self.quality:
             text += f"Quality: {self.quality}\n"
         if self.sockets:
