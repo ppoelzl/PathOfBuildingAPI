@@ -92,6 +92,13 @@ def _get_stat(text: List[str], stat: str) -> Union[str, type(True)]:
             return result or True
 
 
+def _get_pos(text: List[str], stat: str) -> int:
+    """Get the text line of an item affix.
+
+    :return: Item affix line or False."""
+    pass
+
+
 def _item_text(text: List[str]) -> Iterator[str]:
     """Get all affixes on an item.
 
