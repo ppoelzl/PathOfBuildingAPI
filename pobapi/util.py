@@ -96,7 +96,9 @@ def _get_pos(text: List[str], stat: str) -> int:
     """Get the text line of an item affix.
 
     :return: Item affix line or False."""
-    pass
+    for index, line in enumerate(text):
+        if line.startswith(stat):
+            return index
 
 
 def _item_text(text: List[str]) -> Iterator[str]:
