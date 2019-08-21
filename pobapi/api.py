@@ -203,7 +203,7 @@ class PathOfBuildingAPI:
             uid = _get_stat(item, "Unique ID: ")
             shaper = True if _get_stat(item, "Shaper Item") else False
             elder = True if _get_stat(item, "Elder Item") else False
-            crafted = True if _get_stat(item, "(crafted)") else False
+            crafted = True if _get_stat(item, "{crafted}") else False
             _quality = _get_stat(item, "Quality: ")
             quality = int(_quality) if _quality else None
             _sockets = _get_stat(item, "Sockets: ")
