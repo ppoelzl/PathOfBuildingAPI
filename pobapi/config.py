@@ -321,9 +321,9 @@ class Config:
     max_endurance_charges: int = None
     use_siphoning_charges: bool = False
     max_siphoning_charges: int = None
-    use_challenger_charges: bool = None
+    use_challenger_charges: bool = False
     max_challenger_charges: int = None
-    use_blitz_charges: bool = None
+    use_blitz_charges: bool = False
     max_blitz_charges: int = None
     minions_use_power_charges: bool = False
     minions_use_frenzy_charges: bool = False
