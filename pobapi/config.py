@@ -46,11 +46,13 @@ class Config:
     :param in_sandstorm: Whether the player is in a Sandstorm.
     :param brand_attached: Whether the player has a brand attached.
     :param dark_pact_skeleton_life: Skeleton life points used for Dark Pact damage calculation.
+    :param deathmark: Whether the player applies Deathmark.
     :param herald_of_agony_stacks: Number of Virulence stacks on Herald of Agony.
     :param ice_nova_cast_on_frostbolt: Whether the player casts Ice Nova on a Frost Bolt.
     :param infusion: Whether the Infusion Infusion buff is active.
     :param innervate_innervation: Whether the Innervate Innervation buff is active.
     :param intensify_stacks: Number of Intensify stacks.
+    :param meat_shield_enemy_nearby: Whether there are enemies near your minions supported by Meat Shield Support.
     :param raise_spectres_spectre_level: Level of spectres raised by Raise Spectre.
     :param raise_spectres_enable_curses: Whether the curses of spectres are active.
     :param raise_spectres_blade_vortex_blade_count: Number of Blade Vortex stacks of spectres.
@@ -119,6 +121,8 @@ class Config:
     :param max_challenger_charges: Whether the player is at maximum Challenger Charges.
     :param use_blitz_charges: Whether the player uses Blitz Charges.
     :param max_blitz_charges: Whether the player is at maximum Blitz Charges.
+    :param use_inspiration_charges: Whether the player uses Inspiration Charges.
+    :param max_inspiration_charges: Whether the player is at maximum Inspiration Charges.
     :param max_siphoning_charges: Whether the player is at maximum siphoning charges.
     :param minions_use_power_charges: Whether the player's minions use power charges.
     :param minions_use_frenzy_charges: Whether the player's minions use frenzy charges.
@@ -138,6 +142,9 @@ class Config:
     :param leeching_mana: Whether the player is leeching Mana.
     :param using_flask: Whether the player is using a flask.
     :param has_totem: Whether the player has a totem.
+    :param number_of_nearby_allies: Number of nearby allies.
+    :param number_of_nearby_enemies: Number of nearby enemies.
+    :param number_of_nearby_corpses: Number of nearby corpses.
     :param on_consecrated_ground: Whether the player is on consecrated ground.
     :param on_burning_ground: Whether the player is on burning ground.
     :param on_chilled_ground: Whether the player is on chilled ground.
@@ -222,6 +229,7 @@ class Config:
     :param enemy_shocked: Whether enemies are shocked.
     :param enemy_number_of_freeze_shock_ignite: Number of enemies frozen, shocked, or ignited recently.
     :param enemy_intimidated: Whether enemies are intimidated.
+    :param enemy_unnerved: Whether enemies are unnerved.
     :param enemy_covered_in_ash:  Whether enemies are covered in ash.
     :param enemy_rare_or_unique: Whether enemies are rare or unique.
     :param enemy_boss: Whether enemies are bosses.
@@ -263,11 +271,14 @@ class Config:
     in_sandstorm: bool = None
     brand_attached: bool = False
     dark_pact_skeleton_life: int = None
+    deathmark: bool = False
+    feeding_frenzy: bool = False
     herald_of_agony_stacks: int = None
     ice_nova_cast_on_frostbolt: bool = False
     infusion: bool = False
     innervate_innervation: bool = False
     intensify_stacks: int = None
+    meat_shield_enemy_nearby: bool = False
     raise_spectres_spectre_level: int = None
     raise_spectres_enable_curses: bool = False
     raise_spectres_blade_vortex_blade_count: int = None
@@ -325,6 +336,8 @@ class Config:
     max_challenger_charges: int = None
     use_blitz_charges: bool = False
     max_blitz_charges: int = None
+    use_inspiration_charges: bool = False
+    max_inspiration_charges: int = None
     minions_use_power_charges: bool = False
     minions_use_frenzy_charges: bool = False
     minions_use_endurance_charges: bool = False
@@ -343,6 +356,9 @@ class Config:
     leeching_mana: bool = False
     using_flask: bool = False
     has_totem: bool = False
+    number_of_nearby_allies: int = None
+    number_of_nearby_enemies: int = None
+    number_of_nearby_corpses: int = None
     on_consecrated_ground: bool = False
     on_burning_ground: bool = False
     on_chilled_ground: bool = False
@@ -425,6 +441,7 @@ class Config:
     enemy_shocked: bool = False
     enemy_number_of_freeze_shock_ignite: int = None
     enemy_intimidated: bool = False
+    enemy_unnerved: bool = False
     enemy_covered_in_ash: bool = False
     enemy_rare_or_unique: bool = False
     enemy_boss: bool = False
@@ -441,6 +458,7 @@ class Config:
     # calculated, but can also be overridden so we potentially have to initialise them at a later point in time.
     character_level: InitVar[int] = None
 
+    # TODO: Raise Spectre level calc on 3.0.0+
     def __post_init__(self, character_level: int):
         if self.enemy_level is None:
             self.enemy_level = min(character_level, 84)
