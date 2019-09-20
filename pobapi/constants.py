@@ -21,6 +21,7 @@ KEYSTONE_IDS = {
     "iron_reflexes": 10661,
     "mind_over_matter": 34098,
     "minion_instability": 18663,
+    "mortal conviction": 9403,
     "necromantic_aegis": 45175,
     "pain_attunement": 31703,
     "perfect_agony": 23407,
