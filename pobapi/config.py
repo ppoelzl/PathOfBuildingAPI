@@ -1,5 +1,6 @@
 # Built-ins
 from dataclasses import dataclass, field, InitVar
+from typing import Union
 
 # Project
 from pobapi.constants import MONSTER_DAMAGE_TABLE, MONSTER_LIFE_TABLE
@@ -61,7 +62,7 @@ class Config:
     :param raise_spiders_spider_count: Number of spiders from Raise Spiders.
     :param siphoning_trap_affected_enemies: Number of enemies affected by Siphoning Trap.
     :param stance: Controls whether the player is in Blood Stance or Sand Stance.
-        Possible values: ('BLOOD', 'SAND').
+        Possible values: ('Blood', 'Sand').
     :param summon_holy_relic_enable_holy_relic_buff: Whether the Holy Relic buff of Summon Holy Relics is active.
     :param summon_lightning_golem_enable_wrath: Whether a Lightning Golem's wrath buff is active.
     :param vortex_cast_on_frostbolt: Whether the player casts Vortex on a Frost Bolt.
@@ -233,6 +234,7 @@ class Config:
     :param enemy_covered_in_ash:  Whether enemies are covered in ash.
     :param enemy_rare_or_unique: Whether enemies are rare or unique.
     :param enemy_boss: Whether enemies are bosses.
+        Possible Values: (False, True, 'Shaper').
     :param enemy_physical_damage_reduction: Enemy physical damage reduction.
     :param enemy_fire_resist: Enemy fire resistance.
     :param enemy_cold_resist: Enemy cold resistance.
@@ -444,7 +446,7 @@ class Config:
     enemy_unnerved: bool = False
     enemy_covered_in_ash: bool = False
     enemy_rare_or_unique: bool = False
-    enemy_boss: bool = False
+    enemy_boss: Union[bool, str] = False
     enemy_physical_damage_reduction: int = None
     enemy_fire_resist: int = None
     enemy_cold_resist: int = None
