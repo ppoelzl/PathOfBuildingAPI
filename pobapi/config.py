@@ -1,5 +1,5 @@
 # Built-ins
-from dataclasses import dataclass, InitVar
+from dataclasses import dataclass, field, InitVar
 
 # Project
 from pobapi.constants import MONSTER_DAMAGE_TABLE, MONSTER_LIFE_TABLE
@@ -33,7 +33,7 @@ class Config:
     :param has_energy_shield: Whether the player currently has energy shield.
     :param minions_on_full_life: Whether the player's minions are on Full Life.
     :param ignite_mode: Controls how ignite damage is calculated.
-        Possible values: ('Average', 'Crit')
+        Possible values: ('Average', 'Crit').
     :param aspect_of_the_avian_avians_might: Whether Avian's Might is active.
     :param aspect_of_the_avian_avians_flight: Whether Avian's Flight is active.
     :param aspect_of_the_cat_cats_stealth: Whether Cat's Stealth is active.
@@ -267,8 +267,8 @@ class Config:
     aspect_of_the_spider_web_stacks: int = None
     banner_planted: bool = False
     banner_stages: int = None
-    in_bloodstorm: bool = None
-    in_sandstorm: bool = None
+    in_bloodstorm: bool = False
+    in_sandstorm: bool = False
     brand_attached: bool = False
     dark_pact_skeleton_life: int = None
     deathmark: bool = False
