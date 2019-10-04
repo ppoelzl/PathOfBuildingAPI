@@ -62,7 +62,6 @@ def test_active_skill_group(build):
     assert build.active_skill_group.enabled is True
     assert build.active_skill_group.label == "Test label."
     assert build.active_skill_group.active == 1
-    print(build.active_skill_group.gems)
     test_list = [
         ("Arc", True, 20, 1),
         ("Curse On Hit", True, 20, 2),

@@ -462,6 +462,8 @@ class Config:
 
     # TODO: Raise Spectre level calc on 3.0.0+
     def __post_init__(self, character_level: int):
+        if character_level is None:
+            character_level = 84
         if self.enemy_level is None:
             self.enemy_level = min(character_level, 84)
         if self.enemy_physical_hit_damage is None:
