@@ -76,7 +76,7 @@ class Tree:
 
     :param url: pathofexile.com link to passive skill tree.
     :param nodes: List of passive skill tree nodes by ID.
-    :param sockets: Dictionary of passive skill tree jewel socket location : jewel set ID."""
+    :param sockets: Dictionary of {<passive skill tree jewel socket location> : <jewel set ID>}."""
 
     url: str
     nodes: List[int]
@@ -103,6 +103,7 @@ class Keystones:
     :param iron_reflexes: Whether the player has Iron Reflexes.
     :param mind_over_matter: Whether the player has Mind Over Matter.
     :param minion_instability: Whether the player has Minion Instability.
+    :param mortal_conviction: Whether the player has Mortal Conviction.
     :param necromantic_aegis: Whether the player has Necromantic  Aegis.
     :param pain_attunement: Whether the player has Pain Attunement.
     :param perfect_agony: Whether the player has Perfect Agony.
@@ -130,6 +131,7 @@ class Keystones:
     iron_reflexes: bool
     mind_over_matter: bool
     minion_instability: bool
+    mortal_conviction: bool
     necromantic_aegis: bool
     pain_attunement: bool
     perfect_agony: bool

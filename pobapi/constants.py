@@ -21,7 +21,7 @@ KEYSTONE_IDS = {
     "iron_reflexes": 10661,
     "mind_over_matter": 34098,
     "minion_instability": 18663,
-    "mortal conviction": 9403,
+    "mortal_conviction": 9403,
     "necromantic_aegis": 45175,
     "pain_attunement": 31703,
     "perfect_agony": 23407,
@@ -56,7 +56,7 @@ MONSTER_LIFE_TABLE = (15, 18, 21, 25, 29, 33, 38, 43, 49, 55, 61, 68, 76, 85, 94
                       17240, 18388, 19610, 20911, 22296, 23770, 25338, 27007, 28784,
                       30673, 32684, 34823, 37098, 39519, 42093, 44831)
 # fmt: on
-# Mapping between internal skill IDs and their display names
+#: Mapping between internal skill IDs and their display names
 SKILL_MAP = {
     "Melee": "Default Attack",
     "MeleeUseContactPoint": "Default Attack",
