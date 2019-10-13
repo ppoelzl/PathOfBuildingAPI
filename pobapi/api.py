@@ -1,5 +1,5 @@
 # Built-ins
-from typing import List, Optional
+from typing import List, Optional, Union
 
 # Project
 from pobapi import config, models, stats
@@ -64,11 +64,11 @@ class PathOfBuildingAPI:
         return self.xml.find("Build").get("bandit")
 
     @memoized_property
-    def active_skill_group(self) -> models.Skill:
+    def active_skill_group(self) -> models.SkillGroup:
         """Get a character's main skill setup.
 
         :return: Main skill setup.
-        :rtype: :class:`~pobapi.models.Skill`"""
+        :rtype: :class:`~pobapi.models.SkillGroup`"""
         index = int(self.xml.find("Build").get("mainSocketGroup")) - 1
         return self.skill_groups[index]
 
@@ -86,11 +86,11 @@ class PathOfBuildingAPI:
 
     @memoized_property
     @listify
-    def skill_groups(self) -> List[models.Skill]:
+    def skill_groups(self) -> List[models.SkillGroup]:
         """Get a character's skill setups.
 
         :return: Skill setups.
-        :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Skill`]"""
+        :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.SkillGroup`]"""
         for skill in self.xml.find("Skills").findall("Skill"):
             enabled = True if skill.get("enabled") == "true" else False
             label = skill.get("label")
@@ -99,29 +99,31 @@ class PathOfBuildingAPI:
                 if not skill.get("mainActiveSkill") == "nil"
                 else None
             )
-            gems = self._gems(skill)
-            yield models.Skill(enabled, label, active, gems)
+            abilities = self._abilities(skill)
+            yield models.SkillGroup(enabled, label, active, abilities)
 
     @memoized_property
-    def active_skill(self) -> models.Gem:
+    def active_skill(self) -> Union[models.Gem, models.GrantedAbility]:
         """Get a character's main skill.
 
         :return: Main skill.
-        :rtype: :class:`~pobapi.models.Gem`"""
+        :rtype: :data:`~typing.Union`\\[:class:`~pobapi.models.Gem`, :class:`~pobapi.models.GrantedAbility`]"""
         index = self.active_skill_group.active - 1
-        return self.active_skill_group.gems[index]
+        return self.active_skill_group.abilities[index]
 
     @memoized_property
     @listify
     def skill_gems(self) -> List[models.Gem]:  # Added for convenience
         """Get a list of all skill gems on a character.
 
+        .. note: Excludes abilities granted by items.
+
         :return: Skill gems.
         :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Gem`]"""
 
-        for skill in self.xml.find("Skills").findall("Skill"):
+        for skill in self.xml.find("Skills").findall("SkillGroup"):
             if not skill.get("source"):
-                yield from self._gems(skill)
+                yield from self._abilities(skill)
 
     @memoized_property
     def active_skill_tree(self) -> models.Tree:
@@ -270,13 +272,22 @@ class PathOfBuildingAPI:
 
     @classmethod
     @listify
-    def _gems(cls, skill) -> List[models.Gem]:
-        for gem in skill:
-            name = gem.get("nameSpec") or SKILL_MAP[gem.get("skillId")]
-            enabled_ = True if gem.get("enabled") == "true" else False
-            level = int(gem.get("level"))
-            quality = int(gem.get("quality"))
-            yield models.Gem(name, enabled_, level, quality)
+    def _abilities(cls, skill) -> List[Union[models.Gem, models.GrantedAbility]]:
+        """Get a list of abilities, whether they are granted by gems or by items.
+
+        :return: Abilities.
+        :rtype: :class:`~typing.List`\\
+            [:data:`~typing.Union`\\[:class:`~pobapi.models.Gem`, :class:`~pobapi.models.GrantedAbility`]]"""
+        for ability in skill:
+            name = ability.get("nameSpec")
+            enabled = True if ability.get("enabled") == "true" else False
+            level = int(ability.get("level"))
+            if name:
+                quality = int(ability.get("quality"))
+                yield models.Gem(name, enabled, level, quality)
+            else:
+                name = SKILL_MAP[ability.get("skillId")]
+                yield models.GrantedAbility(name, enabled, level)
 
 
 def from_url(url: str, timeout: float = 6.0) -> PathOfBuildingAPI:

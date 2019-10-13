@@ -1,17 +1,30 @@
 # Built-ins
+from abc import ABC
 from dataclasses import asdict, dataclass
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Union
 
 # Third-party
 from dataslots import with_slots
 
-__all__ = ["Gem", "Skill", "Tree", "Item", "Set"]
+__all__ = ["Gem", "GrantedAbility", "SkillGroup", "Tree", "Item", "Set"]
+
+
+class Ability(ABC):
+    """Abstract class that holds the data of an ability..
+
+    :param name: Ability name.
+    :param enabled: Whether the ability is in active use.
+    :param level: Ability level."""
+
+    name: str
+    enabled: bool
+    level: int
 
 
 @with_slots
 @dataclass
-class Gem:
-    """Class that holds a skill gem's data.
+class Gem(Ability):
+    """Class that holds the data of an ability granted by a skill gem.
 
     :param name: Skill gem name.
     :param enabled: Whether the skill gem is in active use.
@@ -26,18 +39,34 @@ class Gem:
 
 @with_slots
 @dataclass
-class Skill:
+class GrantedAbility(Ability):
+    """Class that holds the data of an ability granted by an item.
+
+    :param name: Granted ability name.
+    :param enabled: Whether the granted ability is in active use.
+    :param level: Granted ability level.
+
+    .. note: Granted abilities cannot have any quality on them."""
+
+    name: str
+    enabled: bool
+    level: int
+
+
+@with_slots
+@dataclass
+class SkillGroup:
     """Class that holds a (linked) socket group.
 
     :param enabled: Whether the socket group is in active use.
     :param label: Socket group label assigned in Path Of Building.
     :param active: Main skill in socket group, if given.
-    :param gems: List of :class:`Gem <Gem>` objects in socket group."""
+    :param abilities: List of :class:`Gem <Gem>` or :class:`GrantedAbility <GrantedAbility>` objects in socket group."""
 
     enabled: bool
     label: str
     active: Optional[int]
-    gems: List[Gem]
+    abilities: List[Union[Gem, GrantedAbility]]
 
 
 @with_slots
