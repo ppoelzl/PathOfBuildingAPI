@@ -79,7 +79,7 @@ class PathOfBuildingAPI:
         :return: Character stats.
         :rtype: :class:`~pobapi.stats.Stats`"""
         kwargs = {
-            STATS_MAP[i.get("stat")]: float(i.get("value"))
+            STATS_MAP.get(i.get("stat")): float(i.get("value"))
             for i in self.xml.find("Build").findall("PlayerStat")
         }
         return stats.Stats(**kwargs)
@@ -241,7 +241,7 @@ class PathOfBuildingAPI:
         :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Set`]"""
         for item_set in self.xml.find("Items").findall("ItemSet"):
             kwargs = {
-                SET_MAP[slot.get("name")]: int(slot.get("itemId"))
+                SET_MAP.get(slot.get("name")): int(slot.get("itemId"))
                 if not slot.get("itemId") == "0"
                 else None
                 for slot in item_set.findall("Slot")
@@ -264,7 +264,7 @@ class PathOfBuildingAPI:
                 return item.get("string").capitalize()
 
         kwargs = {
-            CONFIG_MAP[i.get("name")]: _convert_fields(i)
+            CONFIG_MAP.get(i.get("name")): _convert_fields(i)
             for i in self.xml.find("Config").findall("Input")
         }
         kwargs["character_level"] = self.level
@@ -286,7 +286,7 @@ class PathOfBuildingAPI:
                 quality = int(ability.get("quality"))
                 yield models.Gem(name, enabled, level, quality)
             else:
-                name = SKILL_MAP[ability.get("skillId")]
+                name = SKILL_MAP.get(ability.get("skillId"))
                 yield models.GrantedAbility(name, enabled, level)
 
 
