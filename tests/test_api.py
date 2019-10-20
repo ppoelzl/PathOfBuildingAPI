@@ -1,6 +1,10 @@
+# Built-ins
+import itertools
+
 # Project
 from pobapi import api
 from pobapi import config
+from pobapi import models
 from pobapi import stats
 
 # Third-Party
@@ -12,6 +16,15 @@ def build():
     with open("../data/test_code.txt") as f:
         code = f.read()
     return api.from_import_code(code)
+
+
+def _assert_group(skill_group, test_list):
+    for g, t in zip(skill_group, test_list):
+        assert g.name == t[0]
+        assert g.enabled == t[1]
+        assert g.level == t[2]
+        if isinstance(g, models.Gem):
+            assert g.quality == t[3]
 
 
 def test_class_name(build):
@@ -40,7 +53,7 @@ def test_second_weapon_set(build):
 
 def test_stats(build):
     assert isinstance(build.stats, stats.Stats)
-    assert build.stats.life == 149
+    assert build.stats.life == 163
     assert build.stats.mana == 60
 
 
@@ -67,11 +80,7 @@ def test_active_skill_group(build):
         ("Curse On Hit", True, 20, 2),
         ("Conductivity", True, 20, 3),
     ]
-    for g, t in zip(build.active_skill_group.gems, test_list):
-        assert g.name == t[0]
-        assert g.enabled == t[1]
-        assert g.level == t[2]
-        assert g.quality == t[3]
+    _assert_group(build.active_skill_group.abilities, test_list)
 
 
 def test_skill_groups(build):
@@ -84,11 +93,8 @@ def test_skill_groups(build):
         ("Curse On Hit", True, 20, 2),
         ("Conductivity", True, 20, 3),
     ]
-    for g, t in zip(skill_group.gems, test_list):
-        assert g.name == t[0]
-        assert g.enabled == t[1]
-        assert g.level == t[2]
-        assert g.quality == t[3]
+    _assert_group(skill_group.abilities, test_list)
+
     skill_group = build.skill_groups[1]
     assert skill_group.enabled is True
     assert skill_group.label == ""
@@ -98,11 +104,20 @@ def test_skill_groups(build):
         ("Herald of Ice", True, 20, 0),
         ("Herald of Thunder", True, 20, 0),
     ]
-    for g, t in zip(skill_group.gems, test_list):
-        assert g.name == t[0]
-        assert g.enabled == t[1]
-        assert g.level == t[2]
-        assert g.quality == t[3]
+    _assert_group(skill_group.abilities, test_list)
+
+    skill_group = build.skill_groups[2]
+    assert skill_group.enabled is True
+    assert skill_group.label == ""
+    assert skill_group.active == 1
+    test_list = [
+        ("Abberath's Fury", True, 7),
+        ("Added Cold Damage", True, 20, 0),
+        ("Added Lightning Damage", True, 20, 0),
+        ("Hypothermia", True, 20, 0),
+        ("Concentrated Effect", True, 20, 0),
+    ]
+    _assert_group(skill_group.abilities, test_list)
 
 
 def test_skill_gems(build):
@@ -115,30 +130,27 @@ def test_skill_gems(build):
         ("Herald of Ash", True, 20, 0),
         ("Herald of Ice", True, 20, 0),
         ("Herald of Thunder", True, 20, 0),
+        ("Added Cold Damage", True, 20, 0),
+        ("Added Lightning Damage", True, 20, 0),
+        ("Hypothermia", True, 20, 0),
+        ("Concentrated Effect", True, 20, 0),
     ]
-    for g, t in zip(build.skill_gems, test_list_active + test_list_passive):
-        assert g.name == t[0]
-        assert g.enabled == t[1]
-        assert g.level == t[2]
-        assert g.quality == t[3]
+    _assert_group(build.skill_gems, test_list_active + test_list_passive)
 
 
 def test_active_skill(build):
-    t = ("Arc", True, 20, 1)
-    assert build.active_skill.name == t[0]
-    assert build.active_skill.enabled == t[1]
-    assert build.active_skill.level == t[2]
-    assert build.active_skill.quality == t[3]
+    test_list = [("Arc", True, 20, 1)]
+    _assert_group([build.active_skill], test_list)
 
 
 def test_active_skill_tree(build):
     assert (
         build.active_skill_tree.url
-        == "https://www.pathofexile.com/passive-skill-tree/AAAABAABAJitGFbaYthNgsdodCj6lKD56A=="
+        == "https://www.pathofexile.com/passive-skill-tree/AAAABAABAJitGFbaYij62E1odILHlKD56A=="
     )
     # fmt: off
     assert build.active_skill_tree.nodes == \
-        [39085, 6230, 55906, 55373, 33479, 26740, 10490, 38048, 63976]
+        [39085, 6230, 55906, 10490, 55373, 26740, 33479, 38048, 63976]
     # fmt: on
     assert build.active_skill_tree.sockets == {}
 
@@ -147,11 +159,11 @@ def test_trees(build):
     for tree in build.trees:
         assert (
                 tree.url
-                == "https://www.pathofexile.com/passive-skill-tree/AAAABAABAJitGFbaYthNgsdodCj6lKD56A=="
+                == "https://www.pathofexile.com/passive-skill-tree/AAAABAABAJitGFbaYij62E1odILHlKD56A=="
         )
         # fmt: off
         assert tree.nodes == \
-            [39085, 6230, 55906, 55373, 33479, 26740, 10490, 38048, 63976]
+            [39085, 6230, 55906, 10490, 55373, 26740, 33479, 38048, 63976]
         # fmt: on
         assert tree.sockets == {}
 
