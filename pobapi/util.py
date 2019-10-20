@@ -70,7 +70,7 @@ def _skill_tree_nodes(url: str) -> List[int]:
     """Get a list of passive tree node IDs.
 
     :return: Passive tree node IDs."""
-    _, _, url = url.rpartition("/")
+    *_, url = url.rpartition("/")
     bin_tree = base64.urlsafe_b64decode(url)
     return list(
         struct.unpack_from(
@@ -88,7 +88,7 @@ def _get_stat(text: List[str], stat: str) -> Union[str, type(True)]:
     :return: Item affix value or True."""
     for line in text:
         if line.startswith(stat):
-            _, _, result = line.partition(stat)
+            *_, result = line.partition(stat)
             return result or True
 
 
@@ -141,7 +141,7 @@ def _get_text(
                     line = _calculate_mod_text(line, value)
                     counter += 1
             # We are only interested in everything past the '{variant: *}' and '{range: *}' tags.
-            _, _, mod = line.rpartition("}")
+            *_, mod = line.rpartition("}")
             yield mod
 
     return "\n".join(_parse_text(text, variant, alt_variant, mod_ranges))

@@ -219,8 +219,8 @@ class PathOfBuildingAPI:
             implicit = int(_get_stat(item, "Implicits: "))
             item_text = _get_text(item, variant, alt_variant, mod_ranges)
             # fmt: off
-            yield models.Item(rarity, name, base, uid, shaper, elder, crafted, quality, sockets,
-                              level_req, item_level, implicit, item_text)
+            yield models.Item(rarity, name, base, uid, shaper, elder, crafted, quality,
+                              sockets, level_req, item_level, implicit, item_text)
             # fmt: on
 
     @memoized_property
@@ -279,7 +279,8 @@ class PathOfBuildingAPI:
         :rtype: :class:`~typing.List`\\
             [:data:`~typing.Union`\\[:class:`~pobapi.models.Gem`, :class:`~pobapi.models.GrantedAbility`]]"""
         for ability in skill:
-            name = ability.get("nameSpec")
+            # Workaround for https://github.com/Openarl/PathOfBuilding/pull/1728
+            name = ability.get("nameSpec").replace("Abberath's Fury", "")
             enabled = True if ability.get("enabled") == "true" else False
             level = int(ability.get("level"))
             if name:
