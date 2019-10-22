@@ -50,5 +50,5 @@ setup(
     # What does your project relate to?
     keywords="pathofexile poe pathofbuilding pob",
     packages=["pobapi"],
-    install_requires=["dataslots", "defusedxml", "lxml", "requests", "unstdlib"],
+    install_requires=["dataslots", "lxml", "requests", "unstdlib"],
 )

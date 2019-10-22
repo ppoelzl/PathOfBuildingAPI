@@ -8,7 +8,7 @@ from pobapi.util import _get_stat, _skill_tree_nodes, _get_text
 from pobapi.util import _fetch_xml_from_import_code, _fetch_xml_from_url
 
 # Third-party
-from defusedxml import lxml
+from lxml.etree import fromstring
 from unstdlib.standard.functools_ import memoized_property
 from unstdlib.standard.list_ import listify
 
@@ -29,7 +29,7 @@ class PathOfBuildingAPI:
         use :func:`~pobapi.api.from_url` or :func:`~pobapi.api.from_import_code` instead."""
 
     def __init__(self, xml: bytes):
-        self.xml = lxml.fromstring(xml)
+        self.xml = fromstring(xml)
 
     @memoized_property
     def class_name(self) -> str:
