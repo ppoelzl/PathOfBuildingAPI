@@ -279,8 +279,7 @@ class PathOfBuildingAPI:
         :rtype: :class:`~typing.List`\\
             [:data:`~typing.Union`\\[:class:`~pobapi.models.Gem`, :class:`~pobapi.models.GrantedAbility`]]"""
         for ability in skill:
-            # Workaround for https://github.com/Openarl/PathOfBuilding/pull/1728
-            name = ability.get("nameSpec").replace("Abberath's Fury", "")
+            name = ability.get("nameSpec")
             enabled = True if ability.get("enabled") == "true" else False
             level = int(ability.get("level"))
             if name:
