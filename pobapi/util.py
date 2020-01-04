@@ -18,8 +18,9 @@ logger = logging.getLogger(__name__)
 def _fetch_xml_from_url(url: str, timeout: float) -> bytes:
     """Get a Path Of Building import code shared with pastebin.com.
 
-    :raises: :class:`~requests.URLRequired`, :class:`~requests.Timeout`, :class:`~requests.ConnectionError`,
-        :class:`~requests.HTTPError`, :class:`~requests.TooManyRedirects`, :class:`~requests.RequestException`
+    :raises: :class:`~requests.URLRequired`, :class:`~requests.Timeout`,
+        :class:`~requests.ConnectionError`, :class:`~requests.HTTPError`,
+        :class:`~requests.TooManyRedirects`, :class:`~requests.RequestException`
 
     :return: Decompressed XML build document."""
     if url.startswith("https://pastebin.com/"):
@@ -35,7 +36,7 @@ def _fetch_xml_from_url(url: str, timeout: float) -> bytes:
             )
         except requests.ConnectionError:
             logger.exception(
-                f"There was a network problem (e.g. DNS failure, refused connection, etc)."
+                f"There was a network problem (DNS failure, refused connection, etc)."
             )
         except requests.HTTPError:
             logger.exception(f"HTTP request returned unsuccessful status code.")
@@ -117,20 +118,24 @@ def _get_text(
     text: List[str], variant: str, alt_variant: str, mod_ranges: List[float]
 ) -> str:
     def _parse_text(text_, variant_, alt_variant_, mod_ranges_):
-        """Get the correct variant and item affix values for items made in Path Of Building.
+        """Get the correct variant and item affix values
+            for items made in Path Of Building.
 
         :return: Multiline string of correct item variants and item affix values."""
         counter = 0
-        # We have to advance this every time we get a line with text to replace, not every time we substitute.
+        # We have to advance this every time we get a line with text to replace,
+        # not every time we substitute.
         for line in _item_text(text_):
             if line.startswith(
                 "{variant:"
             ):  # We want to skip all mods of alternative item versions.
-                item_variants = line.partition("{variant:")[-1].partition("}")[0].split(",")
+                item_variants = (
+                    line.partition("{variant:")[-1].partition("}")[0].split(",")
+                )
                 if variant_ not in item_variants:
                     if alt_variant_ not in item_variants:
                         continue
-            # We have to check for '{range:' used in range tags to filter unsupported mods.
+            # Check for '{range:' used in range tags to filter unsupported mods.
             if "{range:" in line:
                 if "Adds (" in line:
                     # 'Adds (A-B) to (C-D) to something' mods need to be replaced twice.
@@ -140,7 +145,7 @@ def _get_text(
                     value = mod_ranges_[counter]
                     line = _calculate_mod_text(line, value)
                     counter += 1
-            # We are only interested in everything past the '{variant: *}' and '{range: *}' tags.
+            # Omit '{variant: *}' and '{range: *}' tags.
             *_, mod = line.rpartition("}")
             yield mod
 
@@ -153,7 +158,8 @@ def _calculate_mod_text(line: str, value: float) -> str:
     :return: Corrected item affix value."""
     start, stop = line.partition("(")[-1].partition(")")[0].split("-")
     width = float(stop) - float(start) + 1
-    # Python's round() function uses banker's rounding from 3.0 onwards, we have to emulate Lua's 'towards 0' rounding.
+    # Python's round() function uses banker's rounding from 3.0 onwards
+    # We have to emulate Path of Exile's "towards 0" rounding.
     # https://en.wikipedia.org/w/index.php?title=IEEE_754#Rounding_rules
     offset = decimal.Decimal(width * value).to_integral(decimal.ROUND_HALF_DOWN)
     result = float(start) + float(offset)

@@ -154,7 +154,8 @@ CONFIG_MAP = {
     "raiseSpectreEnableCurses": "raise_spectres_enable_curses",
     "raiseSpectreBladeVortexBladeCount": "raise_spectres_blade_vortex_blade_count",
     "raiseSpectreKaomFireBeamTotemStage": "raise_spectres_kaom_fire_beam_totem_stage",
-    "raiseSpectreEnableSummonedUrsaRallyingCry": "raise_spectres_enable_summoned_ursa_rallying_cry",
+    "raiseSpectreEnableSummonedUrsaRallyingCry":
+        "raise_spectres_enable_summoned_ursa_rallying_cry",
     "raiseSpidersSpiderCount": "raise_spiders_spider_count",
     "siphoningTrapAffectedEnemies": "siphoning_trap_affected_enemies",
     "bloodSandStance": "stance",
@@ -287,7 +288,8 @@ CONFIG_MAP = {
     "conditionConsumedCorpseRecently": "consumed_corpses_recently",
     "multiplierCorpseConsumedRecently": "number_of_corpses_consumed_recently",
     "conditionTauntedEnemyRecently": "taunted_enemy_recently",
-    "conditionBlockedHitFromUniqueEnemyInPast10Sec": "blocked_hit_from_unique_enemy_in_past_ten_seconds",
+    "conditionBlockedHitFromUniqueEnemyInPast10Sec":
+        "blocked_hit_from_unique_enemy_in_past_ten_seconds",
     "critChanceLucky": "lucky_crits",
     "skillChainCount": "number_of_times_skill_has_chained",
     "projectileDistance": "projectile_distance",

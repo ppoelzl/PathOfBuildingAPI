@@ -25,8 +25,9 @@ class PathOfBuildingAPI:
     .. note:: XML must me in byte format, not string format.
         This is required because the XML contains encoding information.
 
-    .. note:: To instantiate from pastebin.com links or import codes,
-        use :func:`~pobapi.api.from_url` or :func:`~pobapi.api.from_import_code` instead."""
+    .. note:: To instantiate from pastebin.com links or import codes, use
+        :func:`~pobapi.api.from_url` or
+        :func:`~pobapi.api.from_import_code`, respectively."""
 
     def __init__(self, xml: bytes):
         self.xml = fromstring(xml)
@@ -107,7 +108,8 @@ class PathOfBuildingAPI:
         """Get a character's main skill.
 
         :return: Main skill.
-        :rtype: :data:`~typing.Union`\\[:class:`~pobapi.models.Gem`, :class:`~pobapi.models.GrantedAbility`]"""
+        :rtype: :data:`~typing.Union`\\[:class:`~pobapi.models.Gem`,
+            :class:`~pobapi.models.GrantedAbility`]"""
         index = self.active_skill_group.active - 1
         return self.active_skill_group.abilities[index]
 
@@ -193,10 +195,9 @@ class PathOfBuildingAPI:
         :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Item`]"""
         for text in self.xml.find("Items").findall("Item"):
             variant = text.get("variant")
-            alt_variant = text.get(
-                "variantAlt"
-            )  # 'variantAlt' is for the second Watcher's Eye unique mod.
-            # The 3-stat variant obtained from Uber Elder is not yet implemented in Path of Building.
+            alt_variant = text.get("variantAlt")
+            # 'variantAlt' is for the second Watcher's Eye unique mod.
+            # The 3-stat variant obtained from Uber Elder is not yet implemented in PoB.
             mod_ranges = [float(i.get("range")) for i in text.findall("ModRange")]
             item = text.text.strip("\n\r\t").splitlines()
             rarity = _get_stat(item, "Rarity: ").capitalize()
@@ -277,7 +278,8 @@ class PathOfBuildingAPI:
 
         :return: Abilities.
         :rtype: :class:`~typing.List`\\
-            [:data:`~typing.Union`\\[:class:`~pobapi.models.Gem`, :class:`~pobapi.models.GrantedAbility`]]"""
+            [:data:`~typing.Union`\\[:class:`~pobapi.models.Gem`,
+            :class:`~pobapi.models.GrantedAbility`]]"""
         for ability in skill:
             name = ability.get("nameSpec")
             enabled = True if ability.get("enabled") == "true" else False
@@ -293,8 +295,9 @@ class PathOfBuildingAPI:
 def from_url(url: str, timeout: float = 6.0) -> PathOfBuildingAPI:
     """Instantiate build class from a pastebin.com link generated with Path Of Building.
 
-    :raises: :class:`~requests.URLRequired`, :class:`~requests.Timeout`, :class:`~requests.ConnectionError`,
-        :class:`~requests.HTTPError`, :class:`~requests.TooManyRedirects`, :class:`~requests.RequestException`
+    :raises: :class:`~requests.URLRequired`, :class:`~requests.Timeout`,
+        :class:`~requests.ConnectionError`, :class:`~requests.HTTPError`,
+        :class:`~requests.TooManyRedirects`, :class:`~requests.RequestException`
 
     :param url: pastebin.com link generated with Path Of Building.
     :param timeout: Timeout for the request."""

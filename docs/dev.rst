@@ -22,5 +22,6 @@ Contributing Code
 * Once accepted, they will be merged to master.
 * Make sure to include unit tests with your changes.
 * Feel free to alter the test import code to do so.
-* Make sure to format your code with `black <https://github.com/ambv/black>`_ before submitting.
+* Make sure to format your code with `black <https://github.com/ambv/black>`_
+  before submitting.
 * Add yourself to AUTHORS.txt!

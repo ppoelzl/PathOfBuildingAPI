@@ -10,6 +10,8 @@ from pobapi import stats
 # Third-Party
 import pytest
 
+BASE_URL = "https://www.pathofexile.com/passive-skill-tree/"
+
 
 @pytest.fixture(scope="module")
 def build():
@@ -144,10 +146,8 @@ def test_active_skill(build):
 
 
 def test_active_skill_tree(build):
-    assert (
-        build.active_skill_tree.url
-        == "https://www.pathofexile.com/passive-skill-tree/AAAABAABAJitGFbaYij62E1odILHlKD56A=="
-    )
+    assert build.active_skill_tree.url == \
+           BASE_URL + "AAAABAABAJitGFbaYij62E1odILHlKD56A=="
     # fmt: off
     assert build.active_skill_tree.nodes == \
         [39085, 6230, 55906, 10490, 55373, 26740, 33479, 38048, 63976]
@@ -157,10 +157,7 @@ def test_active_skill_tree(build):
 
 def test_trees(build):
     for tree in build.trees:
-        assert (
-                tree.url
-                == "https://www.pathofexile.com/passive-skill-tree/AAAABAABAJitGFbaYij62E1odILHlKD56A=="
-        )
+        assert tree.url == BASE_URL + "AAAABAABAJitGFbaYij62E1odILHlKD56A=="
         # fmt: off
         assert tree.nodes == \
             [39085, 6230, 55906, 10490, 55373, 26740, 33479, 38048, 63976]
