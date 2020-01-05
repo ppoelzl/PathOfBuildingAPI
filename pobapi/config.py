@@ -1,5 +1,5 @@
 # Built-ins
-from dataclasses import dataclass, field, InitVar
+from dataclasses import dataclass, InitVar
 from typing import Union
 
 # Project

@@ -1,5 +1,4 @@
 # Built-ins
-import itertools
 
 # Project
 from pobapi import api
