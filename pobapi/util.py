@@ -135,17 +135,17 @@ def _get_text(
                 if variant_ not in item_variants:
                     if alt_variant_ not in item_variants:
                         continue
-            # Check for '{range:' used in range tags to filter unsupported mods.
+            # Check for "{range:" used in range tags to filter unsupported mods.
             if "{range:" in line:
                 if "Adds (" in line:
-                    # 'Adds (A-B) to (C-D) to something' mods need to be replaced twice.
+                    # "Adds (A-B) to (C-D) to something" mods need to be replaced twice.
                     value = mod_ranges_[counter]
                     line = _calculate_mod_text(line, value)
                 if "(" in line:
                     value = mod_ranges_[counter]
                     line = _calculate_mod_text(line, value)
                     counter += 1
-            # Omit '{variant: *}' and '{range: *}' tags.
+            # Omit "{variant: *}" and "{range: *}" tags.
             *_, mod = line.rpartition("}")
             yield mod
 

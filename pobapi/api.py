@@ -196,7 +196,7 @@ class PathOfBuildingAPI:
         for text in self.xml.find("Items").findall("Item"):
             variant = text.get("variant")
             alt_variant = text.get("variantAlt")
-            # 'variantAlt' is for the second Watcher's Eye unique mod.
+            # "variantAlt" is for the second Watcher's Eye unique mod.
             # The 3-stat variant obtained from Uber Elder is not yet implemented in PoB.
             mod_ranges = [float(i.get("range")) for i in text.findall("ModRange")]
             item = text.text.strip("\n\r\t").splitlines()
