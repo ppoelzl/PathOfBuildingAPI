@@ -6,7 +6,7 @@ from typing import Dict, List, Optional, Tuple, Union
 # Third-party
 from dataslots import with_slots
 
-__all__ = ["Gem", "GrantedAbility", "SkillGroup", "Tree", "Item", "Set"]
+__all__ = ["Gem", "GrantedAbility", "SkillGroup", "Tree", "Keystones", "Item", "Set"]
 
 
 class Ability(ABC):
@@ -88,7 +88,8 @@ class Tree:
 @with_slots
 @dataclass
 class Keystones:
-    """Class that holds keystone data.
+    """Keystones(*args)
+    Class that holds keystone data.
 
     :param acrobatics: Whether the player has Acrobatics.
     :param ancestral_bond: Whether the player has Ancestral Bond.
