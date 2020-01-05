@@ -6,7 +6,7 @@ from pobapi import config
 from pobapi import models
 from pobapi import stats
 
-# Third-Party
+# Third-party
 import pytest
 
 BASE_URL = "https://www.pathofexile.com/passive-skill-tree/"
@@ -145,8 +145,9 @@ def test_active_skill(build):
 
 
 def test_active_skill_tree(build):
-    assert build.active_skill_tree.url == \
-           BASE_URL + "AAAABAABAJitGFbaYij62E1odILHlKD56A=="
+    assert (
+        build.active_skill_tree.url == BASE_URL + "AAAABAABAJitGFbaYij62E1odILHlKD56A=="
+    )
     # fmt: off
     assert build.active_skill_tree.nodes == \
         [39085, 6230, 55906, 10490, 55373, 26740, 33479, 38048, 63976]

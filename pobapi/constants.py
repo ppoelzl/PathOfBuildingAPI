@@ -55,7 +55,6 @@ MONSTER_LIFE_TABLE = (15, 18, 21, 25, 29, 33, 38, 43, 49, 55, 61, 68, 76, 85, 94
                       9595, 10246, 10940, 11679, 12466, 13304, 14198, 15149, 16161,
                       17240, 18388, 19610, 20911, 22296, 23770, 25338, 27007, 28784,
                       30673, 32684, 34823, 37098, 39519, 42093, 44831)
-# fmt: on
 #: Mapping between internal skill IDs and their display names
 SKILL_MAP = {
     "Melee": "Default Attack",
@@ -326,6 +325,7 @@ CONFIG_MAP = {
     "enemyConditionHitByLightningDamage": "enemy_hit_by_lightning_damage",
     "EEIgnoreHitDamage": "elemental_equilibrium_ignore_hit_damage",
 }
+# fmt: on
 #: Mapping between PathOfBuilding's export format and this API.
 STATS_MAP = {
     "AverageHit": "average_hit",
