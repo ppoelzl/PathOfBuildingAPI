@@ -282,6 +282,7 @@ CONFIG_MAP = {
     "conditionUsedMovementSkillRecently": "used_movement_skill_recently",
     "conditionUsedVaalSkillRecently": "used_vaal_skill_recently",
     "conditionUsedWarcryRecently": "used_warcry_recently",
+    "conditionUsedWarcryInPast8Seconds": "used_warcry_in_past_8_seconds",
     "multiplierMineDetonatedRecently": "number_of_mines_detonated_recently",
     "multiplierTrapTriggeredRecently": "number_of_traps_triggered_recently",
     "conditionConsumedCorpseRecently": "consumed_corpses_recently",

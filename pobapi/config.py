@@ -230,6 +230,8 @@ class Config:
         Whether the player has used a movement skill recently.
     :param used_vaal_skill_recently: Whether the player has used a vaal skill recently.
     :param used_warcry_recently: Whether the player has used a warcry recently.
+    :param used_warcry_in_past_8_seconds:
+        Whether the player has used a warcry in the past 8 seconds.
     :param number_of_mines_detonated_recently: Number of mines detonated recently.
     :param number_of_traps_triggered_recently: Number of traps triggered recently.
     :param consumed_corpses_recently: Whether the player has consumed corpses recently.
@@ -449,6 +451,7 @@ class Config:
     used_movement_skill_recently: bool = False
     used_vaal_skill_recently: bool = False
     used_warcry_recently: bool = False
+    used_warcry_in_past_8_seconds: bool = False
     number_of_mines_detonated_recently: int = None
     number_of_traps_triggered_recently: int = None
     consumed_corpses_recently: bool = False
