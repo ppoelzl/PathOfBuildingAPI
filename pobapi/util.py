@@ -15,7 +15,7 @@ import requests
 logger = logging.getLogger(__name__)
 
 
-def _fetch_xml_from_url(url: str, timeout: float) -> bytes:
+def _fetch_xml_from_url(url: str, timeout: float = 6.0) -> bytes:
     """Get a Path Of Building import code shared with pastebin.com.
 
     :raises: :class:`~requests.URLRequired`, :class:`~requests.Timeout`,
