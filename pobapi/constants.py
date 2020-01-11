@@ -1,10 +1,12 @@
+from typing import Dict, List
+
 """Constants taken from the game and PathOfBuilding."""
 
 #: Skill tree node data is offset 7 bytes from the start.
-TREE_OFFSET = 7
+TREE_OFFSET: int = 7
 
 #: Skill tree IDs of keystones.
-KEYSTONE_IDS = {
+KEYSTONE_IDS: Dict[str, int] = {
     "acrobatics": 54307,
     "ancestral_bond": 41970,
     "arrow_dancing": 54922,
@@ -37,26 +39,29 @@ KEYSTONE_IDS = {
 
 # fmt: off
 #: Taken from DefaultMonsterStats.dat
-MONSTER_DAMAGE_TABLE = (5, 6, 6, 7, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21,
-                        23, 24, 26, 28, 30, 32, 34, 36, 39, 41, 44, 47, 50, 53, 56, 59,
-                        63, 67, 71, 75, 80, 84, 89, 94, 100, 106, 112, 118, 125, 131,
-                        139, 147, 155, 163, 172, 181, 191, 202, 212, 224, 236, 248, 262,
-                        275, 290, 305, 321, 338, 355, 374, 393, 413, 434, 456, 480, 504,
-                        530, 556, 584, 614, 645, 677, 711, 746, 783, 822, 862, 905, 949,
-                        996, 1045, 1096, 1149, 1205, 1264, 1325, 1390, 1457, 1527, 1601,
-                        1678, 1758)
+MONSTER_DAMAGE_TABLE: List[int] = [5, 6, 6, 7, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+                                   18, 20, 21, 23, 24, 26, 28, 30, 32, 34, 36, 39, 41,
+                                   44, 47, 50, 53, 56, 59, 63, 67, 71, 75, 80, 84, 89,
+                                   94, 100, 106, 112, 118, 125, 131, 139, 147, 155, 163,
+                                   172, 181, 191, 202, 212, 224, 236, 248, 262, 275,
+                                   290, 305, 321, 338, 355, 374, 393, 413, 434, 456,
+                                   480, 504, 530, 556, 584, 614, 645, 677, 711, 746,
+                                   783, 822, 862, 905, 949, 996, 1045, 1096, 1149, 1205,
+                                   1264, 1325, 1390, 1457, 1527, 1601, 1678, 1758]
 #: Taken from DefaultMonsterStats.dat
-MONSTER_LIFE_TABLE = (15, 18, 21, 25, 29, 33, 38, 43, 49, 55, 61, 68, 76, 85, 94, 104,
-                      114, 126, 138, 152, 166, 182, 199, 217, 236, 257, 280, 304, 331,
-                      359, 389, 422, 456, 494, 534, 577, 624, 673, 726, 783, 844, 910,
-                      980, 1055, 1135, 1221, 1313, 1411, 1516, 1629, 1749, 1878, 2015,
-                      2162, 2319, 2486, 2665, 2857, 3061, 3279, 3512, 3760, 4025, 4308,
-                      4610, 4932, 5276, 5642, 6033, 6449, 6894, 7367, 7872, 8410, 8984,
-                      9595, 10246, 10940, 11679, 12466, 13304, 14198, 15149, 16161,
-                      17240, 18388, 19610, 20911, 22296, 23770, 25338, 27007, 28784,
-                      30673, 32684, 34823, 37098, 39519, 42093, 44831)
+MONSTER_LIFE_TABLE: List[int] = [15, 18, 21, 25, 29, 33, 38, 43, 49, 55, 61, 68, 76, 85,
+                                 94, 104, 114, 126, 138, 152, 166, 182, 199, 217, 236,
+                                 257, 280, 304, 331, 359, 389, 422, 456, 494, 534, 577,
+                                 624, 673, 726, 783, 844, 910, 980, 1055, 1135, 1221,
+                                 1313, 1411, 1516, 1629, 1749, 1878, 2015, 2162, 2319,
+                                 2486, 2665, 2857, 3061, 3279, 3512, 3760, 4025, 4308,
+                                 4610, 4932, 5276, 5642, 6033, 6449, 6894, 7367, 7872,
+                                 8410, 8984, 9595, 10246, 10940, 11679, 12466, 13304,
+                                 14198, 15149, 16161, 17240, 18388, 19610, 20911, 22296,
+                                 23770, 25338, 27007, 28784, 30673, 32684, 34823, 37098,
+                                 39519, 42093, 44831]
 #: Mapping between internal skill IDs and their display names
-SKILL_MAP = {
+SKILL_MAP: Dict[str, str] = {
     "Melee": "Default Attack",
     "MeleeUseContactPoint": "Default Attack",
     "GemDetonateMines": "Detonate Mines",
@@ -116,7 +121,7 @@ SKILL_MAP = {
     "VoidGaze": "Void Gaze",
 }
 #: Mapping between PathOfBuilding's export format and this API.
-CONFIG_MAP = {
+CONFIG_MAP: Dict[str, str] = {
     "resistancePenalty": "resistance_penalty",
     "enemyLevel": "enemy_level",
     "enemyPhysicalHit": "enemy_physical_hit_damage",
@@ -328,7 +333,7 @@ CONFIG_MAP = {
 }
 # fmt: on
 #: Mapping between PathOfBuilding's export format and this API.
-STATS_MAP = {
+STATS_MAP: Dict[str, str] = {
     "AverageHit": "average_hit",
     "AverageDamage": "average_damage",
     "Speed": "cast_speed",
@@ -415,7 +420,7 @@ STATS_MAP = {
     "ActiveMinionLimit": "active_minion_limit",
 }
 #: Mapping between PathOfBuilding's export format and this API.
-SET_MAP = {
+SET_MAP: Dict[str, str] = {
     "Gloves": "gloves",
     "Weapon 1": "weapon1",
     "Flask 1": "flask1",
