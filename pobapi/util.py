@@ -123,28 +123,23 @@ def _get_text(
 
         :return: Multiline string of correct item variants and item affix values."""
         counter = 0
-        # We have to advance this every time we get a line with text to replace,
-        # not every time we substitute.
+        # We have to advance this every time we get a line with ranges to replace.
         for line in _item_text(text_):
-            if line.startswith(
-                "{variant:"
-            ):  # We want to skip all mods of alternative item versions.
+            # We want to skip all mods of alternative item versions.
+            if line.startswith("{variant:"):
                 item_variants = (
                     line.partition("{variant:")[-1].partition("}")[0].split(",")
                 )
-                if variant_ not in item_variants:
-                    if alt_variant_ not in item_variants:
-                        continue
+                # "alt_variant_" is only used for the second aura mod on Watcher's Eye
+                if variant_ not in item_variants and alt_variant_ not in item_variants:
+                    continue
             # Check for "{range:" used in range tags to filter unsupported mods.
             if "{range:" in line:
-                if "Adds (" in line:
-                    # "Adds (A-B) to (C-D) to something" mods need to be replaced twice.
+                # "Adds (A-B) to (C-D) to something" mods need to be replaced twice.
+                while "(" in line:
                     value = mod_ranges_[counter]
                     line = _calculate_mod_text(line, value)
-                if "(" in line:
-                    value = mod_ranges_[counter]
-                    line = _calculate_mod_text(line, value)
-                    counter += 1
+                counter += 1
             # Omit "{variant: *}" and "{range: *}" tags.
             *_, mod = line.rpartition("}")
             yield mod
