@@ -18,10 +18,6 @@ Introduction
 * looking to add Path of Building functionality to their apps.
 * upgrading from existing solutions.
 
-| As PoB pastebins became the standard way to share theorycrafting and characters,
-| community tools want to interact with them and users `increasingly expect such functionality
-    <https://www.reddit.com/r/pathofexile/comments/aca7vl/path_of_leveling_a_tool_written_in_java_with_an/>`_.
-
 Benefits from using this library:
 
 * Focus on your app's core competences
@@ -100,8 +96,8 @@ Elementalist
 >>> print(build.bandit)
 None
 >>> print(build.stats.life)
-6911.
->>> if "Blade Vortex" or "Vaal Blade Vortex" == build.active_skill.name:
+6911
+>>> if  build.active_skill.name in ["Blade Vortex", "Vaal Blade Vortex"]:
 ...     if "Storm Brand" in build.skill_names:
 ...         print(build.config.brand_attached)
 ...
@@ -143,9 +139,10 @@ Pull requests are gladly accepted. Check out the `Developer Guide <https://pobap
 To-Do
 -----
 
+* Support corruptions
 * Support enchantments
 
 License
 -------
 
-`EUPL 1.2 <https://eupl.eu/>`_ (Think about it as an equivalent to LGPL + Affero clause).
+`MIT <https://mit-license.org/>`_
