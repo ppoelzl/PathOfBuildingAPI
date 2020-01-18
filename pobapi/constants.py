@@ -60,6 +60,13 @@ MONSTER_LIFE_TABLE: List[int] = [15, 18, 21, 25, 29, 33, 38, 43, 49, 55, 61, 68,
                                  14198, 15149, 16161, 17240, 18388, 19610, 20911, 22296,
                                  23770, 25338, 27007, 28784, 30673, 32684, 34823, 37098,
                                  39519, 42093, 44831]
+#: Vaal Skills with irregular names
+VAAL_SKILL_MAP: Dict[str, str] = {
+    "Vaal Breach": "Portal",
+    "Vaal Impurity of Fire": "Purity of Fire",
+    "Vaal Impurity of Ice": "Purity of Ice",
+    "Vaal Impurity of Lightning": "Purity of Lightning",
+}
 #: Mapping between internal skill IDs and their display names
 SKILL_MAP: Dict[str, str] = {
     "Melee": "Default Attack",

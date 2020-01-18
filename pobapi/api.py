@@ -3,8 +3,7 @@ from functools import cached_property
 from typing import List, Optional, Union
 
 # Project
-from pobapi import config, models, stats
-from pobapi.constants import CONFIG_MAP, KEYSTONE_IDS, SKILL_MAP, STATS_MAP, SET_MAP
+from pobapi import config, constants, models, stats
 from pobapi.util import _get_stat, _skill_tree_nodes, _get_text
 from pobapi.util import _fetch_xml_from_import_code, _fetch_xml_from_url
 
@@ -80,7 +79,7 @@ class PathOfBuildingAPI:
         :return: Character stats.
         :rtype: :class:`~pobapi.stats.Stats`"""
         kwargs = {
-            STATS_MAP.get(i.get("stat")): float(i.get("value"))
+            constants.STATS_MAP.get(i.get("stat")): float(i.get("value"))
             for i in self.xml.find("Build").findall("PlayerStat")
         }
         return stats.Stats(**kwargs)
@@ -111,6 +110,24 @@ class PathOfBuildingAPI:
         :rtype: :data:`~typing.Union`\\[:class:`~pobapi.models.Gem`,
             :class:`~pobapi.models.GrantedAbility`]"""
         index = self.active_skill_group.active - 1
+        # Short-circuited for the most common case
+        if not index:
+            return self.active_skill_group.abilities[index]
+        # For base skills on Vaal skill gems,
+        # the offset is as if the base skill gems would also be present.
+        # Simulating this is easier than calculating the adjusted offset.
+        active = [gem for gem in self.active_skill_group.abilities if not gem.support]
+        duplicate = []
+        for gem in active:
+            if gem.name.startswith("Vaal"):
+                duplicate.append(gem)
+            duplicate.append(gem)
+        if len(duplicate) > 1 and duplicate[index] == duplicate[index - 1]:
+            gem = duplicate[index - 1]
+            name = constants.VAAL_SKILL_MAP.get(
+                gem.name, gem.name.rpartition("Vaal ")[2]
+            )
+            return models.Gem(name, gem.enabled, gem.quality, gem.level, gem.support)
         return self.active_skill_group.abilities[index]
 
     @cached_property
@@ -162,7 +179,7 @@ class PathOfBuildingAPI:
         :rtype: :class:`~pobapi.models.Keystones`"""
         kwargs = {
             keystone: True if id_ in self.active_skill_tree.nodes else False
-            for keystone, id_ in KEYSTONE_IDS.items()
+            for keystone, id_ in constants.KEYSTONE_IDS.items()
         }
         return models.Keystones(**kwargs)
 
@@ -242,7 +259,7 @@ class PathOfBuildingAPI:
         :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Set`]"""
         for item_set in self.xml.find("Items").findall("ItemSet"):
             kwargs = {
-                SET_MAP.get(slot.get("name")): int(slot.get("itemId"))
+                constants.SET_MAP.get(slot.get("name")): int(slot.get("itemId"))
                 if not slot.get("itemId") == "0"
                 else None
                 for slot in item_set.findall("Slot")
@@ -265,7 +282,7 @@ class PathOfBuildingAPI:
                 return item.get("string").capitalize()
 
         kwargs = {
-            CONFIG_MAP.get(i.get("name")): _convert_fields(i)
+            constants.CONFIG_MAP.get(i.get("name")): _convert_fields(i)
             for i in self.xml.find("Config").findall("Input")
         }
         kwargs["character_level"] = self.level
@@ -292,7 +309,7 @@ class PathOfBuildingAPI:
                 )
                 yield models.Gem(name, enabled, level, quality, support)
             else:
-                name = name or SKILL_MAP.get(ability.get("skillId"))
+                name = name or constants.SKILL_MAP.get(ability.get("skillId"))
                 yield models.GrantedAbility(name, enabled, level)
 
 
