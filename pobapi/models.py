@@ -29,12 +29,14 @@ class Gem(Ability):
     :param name: Skill gem name.
     :param enabled: Whether the skill gem is in active use.
     :param level: Skill gem level.
-    :param quality: Skill gem quality."""
+    :param quality: Skill gem quality.
+    :param support: Whether the skill gem is a support gem."""
 
     name: str
     enabled: bool
     level: int
     quality: int
+    support: bool
 
 
 @with_slots
@@ -45,12 +47,14 @@ class GrantedAbility(Ability):
     :param name: Granted ability name.
     :param enabled: Whether the granted ability is in active use.
     :param level: Granted ability level.
-
-    .. note: Granted abilities cannot have any quality on them."""
+    :param quality: Granted abilities cannot have any quality on them.
+    :param support: Granted abilities are never support gems."""
 
     name: str
     enabled: bool
     level: int
+    quality: int = None
+    support: bool = False
 
 
 @with_slots

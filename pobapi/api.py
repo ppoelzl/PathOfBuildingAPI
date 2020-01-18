@@ -281,14 +281,18 @@ class PathOfBuildingAPI:
             [:data:`~typing.Union`\\[:class:`~pobapi.models.Gem`,
             :class:`~pobapi.models.GrantedAbility`]]"""
         for ability in skill:
+            gem_id = ability.get("gemId")
             name = ability.get("nameSpec")
             enabled = True if ability.get("enabled") == "true" else False
             level = int(ability.get("level"))
-            if name:
+            if gem_id:
                 quality = int(ability.get("quality"))
-                yield models.Gem(name, enabled, level, quality)
+                support = (
+                    True if ability.get("skillId").startswith("Support") else False
+                )
+                yield models.Gem(name, enabled, level, quality, support)
             else:
-                name = SKILL_MAP.get(ability.get("skillId"))
+                name = name or SKILL_MAP.get(ability.get("skillId"))
                 yield models.GrantedAbility(name, enabled, level)
 
 
