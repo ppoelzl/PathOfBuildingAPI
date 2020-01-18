@@ -1,5 +1,4 @@
 # Built-ins
-from functools import cached_property
 from typing import List, Optional, Union
 
 # Project
@@ -9,6 +8,7 @@ from pobapi.util import _fetch_xml_from_import_code, _fetch_xml_from_url
 
 # Third-party
 from lxml.etree import fromstring
+from unstdlib.standard.functools_ import memoized_property
 from unstdlib.standard.list_ import listify
 
 """API for PathOfBuilding's XML export format."""
@@ -31,7 +31,7 @@ class PathOfBuildingAPI:
     def __init__(self, xml: bytes):
         self.xml = fromstring(xml)
 
-    @cached_property
+    @memoized_property
     def class_name(self) -> str:
         """Get a character's class.
 
@@ -39,7 +39,7 @@ class PathOfBuildingAPI:
         :rtype: :class:`str`"""
         return self.xml.find("Build").get("className")
 
-    @cached_property
+    @memoized_property
     def ascendancy_name(self) -> Optional[str]:
         """Get a character's ascendancy class.
 
@@ -47,7 +47,7 @@ class PathOfBuildingAPI:
         :rtype: :data:`~typing.Optional`\\[:class:`str`]"""
         return self.xml.find("Build").get("ascendClassName")
 
-    @cached_property
+    @memoized_property
     def level(self) -> int:
         """Get a character's level.
 
@@ -55,7 +55,7 @@ class PathOfBuildingAPI:
         :rtype: :class:`int`"""
         return int(self.xml.find("Build").get("level"))
 
-    @cached_property
+    @memoized_property
     def bandit(self) -> Optional[str]:
         """Get a character's bandit choice.
 
@@ -63,7 +63,7 @@ class PathOfBuildingAPI:
         :rtype: :data:`~typing.Optional`\\[:class:`str`]"""
         return self.xml.find("Build").get("bandit")
 
-    @cached_property
+    @memoized_property
     def active_skill_group(self) -> models.SkillGroup:
         """Get a character's main skill setup.
 
@@ -72,7 +72,7 @@ class PathOfBuildingAPI:
         index = int(self.xml.find("Build").get("mainSocketGroup")) - 1
         return self.skill_groups[index]
 
-    @cached_property
+    @memoized_property
     def stats(self) -> stats.Stats:
         """Namespace for character stats.
 
@@ -84,7 +84,7 @@ class PathOfBuildingAPI:
         }
         return stats.Stats(**kwargs)
 
-    @cached_property
+    @memoized_property
     @listify
     def skill_groups(self) -> List[models.SkillGroup]:
         """Get a character's skill setups.
@@ -102,7 +102,7 @@ class PathOfBuildingAPI:
             abilities = self._abilities(skill)
             yield models.SkillGroup(enabled, label, active, abilities)
 
-    @cached_property
+    @memoized_property
     def active_skill(self) -> Union[models.Gem, models.GrantedAbility]:
         """Get a character's main skill.
 
@@ -130,7 +130,7 @@ class PathOfBuildingAPI:
             return models.Gem(name, gem.enabled, gem.quality, gem.level, gem.support)
         return self.active_skill_group.abilities[index]
 
-    @cached_property
+    @memoized_property
     @listify
     def skill_gems(self) -> List[models.Gem]:  # Added for convenience
         """Get a list of all skill gems on a character.
@@ -144,7 +144,7 @@ class PathOfBuildingAPI:
             if not skill.get("source"):
                 yield from self._abilities(skill)
 
-    @cached_property
+    @memoized_property
     def active_skill_tree(self) -> models.Tree:
         """Get a character's current skill tree.
 
@@ -153,7 +153,7 @@ class PathOfBuildingAPI:
         index = int(self.xml.find("Tree").get("activeSpec")) - 1
         return self.trees[index]
 
-    @cached_property
+    @memoized_property
     @listify
     def trees(self) -> List[models.Tree]:
         """Get a list of all skill trees of a character.
@@ -169,7 +169,7 @@ class PathOfBuildingAPI:
             }
             yield models.Tree(url, nodes, sockets)
 
-    @cached_property
+    @memoized_property
     def keystones(self) -> models.Keystones:
         """Namespace for a character's keystones.
 
@@ -183,7 +183,7 @@ class PathOfBuildingAPI:
         }
         return models.Keystones(**kwargs)
 
-    @cached_property
+    @memoized_property
     def notes(self) -> str:
         """Get notes of a build's author.
 
@@ -191,7 +191,7 @@ class PathOfBuildingAPI:
         :rtype: :class:`str`"""
         return self.xml.find("Notes").text.strip("\n\r\t").rstrip("\n\r\t")
 
-    @cached_property
+    @memoized_property
     def second_weapon_set(self) -> bool:
         """Get whether a character primarily uses their second weapon set.
 
@@ -203,7 +203,7 @@ class PathOfBuildingAPI:
             else False
         )
 
-    @cached_property
+    @memoized_property
     @listify
     def items(self) -> List[models.Item]:
         """Get a list of all items of a Path Of Building build.
@@ -241,7 +241,7 @@ class PathOfBuildingAPI:
                               sockets, level_req, item_level, implicit, item_text)
             # fmt: on
 
-    @cached_property
+    @memoized_property
     def active_item_set(self) -> models.Set:
         """Get the item set a character is currently wearing.
 
@@ -250,7 +250,7 @@ class PathOfBuildingAPI:
         index = int(self.xml.find("Items").get("activeItemSet")) - 1
         return self.item_sets[index]
 
-    @cached_property
+    @memoized_property
     @listify
     def item_sets(self) -> List[models.Set]:
         """Get a list of all item sets of a character.
@@ -266,7 +266,7 @@ class PathOfBuildingAPI:
             }
             yield models.Set(**kwargs)
 
-    @cached_property
+    @memoized_property
     def config(self) -> config.Config:
         """Namespace for Path Of Building config tab's options and values.
 
