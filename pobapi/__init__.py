@@ -4,7 +4,7 @@ import logging
 # Project
 from .api import *
 
-VERSION = "0.4.0"
+VERSION = "0.5.0"
 PROJECT = "Path Of Building API"
 COPYRIGHT = "2020, Peter Pölzl"
 AUTHOR = "Peter Pölzl"

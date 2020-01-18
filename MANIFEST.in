@@ -2,5 +2,4 @@
 recursive-include docs/_build *
 
 #misc
-include CHANGES.txt
 include LICENSE.txt
