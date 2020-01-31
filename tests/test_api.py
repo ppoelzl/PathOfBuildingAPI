@@ -64,12 +64,12 @@ def test_config(build):
 
 
 def test_active_item_set(build):
-    assert build.active_item_set.body_armour == 2
+    assert build.active_item_set.body_armour == 1
 
 
 def test_item_sets(build):
     for item_set in build.item_sets:
-        assert item_set.body_armour == 2
+        assert item_set.body_armour == 1
 
 
 def test_active_skill_group(build):

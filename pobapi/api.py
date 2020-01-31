@@ -255,11 +255,13 @@ class PathOfBuildingAPI:
     def item_sets(self) -> List[models.Set]:
         """Get a list of all item sets of a character.
 
+        .. note:: Slot IDs are 0-indexed.
+
         :return: Item sets.
         :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Set`]"""
         for item_set in self.xml.find("Items").findall("ItemSet"):
             kwargs = {
-                constants.SET_MAP.get(slot.get("name")): int(slot.get("itemId"))
+                constants.SET_MAP.get(slot.get("name")): int(slot.get("itemId")) - 1
                 if not slot.get("itemId") == "0"
                 else None
                 for slot in item_set.findall("Slot")
