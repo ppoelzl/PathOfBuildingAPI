@@ -24,7 +24,7 @@ pluggy==0.13.1
 py==1.8.1
 Pygments==2.6.1
 pyparsing==2.4.6
-pytest==5.3.3
+pytest==5.4.3
 pytz==2019.3
 regex==2019.11.1
 requests==2.22.0
