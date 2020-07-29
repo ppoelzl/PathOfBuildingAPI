@@ -23,7 +23,7 @@ pathspec==0.8.0
 pluggy==0.13.1
 py==1.9.0
 Pygments==2.6.1
-pyparsing==2.4.6
+pyparsing==2.4.7
 pytest==5.4.3
 pytz==2020.1
 regex==2019.11.1
