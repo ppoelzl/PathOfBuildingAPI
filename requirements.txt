@@ -42,5 +42,5 @@ toml==0.10.1
 typed-ast==1.4.1
 unstdlib==1.7.2
 urllib3==1.25.10
-wcwidth==0.1.8
+wcwidth==0.2.5
 zipp==3.1.0
