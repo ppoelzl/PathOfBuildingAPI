@@ -6,7 +6,7 @@ from typing import Dict, List, Optional, Tuple, Union
 # Third-party
 from dataslots import with_slots
 
-__all__ = ["Gem", "GrantedAbility", "SkillGroup", "Tree", "Item", "Set"]
+__all__ = ["Gem", "GrantedAbility", "SkillGroup", "Tree", "Keystones", "Item", "Set"]
 
 
 class Ability(ABC):
@@ -29,12 +29,14 @@ class Gem(Ability):
     :param name: Skill gem name.
     :param enabled: Whether the skill gem is in active use.
     :param level: Skill gem level.
-    :param quality: Skill gem quality."""
+    :param quality: Skill gem quality.
+    :param support: Whether the skill gem is a support gem."""
 
     name: str
     enabled: bool
     level: int
     quality: int
+    support: bool
 
 
 @with_slots
@@ -45,12 +47,14 @@ class GrantedAbility(Ability):
     :param name: Granted ability name.
     :param enabled: Whether the granted ability is in active use.
     :param level: Granted ability level.
-
-    .. note: Granted abilities cannot have any quality on them."""
+    :param quality: Granted abilities cannot have any quality on them.
+    :param support: Granted abilities are never support gems."""
 
     name: str
     enabled: bool
     level: int
+    quality: int = None
+    support: bool = False
 
 
 @with_slots
@@ -61,7 +65,8 @@ class SkillGroup:
     :param enabled: Whether the socket group is in active use.
     :param label: Socket group label assigned in Path Of Building.
     :param active: Main skill in socket group, if given.
-    :param abilities: List of :class:`Gem <Gem>` or :class:`GrantedAbility <GrantedAbility>` objects in socket group."""
+    :param abilities: List of :class:`Gem <Gem>` or
+        :class:`GrantedAbility <GrantedAbility>` objects in socket group."""
 
     enabled: bool
     label: str
@@ -76,7 +81,8 @@ class Tree:
 
     :param url: pathofexile.com link to passive skill tree.
     :param nodes: List of passive skill tree nodes by ID.
-    :param sockets: Dictionary of {<passive skill tree jewel socket location> : <jewel set ID>}."""
+    :param sockets: Dictionary of
+        {<passive skill tree jewel socket location> : <jewel set ID>}."""
 
     url: str
     nodes: List[int]
@@ -86,7 +92,8 @@ class Tree:
 @with_slots
 @dataclass
 class Keystones:
-    """Class that holds keystone data.
+    """Keystones(*args)
+    Class that holds keystone data.
 
     :param acrobatics: Whether the player has Acrobatics.
     :param ancestral_bond: Whether the player has Ancestral Bond.
@@ -172,15 +179,16 @@ class Item:
     :param quality: Item quality, if the item can have quality.
     :param sockets: Item socket groups, if the item can have sockets.
 
-    .. note:: The format used for example a 5 socket chest armour with 2 socket groups of 3 linked blue sockets and
-        2 linked red sockets would be ((B, B, B), (R, R)).
+    .. note:: Example: The format used for a 5 socket chest armour with 2 socket groups
+        of 3 linked blue sockets and 2 linked red sockets would be ((B, B, B), (R, R)).
 
     :param level_req: Required character level to equip the item.
     :param item_level: Item level.
     :param implicit: Number of item implicits, if the item can have implicits.
     :param text: Item text.
 
-    .. note:: For items existing in-game, their item text is just copied. For items created with Path Of Building,
+    .. note:: For items existing in-game, their item text is just copied.
+        For items created with Path Of Building,
         their affix values are calculated to match in-game items in appearance."""
 
     rarity: str

@@ -18,10 +18,6 @@ Introduction
 * looking to add Path of Building functionality to their apps.
 * upgrading from existing solutions.
 
-| As PoB pastebins became the standard way to share theorycrafting and characters,
-| community tools want to interact with them and users `increasingly expect such functionality
-    <https://www.reddit.com/r/pathofexile/comments/aca7vl/path_of_leveling_a_tool_written_in_java_with_an/>`_.
-
 Benefits from using this library:
 
 * Focus on your app's core competences
@@ -42,14 +38,13 @@ Features
 * Exposes all of Path of Building's relevant stats and attributes in a simple and pythonic way.
 * Automatically calculates mod values on theorycrafted items.
 * Low memory footprint through slots and dynamically generated attributes.
-* Secure against XML attacks thanks to the `defusedxml <https://pypi.org/project/defusedxml/>`_ library.
 
 Requirements
 ------------
 
-* `Python 3.7+ <https://www.python.org/>`_
+* `Python 3.6+ <https://www.python.org/>`_
+* `dataclasses <https://pypi.org/project/dataclasses/>`_
 * `dataslots <https://pypi.org/project/dataslots/>`_
-* `defusedxml <https://pypi.org/project/defusedxml/>`_
 * `lxml <https://pypi.org/project/lxml/>`_
 * `requests <https://pypi.org/project/requests/>`_
 * `unstdlib <https://pypi.org/project/unstdlib/>`_
@@ -102,8 +97,8 @@ Elementalist
 >>> print(build.bandit)
 None
 >>> print(build.stats.life)
-6911.
->>> if "Blade Vortex" or "Vaal Blade Vortex" == build.active_skill.name:
+6911
+>>> if  build.active_skill.name in ["Blade Vortex", "Vaal Blade Vortex"]:
 ...     if "Storm Brand" in build.skill_names:
 ...         print(build.config.brand_attached)
 ...
@@ -145,9 +140,10 @@ Pull requests are gladly accepted. Check out the `Developer Guide <https://pobap
 To-Do
 -----
 
+* Support corruptions
 * Support enchantments
 
 License
 -------
 
-`EUPL 1.2 <https://eupl.eu/>`_ (Think about it as an equivalent to LGPL + Affero clause).
+`MIT <https://mit-license.org/>`_

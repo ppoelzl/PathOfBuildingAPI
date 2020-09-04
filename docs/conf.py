@@ -136,7 +136,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'PathOfBuildingAPI.tex', 'Path Of Building API Documentation',
-     'Peter Poelzl', 'manual'),
+     'Peter Pölzl', 'manual'),
 ]
 
 

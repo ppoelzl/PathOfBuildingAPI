@@ -1,5 +1,5 @@
 # Built-ins
-from dataclasses import dataclass, field, InitVar
+from dataclasses import dataclass, InitVar
 from typing import Union
 
 # Project
@@ -46,27 +46,37 @@ class Config:
     :param in_bloodstorm: Whether the player is in a Bloodstorm.
     :param in_sandstorm: Whether the player is in a Sandstorm.
     :param brand_attached: Whether the player has a brand attached.
-    :param dark_pact_skeleton_life: Skeleton life points used for Dark Pact damage calculation.
+    :param dark_pact_skeleton_life:
+        Skeleton life points used for Dark Pact damage calculation.
     :param deathmark: Whether the player applies Deathmark.
     :param herald_of_agony_stacks: Number of Virulence stacks on Herald of Agony.
-    :param ice_nova_cast_on_frostbolt: Whether the player casts Ice Nova on a Frost Bolt.
+    :param ice_nova_cast_on_frostbolt:
+        Whether the player casts Ice Nova on a Frost Bolt.
     :param infusion: Whether the Infusion Infusion buff is active.
     :param innervate_innervation: Whether the Innervate Innervation buff is active.
     :param intensify_stacks: Number of Intensify stacks.
-    :param meat_shield_enemy_nearby: Whether there are enemies near your minions supported by Meat Shield Support.
+    :param meat_shield_enemy_nearby:
+        Whether there are enemies near your minions supported by Meat Shield Support.
     :param raise_spectres_spectre_level: Level of spectres raised by Raise Spectre.
     :param raise_spectres_enable_curses: Whether the curses of spectres are active.
-    :param raise_spectres_blade_vortex_blade_count: Number of Blade Vortex stacks of spectres.
-    :param raise_spectres_kaom_fire_beam_totem_stage: Number of fire beam stages of spectres.
-    :param raise_spectres_enable_summoned_ursa_rallying_cry: Whether the Rallying Cry of ursa spectres is active.
+    :param raise_spectres_blade_vortex_blade_count:
+        Number of Blade Vortex stacks of spectres.
+    :param raise_spectres_kaom_fire_beam_totem_stage:
+        Number of fire beam stages of spectres.
+    :param raise_spectres_enable_summoned_ursa_rallying_cry:
+        Whether the Rallying Cry of ursa spectres is active.
     :param raise_spiders_spider_count: Number of spiders from Raise Spiders.
-    :param siphoning_trap_affected_enemies: Number of enemies affected by Siphoning Trap.
+    :param siphoning_trap_affected_enemies:
+        Number of enemies affected by Siphoning Trap.
     :param stance: Controls whether the player is in Blood Stance or Sand Stance.
         Possible values: ('Blood', 'Sand').
-    :param summon_holy_relic_enable_holy_relic_buff: Whether the Holy Relic buff of Summon Holy Relics is active.
-    :param summon_lightning_golem_enable_wrath: Whether a Lightning Golem's wrath buff is active.
+    :param summon_holy_relic_enable_holy_relic_buff:
+        Whether the Holy Relic buff of Summon Holy Relics is active.
+    :param summon_lightning_golem_enable_wrath:
+        Whether a Lightning Golem's wrath buff is active.
     :param vortex_cast_on_frostbolt: Whether the player casts Vortex on a Frost Bolt.
-    :param wave_of_conviction_exposure_type: Controls which Exposure damage type is selected.
+    :param wave_of_conviction_exposure_type:
+        Controls which Exposure damage type is selected.
         Possible values: ('Fire', 'Cold', 'Lightning').
     :param winter_orb_stages: Number of stages of Winter Orb.
     :param enemy_physical_reduction: Whether enemies have physical damage reduction.
@@ -74,9 +84,11 @@ class Config:
     :param enemy_hexproof: Whether enemies are hexproof.
     :param less_curse_effect: Whether enemies have reduced effect of curses on them.
         Possible values: (25%, 40%, 60%).
-    :param enemy_avoid_poison_blind_bleed: Whether enemies have a chance to avoid poison, blind and bleed.
+    :param enemy_avoid_poison_blind_bleed:
+        Whether enemies have a chance to avoid poison, blind and bleed.
         Possible values: (25%, 45%, 65%).
-    :param enemy_resistances: Whether enemies have increased elemental and chaos resistances.
+    :param enemy_resistances:
+        Whether enemies have increased elemental and chaos resistances.
         Possible values: ((20%, 15%), (30%, 20%), (40%, 25%)).
     :param elemental_equilibrium: Whether player have Elemental Equilibrium.
     :param no_leech: Whether players cannot leech life/mana/energy shield.
@@ -86,17 +98,20 @@ class Config:
         Possible values: (0%, 5-8%, 9-12%).
     :param less_aoe: Whether players have less area of effect.
         Possible values: (15%, 20%, 25%).
-    :param enemy_avoid_status_ailment: Whether enemies have a chance to avoid status ailments.
+    :param enemy_avoid_status_ailment:
+        Whether enemies have a chance to avoid status ailments.
         Possible values: (30%, 60%, 90%).
     :param enemy_increased_accuracy: Whether enemies hav increased accuracy.
         Possible values: (30%, 40%, 50%).
     :param less_armour_block: Whether players have less armour and block chance.
         Possible values: ((20%, 20%), (25%, 30%), (30%, 40%)).
     :param point_blank: Whether players have Point Blank.
-    :param less_recovery: Whether players have less life/mana/energy shield recovery rate.
+    :param less_recovery:
+        Whether players have less life/mana/energy shield recovery rate.
         Possible values: (20%, 40%, 60%).
     :param no_regen: Whether players cannot regenerate life/mana/energy shield.
-    :param enemy_takes_reduced_extra_crit_damage: Whether enemies take reduced extra damage from critical strikes.
+    :param enemy_takes_reduced_extra_crit_damage:
+        Whether enemies take reduced extra damage from critical strikes.
         Possible values: (25-30%, 31-35%, 36-40%).
     :param curse_assassins_mark: Level of Assassin's Mark applying to players.
     :param curse_conductivity: Level Conductivity applying to players.
@@ -123,11 +138,13 @@ class Config:
     :param use_blitz_charges: Whether the player uses Blitz Charges.
     :param max_blitz_charges: Whether the player is at maximum Blitz Charges.
     :param use_inspiration_charges: Whether the player uses Inspiration Charges.
-    :param max_inspiration_charges: Whether the player is at maximum Inspiration Charges.
+    :param max_inspiration_charges:
+        Whether the player is at maximum Inspiration Charges.
     :param max_siphoning_charges: Whether the player is at maximum siphoning charges.
     :param minions_use_power_charges: Whether the player's minions use power charges.
     :param minions_use_frenzy_charges: Whether the player's minions use frenzy charges.
-    :param minions_use_endurance_charges: Whether the player's minions use endurance charges.
+    :param minions_use_endurance_charges:
+        Whether the player's minions use endurance charges.
     :param focus: Whether the player has Focus.
     :param onslaught: Whether the player has Onslaught.
     :param unholy_might: Whether the player has Unholy Might.
@@ -164,28 +181,38 @@ class Config:
     :param skill_crit_recently: Whether one the player's skills has crit recently.
     :param non_crit_recently: Whether the player has not crit recently.
     :param killed_recently: Whether the player has killed recently.
-    :param number_of_enemies_killed_recently: Number of enemies killed by the player recently.
+    :param number_of_enemies_killed_recently:
+        Number of enemies killed by the player recently.
     :param totems_killed_recently: Whether the player's totems killed recently.
-    :param number_of_totems_killed_recently: Number of enemies killed by the player's totems recently.
+    :param number_of_totems_killed_recently:
+        Number of enemies killed by the player's totems recently.
     :param minions_killed_recently: Whether the player's minions killed recently.
-    :param number_of_minions_killed_recently: Number of enemies killed by the player's minions recently.
-    :param killed_affected_by_dot: Whether the player has killed an enemy affected by damage over time recently.
-    :param number_of_shocked_enemies_killed_recently: Number of shocked enemies killed by the player recently.
+    :param number_of_minions_killed_recently:
+        Number of enemies killed by the player's minions recently.
+    :param killed_affected_by_dot:
+        Whether the player has killed an enemy affected by damage over time recently.
+    :param number_of_shocked_enemies_killed_recently:
+        Number of shocked enemies killed by the player recently.
     :param frozen_enemy_recently: Whether the player has frozen an enemy recently.
     :param shattered_enemy_recently: Whether the player has shattered an enemy recently.
     :param ignited_enemy_recently: Whether the player has ignited an enemy recently.
     :param shocked_enemy_recently: Whether the player has shocked an enemy recently.
-    :param number_of_poisons_applied_recently: Number of poisons applied by the player recently.
+    :param number_of_poisons_applied_recently:
+        Number of poisons applied by the player recently.
     :param been_hit_recently: Whether the player has been hit recently.
     :param been_crit_recently: Whether the player has been crit recently.
     :param been_savage_hit_recently: Whether the player has been savage hit recently.
-    :param hit_by_fire_damage_recently: Whether the player has been hit by fire damage recently.
-    :param hit_by_cold_damage_recently: Whether the player has been hit by cold damage recently.
-    :param hit_by_lightning_damage_recently: Whether the player has been hit by lightning damage recently.
+    :param hit_by_fire_damage_recently:
+        Whether the player has been hit by fire damage recently.
+    :param hit_by_cold_damage_recently:
+        Whether the player has been hit by cold damage recently.
+    :param hit_by_lightning_damage_recently:
+        Whether the player has been hit by lightning damage recently.
     :param blocked_recently: Whether the player has blocked recently.
     :param blocked_attack_recently: Whether the player has blocked an attack recently.
     :param blocked_spell_recently: Whether the player has blocked a spell recently.
-    :param energy_shield_recharge_started_recently: Whether the player's energy shield recharge started recently.
+    :param energy_shield_recharge_started_recently:
+        Whether the player's energy shield recharge started recently.
     :param pendulum_of_destruction: Controls Pendulum of Destruction mode.
         Possible values: ('Area', 'Damage').
     :param elemental_conflux: Controls Elemental Conflux mode.
@@ -197,19 +224,26 @@ class Config:
     :param cast_spell_recently: Whether the player has cast a spell recently.
     :param used_fire_skill_recently: Whether the player has used a fire skill recently.
     :param used_cold_skill_recently: Whether the player has used a cold skill recently.
-    :param used_minion_skill_recently: Whether the player has used a minion skill recently.
-    :param used_movement_skill_recently: Whether the player has used a movement skill recently.
+    :param used_minion_skill_recently:
+        Whether the player has used a minion skill recently.
+    :param used_movement_skill_recently:
+        Whether the player has used a movement skill recently.
     :param used_vaal_skill_recently: Whether the player has used a vaal skill recently.
     :param used_warcry_recently: Whether the player has used a warcry recently.
+    :param used_warcry_in_past_8_seconds:
+        Whether the player has used a warcry in the past 8 seconds.
     :param number_of_mines_detonated_recently: Number of mines detonated recently.
     :param number_of_traps_triggered_recently: Number of traps triggered recently.
     :param consumed_corpses_recently: Whether the player has consumed corpses recently.
-    :param number_of_corpses_consumed_recently: Number of corpses consumed by the player recently.
+    :param number_of_corpses_consumed_recently:
+        Number of corpses consumed by the player recently.
     :param taunted_enemy_recently: Whether the player has taunted an enemy recently.
     :param blocked_hit_from_unique_enemy_in_past_ten_seconds:
-        Whether the player has blocked a hit from an unique enemy in the past ten seconds.
+        Whether the player has blocked a hit from an unique enemy
+        in the past ten seconds.
     :param lucky_crits: Whether the player's hits are lucky.
-    :param number_of_times_skill_has_chained: Number of times the main skill has chained.
+    :param number_of_times_skill_has_chained:
+        Number of times the main skill has chained.
     :param projectile_distance: Projectile travel distance.
     :param enemy_in_close_range: Whether enemies are in close range.
     :param enemy_moving: Whether enemies are moving.
@@ -228,7 +262,8 @@ class Config:
     :param enemy_chilled: Whether enemies are chilled.
     :param enemy_frozen: Whether enemies are frozen.
     :param enemy_shocked: Whether enemies are shocked.
-    :param enemy_number_of_freeze_shock_ignite: Number of enemies frozen, shocked, or ignited recently.
+    :param enemy_number_of_freeze_shock_ignite:
+        Number of enemies frozen, shocked, or ignited recently.
     :param enemy_intimidated: Whether enemies are intimidated.
     :param enemy_unnerved: Whether enemies are unnerved.
     :param enemy_covered_in_ash:  Whether enemies are covered in ash.
@@ -243,9 +278,11 @@ class Config:
     :param enemy_hit_by_fire_damage: Whether enemies were hit by fire damage.
     :param enemy_hit_by_cold_damage: Whether enemies were hit by cold damage.
     :param enemy_hit_by_lightning_damage: Whether enemies were hit by lightning damage.
-    :param elemental_equilibrium_ignore_hit_damage: Whether to ignore skill hit damage resetting Elemental Equilibrium.
-    :param character_level: Overridden character/enemy level used to estimate hit and evasion chances, enemy life and
-        damage."""
+    :param elemental_equilibrium_ignore_hit_damage:
+        Whether to ignore skill hit damage resetting Elemental Equilibrium.
+    :param character_level:
+        Overridden character/enemy level used to estimate
+        hit and evasion chances, enemy life and damage."""
 
     # General Build Configuration
     resistance_penalty: int = -60
@@ -414,6 +451,7 @@ class Config:
     used_movement_skill_recently: bool = False
     used_vaal_skill_recently: bool = False
     used_warcry_recently: bool = False
+    used_warcry_in_past_8_seconds: bool = False
     number_of_mines_detonated_recently: int = None
     number_of_traps_triggered_recently: int = None
     consumed_corpses_recently: bool = False
@@ -456,8 +494,9 @@ class Config:
     enemy_hit_by_cold_damage: bool = False
     enemy_hit_by_lightning_damage: bool = False
     elemental_equilibrium_ignore_hit_damage: bool = False
-    # The fields in the post init method are the only values in Path of Building's configuration tab that are
-    # calculated, but can also be overridden so we potentially have to initialise them at a later point in time.
+    # The fields in the post init method are the only values in Path of Building's
+    # configuration tab that are calculated, but can also be overridden so we
+    # potentially have to initialise them at a later point in time.
     character_level: InitVar[int] = None
 
     # TODO: Raise Spectre level calc on 3.0.0+

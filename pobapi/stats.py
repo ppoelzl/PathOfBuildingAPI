@@ -21,7 +21,8 @@ class Stats:
     :param trap_cooldown: Trap throwing cooldown.
     :param mine_laying_speed: Mine laying speed.
     :param totem_placement_speed: Totem placement speed.
-    :param pre_effective_crit_chance: Crit chance as displayed in-game (doesn't factor in accuracy and luck).
+    :param pre_effective_crit_chance:
+        Crit chance as displayed in-game (doesn't factor in accuracy and luck).
     :param crit_chance: Effective crit chance, factors in accuracy and luck.
     :param crit_multiplier: Critical strike multiplier.
     :param hit_chance: Chance to hit with attacks.

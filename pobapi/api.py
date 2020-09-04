@@ -2,13 +2,12 @@
 from typing import List, Optional, Union
 
 # Project
-from pobapi import config, models, stats
-from pobapi.constants import CONFIG_MAP, KEYSTONE_IDS, SKILL_MAP, STATS_MAP, SET_MAP
+from pobapi import config, constants, models, stats
 from pobapi.util import _get_stat, _skill_tree_nodes, _get_text
 from pobapi.util import _fetch_xml_from_import_code, _fetch_xml_from_url
 
 # Third-party
-from defusedxml import lxml
+from lxml.etree import fromstring
 from unstdlib.standard.functools_ import memoized_property
 from unstdlib.standard.list_ import listify
 
@@ -25,11 +24,12 @@ class PathOfBuildingAPI:
     .. note:: XML must me in byte format, not string format.
         This is required because the XML contains encoding information.
 
-    .. note:: To instantiate from pastebin.com links or import codes,
-        use :func:`~pobapi.api.from_url` or :func:`~pobapi.api.from_import_code` instead."""
+    .. note:: To instantiate from pastebin.com links or import codes, use
+        :func:`~pobapi.api.from_url` or
+        :func:`~pobapi.api.from_import_code`, respectively."""
 
     def __init__(self, xml: bytes):
-        self.xml = lxml.fromstring(xml)
+        self.xml = fromstring(xml)
 
     @memoized_property
     def class_name(self) -> str:
@@ -79,7 +79,7 @@ class PathOfBuildingAPI:
         :return: Character stats.
         :rtype: :class:`~pobapi.stats.Stats`"""
         kwargs = {
-            STATS_MAP.get(i.get("stat")): float(i.get("value"))
+            constants.STATS_MAP.get(i.get("stat")): float(i.get("value"))
             for i in self.xml.find("Build").findall("PlayerStat")
         }
         return stats.Stats(**kwargs)
@@ -107,8 +107,27 @@ class PathOfBuildingAPI:
         """Get a character's main skill.
 
         :return: Main skill.
-        :rtype: :data:`~typing.Union`\\[:class:`~pobapi.models.Gem`, :class:`~pobapi.models.GrantedAbility`]"""
+        :rtype: :data:`~typing.Union`\\[:class:`~pobapi.models.Gem`,
+            :class:`~pobapi.models.GrantedAbility`]"""
         index = self.active_skill_group.active - 1
+        # Short-circuited for the most common case
+        if not index:
+            return self.active_skill_group.abilities[index]
+        # For base skills on Vaal skill gems,
+        # the offset is as if the base skill gems would also be present.
+        # Simulating this is easier than calculating the adjusted offset.
+        active = [gem for gem in self.active_skill_group.abilities if not gem.support]
+        duplicate = []
+        for gem in active:
+            if gem.name.startswith("Vaal"):
+                duplicate.append(gem)
+            duplicate.append(gem)
+        if len(duplicate) > 1 and duplicate[index] == duplicate[index - 1]:
+            gem = duplicate[index - 1]
+            name = constants.VAAL_SKILL_MAP.get(
+                gem.name, gem.name.rpartition("Vaal ")[2]
+            )
+            return models.Gem(name, gem.enabled, gem.quality, gem.level, gem.support)
         return self.active_skill_group.abilities[index]
 
     @memoized_property
@@ -160,7 +179,7 @@ class PathOfBuildingAPI:
         :rtype: :class:`~pobapi.models.Keystones`"""
         kwargs = {
             keystone: True if id_ in self.active_skill_tree.nodes else False
-            for keystone, id_ in KEYSTONE_IDS.items()
+            for keystone, id_ in constants.KEYSTONE_IDS.items()
         }
         return models.Keystones(**kwargs)
 
@@ -193,10 +212,9 @@ class PathOfBuildingAPI:
         :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Item`]"""
         for text in self.xml.find("Items").findall("Item"):
             variant = text.get("variant")
-            alt_variant = text.get(
-                "variantAlt"
-            )  # 'variantAlt' is for the second Watcher's Eye unique mod.
-            # The 3-stat variant obtained from Uber Elder is not yet implemented in Path of Building.
+            alt_variant = text.get("variantAlt")
+            # "variantAlt" is for the second Watcher's Eye unique mod.
+            # The 3-stat variant obtained from Uber Elder is not yet implemented in PoB.
             mod_ranges = [float(i.get("range")) for i in text.findall("ModRange")]
             item = text.text.strip("\n\r\t").splitlines()
             rarity = _get_stat(item, "Rarity: ").capitalize()
@@ -219,8 +237,8 @@ class PathOfBuildingAPI:
             implicit = int(_get_stat(item, "Implicits: "))
             item_text = _get_text(item, variant, alt_variant, mod_ranges)
             # fmt: off
-            yield models.Item(rarity, name, base, uid, shaper, elder, crafted, quality, sockets,
-                              level_req, item_level, implicit, item_text)
+            yield models.Item(rarity, name, base, uid, shaper, elder, crafted, quality,
+                              sockets, level_req, item_level, implicit, item_text)
             # fmt: on
 
     @memoized_property
@@ -237,11 +255,13 @@ class PathOfBuildingAPI:
     def item_sets(self) -> List[models.Set]:
         """Get a list of all item sets of a character.
 
+        .. note:: Slot IDs are 0-indexed.
+
         :return: Item sets.
         :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Set`]"""
         for item_set in self.xml.find("Items").findall("ItemSet"):
             kwargs = {
-                SET_MAP.get(slot.get("name")): int(slot.get("itemId"))
+                constants.SET_MAP.get(slot.get("name")): int(slot.get("itemId")) - 1
                 if not slot.get("itemId") == "0"
                 else None
                 for slot in item_set.findall("Slot")
@@ -264,7 +284,7 @@ class PathOfBuildingAPI:
                 return item.get("string").capitalize()
 
         kwargs = {
-            CONFIG_MAP.get(i.get("name")): _convert_fields(i)
+            constants.CONFIG_MAP.get(i.get("name")): _convert_fields(i)
             for i in self.xml.find("Config").findall("Input")
         }
         kwargs["character_level"] = self.level
@@ -277,24 +297,30 @@ class PathOfBuildingAPI:
 
         :return: Abilities.
         :rtype: :class:`~typing.List`\\
-            [:data:`~typing.Union`\\[:class:`~pobapi.models.Gem`, :class:`~pobapi.models.GrantedAbility`]]"""
+            [:data:`~typing.Union`\\[:class:`~pobapi.models.Gem`,
+            :class:`~pobapi.models.GrantedAbility`]]"""
         for ability in skill:
+            gem_id = ability.get("gemId")
             name = ability.get("nameSpec")
             enabled = True if ability.get("enabled") == "true" else False
             level = int(ability.get("level"))
-            if name:
+            if gem_id:
                 quality = int(ability.get("quality"))
-                yield models.Gem(name, enabled, level, quality)
+                support = (
+                    True if ability.get("skillId").startswith("Support") else False
+                )
+                yield models.Gem(name, enabled, level, quality, support)
             else:
-                name = SKILL_MAP.get(ability.get("skillId"))
+                name = name or constants.SKILL_MAP.get(ability.get("skillId"))
                 yield models.GrantedAbility(name, enabled, level)
 
 
 def from_url(url: str, timeout: float = 6.0) -> PathOfBuildingAPI:
     """Instantiate build class from a pastebin.com link generated with Path Of Building.
 
-    :raises: :class:`~requests.URLRequired`, :class:`~requests.Timeout`, :class:`~requests.ConnectionError`,
-        :class:`~requests.HTTPError`, :class:`~requests.TooManyRedirects`, :class:`~requests.RequestException`
+    :raises: :class:`~requests.URLRequired`, :class:`~requests.Timeout`,
+        :class:`~requests.ConnectionError`, :class:`~requests.HTTPError`,
+        :class:`~requests.TooManyRedirects`, :class:`~requests.RequestException`
 
     :param url: pastebin.com link generated with Path Of Building.
     :param timeout: Timeout for the request."""
