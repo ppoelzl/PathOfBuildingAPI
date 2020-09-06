@@ -140,7 +140,7 @@ class PathOfBuildingAPI:
         :return: Skill gems.
         :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Gem`]"""
 
-        for skill in self.xml.find("Skills").findall("SkillGroup"):
+        for skill in self.xml.find("Skills").findall("Skill"):
             if not skill.get("source"):
                 yield from self._abilities(skill)
 
