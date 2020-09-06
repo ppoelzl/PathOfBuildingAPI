@@ -46,12 +46,11 @@ setup(
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
     # What does your project relate to?
     keywords="pathofexile poe pathofbuilding pob",
     packages=["pobapi"],
-    install_requires=["dataclasses", "dataslots", "lxml", "requests", "unstdlib"],
+    install_requires=["dataslots", "lxml", "requests", "unstdlib"],
 )
