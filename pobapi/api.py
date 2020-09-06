@@ -92,7 +92,7 @@ class PathOfBuildingAPI:
         :return: Skill setups.
         :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.SkillGroup`]"""
         for skill in self.xml.find("Skills").findall("Skill"):
-            enabled = True if skill.get("enabled") == "true" else False
+            enabled = skill.get("enabled") == "true"
             label = skill.get("label")
             active = (
                 int(skill.get("mainActiveSkill"))
@@ -178,7 +178,7 @@ class PathOfBuildingAPI:
         :return: Keystones.
         :rtype: :class:`~pobapi.models.Keystones`"""
         kwargs = {
-            keystone: True if id_ in self.active_skill_tree.nodes else False
+            keystone: id_ in self.active_skill_tree.nodes
             for keystone, id_ in constants.KEYSTONE_IDS.items()
         }
         return models.Keystones(**kwargs)
@@ -197,11 +197,7 @@ class PathOfBuildingAPI:
 
         :return: Truth value.
         :rtype: :class:`bool`"""
-        return (
-            True
-            if self.xml.find("Items").get("useSecondWeaponSet") == "true"
-            else False
-        )
+        return self.xml.find("Items").get("useSecondWeaponSet") == "true"
 
     @memoized_property
     @listify
@@ -302,13 +298,11 @@ class PathOfBuildingAPI:
         for ability in skill:
             gem_id = ability.get("gemId")
             name = ability.get("nameSpec")
-            enabled = True if ability.get("enabled") == "true" else False
+            enabled = ability.get("enabled") == "true"
             level = int(ability.get("level"))
             if gem_id:
                 quality = int(ability.get("quality"))
-                support = (
-                    True if ability.get("skillId").startswith("Support") else False
-                )
+                support = ability.get("skillId").startswith("Support")
                 yield models.Gem(name, enabled, level, quality, support)
             else:
                 name = name or constants.SKILL_MAP.get(ability.get("skillId"))
