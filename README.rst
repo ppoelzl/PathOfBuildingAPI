@@ -42,8 +42,7 @@ Features
 Requirements
 ------------
 
-* `Python 3.6+ <https://www.python.org/>`_
-* `dataclasses <https://pypi.org/project/dataclasses/>`_
+* `Python 3.7+ <https://www.python.org/>`_
 * `dataslots <https://pypi.org/project/dataslots/>`_
 * `lxml <https://pypi.org/project/lxml/>`_
 * `requests <https://pypi.org/project/requests/>`_

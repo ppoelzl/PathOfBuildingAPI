@@ -1,4 +1,5 @@
 # Built-ins
+import itertools
 
 # Project
 from pobapi import api
@@ -20,7 +21,7 @@ def build():
 
 
 def _assert_group(skill_group, test_list):
-    for g, t in zip(skill_group, test_list):
+    for g, t in itertools.zip_longest(skill_group, test_list):
         assert g.name == t[0]
         assert g.enabled == t[1]
         assert g.level == t[2]
