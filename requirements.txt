@@ -4,7 +4,7 @@ atomicwrites==1.4.0
 attrs==20.3.0
 Babel==2.9.0
 black==20.8b1
-certifi==2020.11.8
+certifi==2020.12.5
 chardet==3.0.4
 Click==7.1.2
 colorama==0.4.4
