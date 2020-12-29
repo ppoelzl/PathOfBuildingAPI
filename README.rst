@@ -12,7 +12,7 @@ Introduction
 ------------
 
 | Path Of Building API provides a comprehensive toolbox for processing
-    `Path of Building <https://github.com/Openarl/PathOfBuilding>`_ pastebins.
+    `Path of Building <https://github.com/PathOfBuilding/PathOfBuilding>`_ pastebins.
 | It is aimed at community developers:
 
 * looking to add Path of Building functionality to their apps.
