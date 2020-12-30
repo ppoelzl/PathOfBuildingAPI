@@ -1,12 +1,10 @@
 Path of Building API
 ====================
 
-Pre-release Software Warning
+Notice
 ----------------------------
 
-| This library is currently in pre-release status and may change in the near future.
-| Meanwhile I am looking forward to community feedback to accommodate most use cases.
-| Pull requests are gladly accepted and much appreciated!
+This library is not stable yet and may still change in compatibility-breaking ways.
 
 Introduction
 ------------
@@ -66,13 +64,13 @@ Setup virtual environment:
     cd my_project_folder
     virtualenv venv
 
-To activate on Microsoft Windows:
+To activate on Windows:
 
 .. code-block:: console
 
     \venv\Scripts\activate
 
-To activate on GNU/Linux:
+To activate on Linux:
 
 .. code-block:: console
 
@@ -131,12 +129,12 @@ Feedback
 
 Please file a `GitHub issue <https://developer.github.com/v3/issues/>`_ in this repository for any feedback you may have.
 
-Contribution
+Contributing
 ------------
 
 Pull requests are gladly accepted. Check out the `Developer Guide <https://pobapi.readthedocs.io/dev.html>`_.
 
-To-Do
+Roadmap
 -----
 
 * Support corruptions
