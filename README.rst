@@ -1,10 +1,29 @@
 Path of Building API
 ====================
 
-Notice
-----------------------------
-
-This library is not stable yet and may still change in compatibility-breaking ways.
+.. image:: https://img.shields.io/maintenance/yes/2021
+   :alt: Maintenance
+.. image:: https://readthedocs.org/projects/pobapi/badge
+   :target: https://pobapi.readthedocs.io
+   :alt: Read the Docs - Status
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+   :target: https://github.com/psf/black
+   :alt: Code style - black
+.. image:: https://img.shields.io/pypi/pyversions/pobapi
+   :target: https://pypi.org/project/pobapi/
+   :alt: PyPI - Python Version
+.. image:: https://img.shields.io/pypi/v/pobapi
+   :target: https://pypi.org/project/pobapi/
+   :alt: PyPI
+.. image:: https://img.shields.io/pypi/status/pobapi
+   :target: https://pypi.org/project/pobapi/
+   :alt: PyPI - Status
+.. image:: https://img.shields.io/pypi/format/pobapi
+   :target: https://pypi.org/project/pobapi/
+   :alt: PyPI - Format
+.. image:: https://img.shields.io/pypi/l/pobapi
+   :target: https://opensource.org/licenses/MIT
+   :alt: PyPI - License
 
 Introduction
 ------------
