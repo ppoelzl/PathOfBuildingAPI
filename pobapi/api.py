@@ -1,15 +1,17 @@
-# Built-ins
 from typing import List, Optional, Union
 
-# Project
-from pobapi import config, constants, models, stats
-from pobapi.util import _get_stat, _skill_tree_nodes, _get_text
-from pobapi.util import _fetch_xml_from_import_code, _fetch_xml_from_url
-
-# Third-party
 from lxml.etree import fromstring
 from unstdlib.standard.functools_ import memoized_property
 from unstdlib.standard.list_ import listify
+
+from pobapi import config, constants, models, stats
+from pobapi.util import (
+    _fetch_xml_from_import_code,
+    _fetch_xml_from_url,
+    _get_stat,
+    _get_text,
+    _skill_tree_nodes,
+)
 
 """API for PathOfBuilding's XML export format."""
 
@@ -203,7 +205,7 @@ class PathOfBuildingAPI:
     @listify
     def items(self) -> List[models.Item]:
         """Get a list of all items of a Path Of Building build.
-        
+
         :return: Items.
         :rtype: :class:`~typing.List`\\[:class:`~pobapi.models.Item`]"""
         for text in self.xml.find("Items").findall("Item"):

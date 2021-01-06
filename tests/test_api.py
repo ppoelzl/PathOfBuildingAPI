@@ -1,14 +1,8 @@
-# Built-ins
 import itertools
 
-# Project
-from pobapi import api
-from pobapi import config
-from pobapi import models
-from pobapi import stats
-
-# Third-party
 import pytest
+
+from pobapi import api, config, models, stats
 
 BASE_URL = "https://www.pathofexile.com/passive-skill-tree/"
 

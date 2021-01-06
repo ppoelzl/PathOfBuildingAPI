@@ -1,4 +1,3 @@
-# Built-ins
 import base64
 import decimal
 import logging
@@ -6,11 +5,9 @@ import struct
 import zlib
 from typing import Iterator, List, Union
 
-# Project
-from pobapi.constants import TREE_OFFSET
-
-# Third-party
 import requests
+
+from pobapi.constants import TREE_OFFSET
 
 logger = logging.getLogger(__name__)
 

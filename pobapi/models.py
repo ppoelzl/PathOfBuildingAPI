@@ -1,9 +1,7 @@
-# Built-ins
 from abc import ABC
 from dataclasses import asdict, dataclass
 from typing import Dict, List, Optional, Tuple, Union
 
-# Third-party
 from dataslots import with_slots
 
 __all__ = ["Gem", "GrantedAbility", "SkillGroup", "Tree", "Keystones", "Item", "Set"]

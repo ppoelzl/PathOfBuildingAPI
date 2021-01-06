@@ -1,12 +1,9 @@
-# Built-ins
-from dataclasses import dataclass, InitVar
+from dataclasses import InitVar, dataclass
 from typing import Union
 
-# Project
-from pobapi.constants import MONSTER_DAMAGE_TABLE, MONSTER_LIFE_TABLE
-
-# Third-party
 from dataslots import with_slots
+
+from pobapi.constants import MONSTER_DAMAGE_TABLE, MONSTER_LIFE_TABLE
 
 __all__ = ["Config"]
 

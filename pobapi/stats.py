@@ -1,7 +1,5 @@
-# Built-ins
 from dataclasses import dataclass
 
-# Third-party
 from dataslots import with_slots
 
 __all__ = ["Stats"]

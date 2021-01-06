@@ -1,7 +1,5 @@
-# Built-ins
 import logging
 
-# Project
 from .api import *
 
 VERSION = "0.6.0"
