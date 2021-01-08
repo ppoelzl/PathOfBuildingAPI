@@ -1,35 +1,46 @@
-Path of Building API
-====================
+Path of Building API *(pobapi)*
+===============================
 
 .. image:: https://img.shields.io/maintenance/yes/2021
+   :target: https://github.com/ppoelzl/PathOfBuildingAPI
    :alt: Maintenance
 .. image:: https://readthedocs.org/projects/pobapi/badge
    :target: https://pobapi.readthedocs.io
-   :alt: Read the Docs - Status
-.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-   :target: https://github.com/psf/black
-   :alt: Code style - black
+   :alt: Read the Docs - Build Status
 .. image:: https://img.shields.io/pypi/pyversions/pobapi
    :target: https://pypi.org/project/pobapi/
    :alt: PyPI - Python Version
 .. image:: https://img.shields.io/pypi/v/pobapi
    :target: https://pypi.org/project/pobapi/
-   :alt: PyPI
+   :alt: PyPI - Library Version
 .. image:: https://img.shields.io/pypi/status/pobapi
    :target: https://pypi.org/project/pobapi/
-   :alt: PyPI - Status
+   :alt: PyPI - Project Status
 .. image:: https://img.shields.io/pypi/format/pobapi
    :target: https://pypi.org/project/pobapi/
-   :alt: PyPI - Format
+   :alt: PyPI - Distribution Format
 .. image:: https://img.shields.io/pypi/l/pobapi
    :target: https://opensource.org/licenses/MIT
    :alt: PyPI - License
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+   :target: https://github.com/psf/black
+   :alt: Code style - black
+.. image:: https://img.shields.io/badge/readme%20style-standard-brightgreen.svg
+   :target: https://github.com/RichardLitt/standard-readme
+   :alt: Standard Readme - Compliant
+..
 
-Introduction
-------------
+| API for Path of Building's build sharing format for builds in Path of Exile.
+
+.. contents:: Table of Contents
+   :depth: 2
+
+Background
+----------
 
 | Path Of Building API provides a comprehensive toolbox for processing
-    `Path of Building <https://github.com/PathOfBuildingCommunity/PathOfBuilding>`_ pastebins.
+    `Path of Building
+    <https://github.com/PathOfBuildingCommunity/PathOfBuilding>`_ pastebins.
 | It is aimed at community developers:
 
 * looking to add Path of Building functionality to their apps.
@@ -42,22 +53,15 @@ Benefits from using this library:
 * Backwards-compatibility as PoB's export format changes
 * Tested and secure codebase
 
-Features
---------
+Install
+-------
 
-* Look up and process:
-    * Character stats (DPS, life, etc.)
-    * Skill trees
-    * Skills, skill groups and links
-    * Gear and item sets
-    * Path of Building configuration settings
-    * Build author's notes
-* Exposes all of Path of Building's relevant stats and attributes in a simple and pythonic way.
-* Automatically calculates mod values on theorycrafted items.
-* Low memory footprint through slots and dynamically generated attributes.
+.. code-block:: console
 
-Requirements
-------------
+    pip install pobapi
+
+Dependencies
+............
 
 * `Python 3.7+ <https://www.python.org/>`_
 * `dataslots <https://pypi.org/project/dataslots/>`_
@@ -65,45 +69,8 @@ Requirements
 * `requests <https://pypi.org/project/requests/>`_
 * `unstdlib <https://pypi.org/project/unstdlib/>`_
 
-Setup Instructions
---------------------
-
-.. code-block:: console
-
-    pip install pobapi
-
-Setup Instructions For Developers
----------------------------------
-
-Setup virtual environment:
-
-.. code-block:: console
-
-    pip install virtualenv
-    cd my_project_folder
-    virtualenv venv
-
-To activate on Windows:
-
-.. code-block:: console
-
-    \venv\Scripts\activate
-
-To activate on Linux:
-
-.. code-block:: console
-
-    source venv/bin/activate
-
-Setup repository:
-
-.. code-block:: console
-
-    git clone https://github.com/ppoelzl/PathOfBuildingAPI.git
-    pip install -r requirements.txt
-
-Basic Usage
------------
+Usage
+-----
 
 >>> import pobapi
 >>> url = "https://pastebin.com/bQRjfedq"
@@ -138,28 +105,59 @@ Shocked Enemies you Kill Explode, dealing 5% of
 their Maximum Life as Lightning Damage which cannot Shock
 Unaffected by Shock
 
-Documentation
--------------
+Features
+--------
 
-Available at `Read the Docs <https://pobapi.readthedocs.io>`_.
+* Look up and process:
+    * Character stats (DPS, life, etc.)
+    * Skill trees
+    * Skills, skill groups and links
+    * Gear and item sets
+    * Path of Building configuration settings
+    * Build author's notes
+* Exposes all of Path of Building's relevant stats and attributes in a simple and pythonic way.
+* Automatically calculates mod values on theorycrafted items.
+* Low memory footprint through slots and dynamically generated attributes.
 
 Feedback
 --------
 
-Please file a `GitHub issue <https://developer.github.com/v3/issues/>`_ in this repository for any feedback you may have.
-
-Contributing
-------------
-
-Pull requests are gladly accepted. Check out the `Developer Guide <https://pobapi.readthedocs.io/dev.html>`_.
+| Please open a `GitHub issue <https://developer.github.com/v3/issues/>`_
+  in this repository for any feedback you may have.
 
 Roadmap
------
+-------
 
 * Support corruptions
 * Support enchantments
 
-License
+API
+---
+
+Documentation available at `Read the Docs <https://pobapi.readthedocs.io>`_.
+
+Contributing
+------------
+
+Setup repository using `Git <https://git-scm.com/>`_ (recommended):
+
+.. code-block:: console
+
+    git clone https://github.com/ppoelzl/PathOfBuildingAPI.git
+
+Install dev dependencies using `Poetry <https://python-poetry.org/>`_ (recommended):
+
+.. code-block:: console
+
+    poetry install
+
+| If you have any questions about contributing, please open a
+  `GitHub issue <https://developer.github.com/v3/issues/>`_.
+| Pull requests are gladly accepted.
+| Check out the `Developer Guide <https://pobapi.readthedocs.io/dev.html>`_
+  for more info.
+
+Licence
 -------
 
-`MIT <https://mit-license.org/>`_
+`MIT <https://opensource.org/licenses/MIT>`_ © Peter Pölzl
