@@ -28,7 +28,7 @@ isort = "^5.8.0"
 pytest = "^6.2.2"
 sphinx = "^3.4.2"
 sphinx-autodoc-typehints = "^1.11.1"
-toml-sort = "^0.18.0"
+toml-sort = "^0.19.0"
 
 [tool.poetry.extras]
 docs = ["sphinx", "sphinx-autodoc-typehints"]
