@@ -103,11 +103,14 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "dataslots"
-version = "1.0.2"
+version = "1.1.0"
 description = "Decorator to add __slots__ in dataclasses"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
+
+[package.dependencies]
+typing-extensions = {version = ">=3.7.4", markers = "python_version < \"3.8\""}
 
 [[package]]
 name = "docutils"
@@ -603,8 +606,8 @@ colorama = [
     {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
 dataslots = [
-    {file = "dataslots-1.0.2-py2.py3-none-any.whl", hash = "sha256:4fe302ab59c86e01a4fafe516776a198cd8a42dc696dcc9d525e2ec8ee0fe773"},
-    {file = "dataslots-1.0.2.tar.gz", hash = "sha256:0dfc4d12aab104b00ddb88a585c0a2227bbb9bd19c785dc8068b43eb0d6009e1"},
+    {file = "dataslots-1.1.0-py3-none-any.whl", hash = "sha256:7b757fcd96cb9bd165fd68a0a04fb6ac88a656f93f0f58bcce2f9fa585594b93"},
+    {file = "dataslots-1.1.0.tar.gz", hash = "sha256:e94c1ecc6eb1b1dd3c602061148a26d67c03b3c812addf36e2664ecdf70fb4dd"},
 ]
 docutils = [
     {file = "docutils-0.16-py2.py3-none-any.whl", hash = "sha256:0c5b78adfbf7762415433f5515cd5c9e762339e23369dbe8000d84a4bf4ab3af"},
