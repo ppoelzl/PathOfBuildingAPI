@@ -23,7 +23,7 @@ sphinx-autodoc-typehints = {version = "^1.11.1", optional = true}
 unstdlib = "^1.7.2"
 
 [tool.poetry.dev-dependencies]
-black = "^22.10"
+black = "^22.12"
 isort = "^5.10.1"
 pytest = "^7.1.3"
 sphinx = ">=3.4.2,<5.0.0"
