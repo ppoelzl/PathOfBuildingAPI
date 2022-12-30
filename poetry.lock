@@ -455,7 +455,7 @@ test = ["pytest"]
 
 [[package]]
 name = "toml-sort"
-version = "0.20.1"
+version = "0.21.0"
 description = "Toml sorting library"
 category = "dev"
 optional = false
@@ -535,7 +535,7 @@ docs = ["sphinx", "sphinx-autodoc-typehints"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<4.0"
-content-hash = "4fdace17968ed6152a738b56cc33eae0a8087bb043841fdf6509c91fb5d73ca5"
+content-hash = "eb876e15e3f669f4bbef0ab8e4af945270ed6a995c262104563d21183e0dd5fb"
 
 [metadata.files]
 alabaster = [
@@ -828,8 +828,8 @@ sphinxcontrib-serializinghtml = [
     {file = "sphinxcontrib_serializinghtml-1.1.5-py2.py3-none-any.whl", hash = "sha256:352a9a00ae864471d3a7ead8d7d79f5fc0b57e8b3f95e9867eb9eb28999b92fd"},
 ]
 toml-sort = [
-    {file = "toml-sort-0.20.1.tar.gz", hash = "sha256:bce9023787c6f15ebbdf22d0b05eab928c047b164f65d393a25c27ac060bd7e1"},
-    {file = "toml_sort-0.20.1-py3-none-any.whl", hash = "sha256:c5f5923969cbbf3b391dea47687733143d342ea438619790ee49d055052fd0f5"},
+    {file = "toml_sort-0.21.0-py3-none-any.whl", hash = "sha256:7f3ad678abf2f23658b97f6a00a9d9f8e1339861276ec2920cf3452095c0a214"},
+    {file = "toml_sort-0.21.0.tar.gz", hash = "sha256:6543b6e246ae54f173183525de2fa4845e22e071a3f6316f23e8ffc6eed39bcb"},
 ]
 tomli = [
     {file = "tomli-2.0.0-py3-none-any.whl", hash = "sha256:b5bde28da1fed24b9bd1d4d2b8cba62300bfb4ec9a6187a957e8ddb9434c5224"},
